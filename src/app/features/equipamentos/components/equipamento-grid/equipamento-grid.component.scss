@@ -1,0 +1,29 @@
+.container {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.botao-exportar {
+  margin: 1rem 0;
+
+  mat-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+.edit-icon {
+  color: #1976d2;
+
+  &:hover {
+    background-color: rgba(25, 118, 210, 0.1);
+  }
+}
+
+.delete-icon {
+  color: #d32f2f;
+
+  &:hover {
+    background-color: rgba(211, 47, 47, 0.1);
+  }
+}

@@ -9,15 +9,20 @@ export const routes: Routes = [
       ),
     children: [
       {
-        path: 'cadastrosBasicos/suportePlataforma',
+        path: '',
         loadComponent: () =>
-          import(
-            './features/suporte-plataforma/pages/suporte-plataforma.component'
-          ).then((m) => m.SuportePlataformaComponent),
+          import('./features/home/home.component').then((m) => m.HomeComponent),
       },
       {
-        path: '',
-        redirectTo: '/cadastrosBasicos/suportePlataforma',
+        path: 'equipamentos',
+        loadComponent: () =>
+          import('./features/equipamentos/pages/equipamentos.component').then(
+            (m) => m.EquipamentosComponent
+          ),
+      },
+      {
+        path: 'cadastrosBasicos/equipamentos',
+        redirectTo: 'equipamentos',
         pathMatch: 'full',
       },
     ],

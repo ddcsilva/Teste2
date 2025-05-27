@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FiltrosComponent } from '../../../../shared/components/filtros/filtros.component';
-import { SuportePlataformaFiltro } from '../../models/suporte-plataforma-filtro.model';
+import { EquipamentoFiltro } from '../../models/equipamento-filtro.model';
 import { FiltroBotoesComponent } from '../../../../shared/components/filtro-botoes/filtro-botoes.component';
 
 @Component({
-  selector: 'app-suporte-plataforma-filtros',
+  selector: 'app-equipamento-filtros',
   standalone: true,
   imports: [
     CommonModule,
@@ -22,29 +22,29 @@ import { FiltroBotoesComponent } from '../../../../shared/components/filtro-boto
     <app-filtros>
       <div class="filtros-container">
         <mat-form-field appearance="outline">
-          <mat-label>Suporte</mat-label>
+          <mat-label>Código</mat-label>
           <input
             matInput
-            [(ngModel)]="filtros.suporte"
-            placeholder="Digite o código do suporte"
+            [(ngModel)]="filtros.codigo"
+            placeholder="Digite o código do equipamento"
           />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Plataforma</mat-label>
+          <mat-label>Categoria</mat-label>
           <input
             matInput
-            [(ngModel)]="filtros.plataforma"
-            placeholder="Digite o código da plataforma"
+            [(ngModel)]="filtros.categoria"
+            placeholder="Digite a categoria"
           />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Posição</mat-label>
+          <mat-label>Localização</mat-label>
           <input
             matInput
-            [(ngModel)]="filtros.posicao"
-            placeholder="Digite a posição"
+            [(ngModel)]="filtros.localizacao"
+            placeholder="Digite a localização"
           />
         </mat-form-field>
 
@@ -71,14 +71,14 @@ import { FiltroBotoesComponent } from '../../../../shared/components/filtro-boto
     `,
   ],
 })
-export class SuportePlataformaFiltrosComponent {
-  @Output() buscar = new EventEmitter<SuportePlataformaFiltro>();
+export class EquipamentoFiltrosComponent {
+  @Output() buscar = new EventEmitter<EquipamentoFiltro>();
   @Output() limpar = new EventEmitter<void>();
 
-  filtros: SuportePlataformaFiltro = {
-    suporte: '',
-    plataforma: '',
-    posicao: '',
+  filtros: EquipamentoFiltro = {
+    codigo: '',
+    categoria: '',
+    localizacao: '',
   };
 
   onBuscar(): void {
@@ -87,9 +87,9 @@ export class SuportePlataformaFiltrosComponent {
 
   onLimpar(): void {
     this.filtros = {
-      suporte: '',
-      plataforma: '',
-      posicao: '',
+      codigo: '',
+      categoria: '',
+      localizacao: '',
     };
     this.limpar.emit();
   }

@@ -1,10 +1,7 @@
-<app-cabecalho-pagina [titulo]="'Suportes da Plataforma'" />
+<app-cabecalho-pagina [titulo]="'Equipamentos'" />
 
 <div class="container">
-  <app-suporte-plataforma-filtros
-    (buscar)="buscar($event)"
-    (limpar)="limpar()"
-  />
+  <app-equipamento-filtros (buscar)="buscar($event)" (limpar)="limpar()" />
 
   <button
     mat-raised-button

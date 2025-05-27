@@ -1,47 +1,47 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { SuportePlataformaService } from '../../services/suporte-plataforma.service';
+import { EquipamentoService } from '../../services/equipamento.service';
 import { GridService } from '../../../../shared/services/grid.service';
 import { Router } from '@angular/router';
-import { SuportePlataformaFiltro } from '../../models/suporte-plataforma-filtro.model';
-import { SuportePlataforma } from '../../models/suporte-plataforma.model';
+import { EquipamentoFiltro } from '../../models/equipamento-filtro.model';
+import { Equipamento } from '../../models/equipamento.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CabecalhoPaginaComponent } from '../../../../shared/components/cabecalho-pagina/cabecalho-pagina.component';
-import { SuportePlataformaFiltrosComponent } from '../suporte-plataforma-filtros/suporte-plataforma-filtros.component';
+import { EquipamentoFiltrosComponent } from '../equipamento-filtros/equipamento-filtros.component';
 import { GridGenericoComponent } from '../../../../shared/components/grid-generico/grid-generico.component';
 
 @Component({
-  selector: 'app-suporte-plataforma-grid',
+  selector: 'app-equipamento-grid',
   standalone: true,
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
     CabecalhoPaginaComponent,
-    SuportePlataformaFiltrosComponent,
+    EquipamentoFiltrosComponent,
     GridGenericoComponent,
   ],
-  templateUrl: './suporte-plataforma-grid.component.html',
-  styleUrls: ['./suporte-plataforma-grid.component.scss'],
+  templateUrl: './equipamento-grid.component.html',
+  styleUrls: ['./equipamento-grid.component.scss'],
 })
-export class SuportePlataformaGridComponent implements OnInit, OnDestroy {
-  colunas: string[] = ['codigoSuporte', 'codigoPlataforma', 'posicaoSuporte'];
+export class EquipamentoGridComponent implements OnInit, OnDestroy {
+  colunas: string[] = ['codigo', 'categoria', 'localizacao'];
   nomesColunas = {
-    codigoSuporte: 'Suporte',
-    codigoPlataforma: 'Plataforma',
-    posicaoSuporte: 'Posição do Suporte',
+    codigo: 'Código',
+    categoria: 'Categoria',
+    localizacao: 'Localização',
   };
 
-  filtrosSubject = new BehaviorSubject<SuportePlataformaFiltro>({
-    suporte: '',
-    plataforma: '',
-    posicao: '',
+  filtrosSubject = new BehaviorSubject<EquipamentoFiltro>({
+    codigo: '',
+    categoria: '',
+    localizacao: '',
   });
   dadosSubject = new BehaviorSubject<{
-    itens: SuportePlataforma[];
+    itens: Equipamento[];
     totalItens: number;
   }>({ itens: [], totalItens: 0 });
   dadosObservable = this.dadosSubject.asObservable();
@@ -49,7 +49,7 @@ export class SuportePlataformaGridComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
-    private suportePlataformaService: SuportePlataformaService,
+    private equipamentoService: EquipamentoService,
     private gridService: GridService,
     private router: Router
   ) {}
@@ -64,13 +64,13 @@ export class SuportePlataformaGridComponent implements OnInit, OnDestroy {
   }
 
   carregarDados(paginaAtual: number = 1, itensPorPagina: number = 10): void {
-    this.suportePlataformaService
+    this.equipamentoService
       .obterDadosParaGrid(
         paginaAtual,
         itensPorPagina,
-        this.filtrosSubject.value.suporte,
-        this.filtrosSubject.value.plataforma,
-        this.filtrosSubject.value.posicao
+        this.filtrosSubject.value.codigo,
+        this.filtrosSubject.value.categoria,
+        this.filtrosSubject.value.localizacao
       )
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response) => this.dadosSubject.next(response));
@@ -80,43 +80,40 @@ export class SuportePlataformaGridComponent implements OnInit, OnDestroy {
     this.carregarDados(evento.pageIndex + 1, evento.pageSize);
   }
 
-  buscar(filtros: SuportePlataformaFiltro): void {
+  buscar(filtros: EquipamentoFiltro): void {
     this.filtrosSubject.next(filtros);
     this.carregarDados();
   }
 
   limpar(): void {
-    this.filtrosSubject.next({ suporte: '', plataforma: '', posicao: '' });
+    this.filtrosSubject.next({ codigo: '', categoria: '', localizacao: '' });
     this.carregarDados();
   }
 
-  editar(suporte: SuportePlataforma): void {
-    this.router.navigate([
-      `/cadastrosBasicos/suportePlataforma/update/${suporte.id}`,
-    ]);
+  editar(equipamento: Equipamento): void {
+    this.router.navigate([`/equipamentos/editar/${equipamento.id}`]);
   }
 
-  excluir(suporte: SuportePlataforma): void {
+  excluir(equipamento: Equipamento): void {
     this.gridService.confirmarEExcluir(
       {
         title: 'Confirmar Exclusão',
-        content: `Tem certeza que deseja excluir o suporte ${suporte.codigoSuporte}?`,
+        content: `Tem certeza que deseja excluir o equipamento ${equipamento.codigo}?`,
       },
-      suporte.id,
-      (id: number) => this.suportePlataformaService.excluir(id),
+      equipamento.id,
+      (id: number) => this.equipamentoService.excluir(id),
       () => this.carregarDados(),
       {
-        sucesso: `Suporte ${suporte.codigoSuporte} excluído com sucesso!`,
-        erro: `Houve um erro ao excluir o suporte ${suporte.codigoSuporte}.`,
+        sucesso: `Equipamento ${equipamento.codigo} excluído com sucesso!`,
+        erro: `Houve um erro ao excluir o equipamento ${equipamento.codigo}.`,
       }
     );
   }
 
   exportarExcel(): void {
     this.gridService.exportarDadosParaExcel(
-      () =>
-        this.suportePlataformaService.exportarExcel(this.filtrosSubject.value),
-      'SuportesPlataformas'
+      () => this.equipamentoService.exportarExcel(this.filtrosSubject.value),
+      'Equipamentos'
     );
   }
 }

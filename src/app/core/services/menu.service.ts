@@ -7,29 +7,70 @@ import { MenuItem } from '../../shared/models/menu.model';
 export class MenuService {
   public obterItensMenu(): MenuItem[] {
     return [
-      this.criarItemMenu(
-        'add_circle',
-        'ITEM_MENU_CADASTRO_TESTE',
-        'cadastrosBasicos/teste',
-        'Cadastro de Teste'
-      ),
+      this.criarItemMenu('home', 'ITEM_MENU_HOME', '', 'Início'),
       this.criarItemMenuComSubMenu(
         'apps',
-        'ITEM_MENU_CADASTRO_TESTE',
+        'ITEM_MENU_CADASTROS_BASICOS',
         '',
         'Cadastros Básicos',
         [
           this.criarItemMenu(
             '',
-            'ITEM_MENU_CADASTRO_SUPORTE',
-            'cadastrosBasicos/suportePlataforma',
-            'Suportes Plataforma'
+            'ITEM_MENU_EQUIPAMENTOS',
+            'equipamentos',
+            'Equipamentos'
           ),
           this.criarItemMenu(
             '',
-            'ITEM_MENU_CADASTRO_UNIFILAR',
-            'cadastrosBasicos/unifilar',
-            'Unifilar'
+            'ITEM_MENU_CATEGORIAS',
+            'cadastrosBasicos/categorias',
+            'Categorias'
+          ),
+          this.criarItemMenu(
+            '',
+            'ITEM_MENU_LOCALIZACOES',
+            'cadastrosBasicos/localizacoes',
+            'Localizações'
+          ),
+        ]
+      ),
+      this.criarItemMenuComSubMenu(
+        'assessment',
+        'ITEM_MENU_RELATORIOS',
+        '',
+        'Relatórios',
+        [
+          this.criarItemMenu(
+            '',
+            'ITEM_MENU_RELATORIO_EQUIPAMENTOS',
+            'relatorios/equipamentos',
+            'Relatório de Equipamentos'
+          ),
+          this.criarItemMenu(
+            '',
+            'ITEM_MENU_RELATORIO_CATEGORIAS',
+            'relatorios/categorias',
+            'Relatório de Categorias'
+          ),
+        ]
+      ),
+      this.criarItemMenuComSubMenu(
+        'settings',
+        'ITEM_MENU_CONFIGURACOES',
+        '',
+        'Configurações',
+        [
+          this.criarItemMenu(
+            '',
+            'ITEM_MENU_USUARIOS',
+            'configuracoes/usuarios',
+            'Usuários'
+          ),
+          this.criarItemMenu(
+            '',
+            'ITEM_MENU_PERFIS',
+            'configuracoes/perfis',
+            'Perfis'
           ),
         ]
       ),
