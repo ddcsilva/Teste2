@@ -1,0 +1,43 @@
+@use "../../../../styles/tokens" as *;
+
+.cabecalho-pagina {
+  padding: $spacing-md 0 $spacing-sm 0;
+  margin-bottom: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+  background-color: transparent;
+
+  .titulo {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: $color-text-primary;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+}
+
+// Variação para páginas com menos espaçamento
+.cabecalho-pagina--compact {
+  padding: $spacing-sm 0;
+  margin-bottom: $spacing-md;
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+}
+
+// Variação sem borda inferior
+.cabecalho-pagina--no-border {
+  border-bottom: none;
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .cabecalho-pagina {
+    padding: $spacing-sm 0;
+
+    .titulo {
+      font-size: 1.5rem;
+    }
+  }
+}

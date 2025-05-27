@@ -5,28 +5,25 @@ import { CommonModule } from '@angular/common';
   selector: 'app-cabecalho-pagina',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="cabecalho-pagina">
-      <h1>{{ titulo }}</h1>
-    </div>
-  `,
-  styles: [
-    `
-      .cabecalho-pagina {
-        padding: 16px;
-        margin-bottom: 16px;
-        border-bottom: 1px solid #ddd;
-      }
-
-      h1 {
-        margin: 0;
-        font-size: 24px;
-        font-weight: 500;
-        color: #333;
-      }
-    `,
-  ],
+  templateUrl: './cabecalho-pagina.component.html',
+  styleUrl: './cabecalho-pagina.component.scss',
 })
 export class CabecalhoPaginaComponent {
   @Input() titulo: string = '';
+  @Input() compact: boolean = false;
+  @Input() noBorder: boolean = false;
+
+  get cssClasses(): string {
+    const classes = ['cabecalho-pagina'];
+
+    if (this.compact) {
+      classes.push('cabecalho-pagina--compact');
+    }
+
+    if (this.noBorder) {
+      classes.push('cabecalho-pagina--no-border');
+    }
+
+    return classes.join(' ');
+  }
 }
