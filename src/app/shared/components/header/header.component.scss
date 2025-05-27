@@ -8,20 +8,22 @@ $cor-foco: #d9cd26;
 :host {
   display: block;
   height: $altura-cabecalho;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.cabecalho-app {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  height: $altura-cabecalho;
   z-index: 1000;
+  margin: 0;
+  padding: 0;
+}
+
+.cabecalho-app {
+  width: 100%;
+  height: $altura-cabecalho;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 0;
 }
 
 .barra-ferramentas-cabecalho {
@@ -32,6 +34,15 @@ $cor-foco: #d9cd26;
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin: 0;
+  min-height: $altura-cabecalho !important;
+
+  // Reset Angular Material styles
+  &.mat-toolbar {
+    padding: 0 $espacamento-cabecalho !important;
+    min-height: $altura-cabecalho !important;
+    height: $altura-cabecalho !important;
+  }
 }
 
 .botao-alternar-menu {
