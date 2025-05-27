@@ -13,10 +13,12 @@
       <h1 class="titulo-aplicacao">{{ titulo() }}</h1>
       <div class="container-subtitulo">
         <span class="subtitulo-aplicacao">{{ subtitulo() }}</span>
-        <ng-container *ngIf="'Versão em ' | tarja as versaoAmbiente">
-          <span class="divisor">-</span>
-          <span class="tag-ambiente">{{ versaoAmbiente }}</span>
-        </ng-container>
+        <span
+          *ngIf="'Versão em ' | tarja as versaoAmbiente"
+          class="tag-ambiente"
+        >
+          {{ versaoAmbiente }}
+        </span>
       </div>
     </div>
 
