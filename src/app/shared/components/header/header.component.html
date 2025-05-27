@@ -1,0 +1,29 @@
+<header class="header">
+  <mat-toolbar color="primary" class="header__toolbar mat-elevation-z3">
+    <button
+      *ngIf="usuario()"
+      class="header__botao-menu"
+      mat-icon-button
+      (click)="aoClicarNoMenu()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <div class="header__titulo-container">
+      <span class="header__titulo">{{ titulo() }}</span>
+      <span class="header__subtitulo">
+        {{ subtitulo() }}
+        <ng-container *ngIf="'Versão em ' | tarja as versao">
+          <span *ngIf="versao"> - </span>
+          <span class="header__tag">{{ versao }}</span>
+        </ng-container>
+      </span>
+    </div>
+
+    <span class="header__flex-spacer"></span>
+
+    <div class="header__botoes-usuario">
+      <app-usuario></app-usuario>
+    </div>
+  </mat-toolbar>
+</header>

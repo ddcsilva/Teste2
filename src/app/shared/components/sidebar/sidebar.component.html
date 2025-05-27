@@ -1,0 +1,42 @@
+<div class="sidebar">
+  <mat-nav-list>
+    <ng-container *ngFor="let menu of menuItems">
+      <!-- Item sem submenu -->
+      <ng-container *ngIf="menu.subMenuItem.length === 0">
+        <mat-list-item
+          *appHasPermission="menu.permission"
+          [routerLink]="menu.routerLink"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <mat-icon>{{ menu.icon }}</mat-icon>
+          <span>{{ menu.tooltip }}</span>
+        </mat-list-item>
+      </ng-container>
+
+      <!-- Item com submenu -->
+      <ng-container *ngIf="menu.subMenuItem.length > 0">
+        <mat-expansion-panel
+          *appHasPermission="menu.permission"
+          [class.mat-elevation-z0]="true"
+        >
+          <mat-expansion-panel-header>
+            <mat-icon>{{ menu.icon }}</mat-icon>
+            <span>{{ menu.tooltip }}</span>
+          </mat-expansion-panel-header>
+
+          <div *ngFor="let submenu of menu.subMenuItem">
+            <mat-list-item
+              *appHasPermission="submenu.permission"
+              [routerLink]="submenu.routerLink"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ exact: false }"
+            >
+              <span class="subitem-padding">{{ submenu.tooltip }}</span>
+            </mat-list-item>
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
+    </ng-container>
+  </mat-nav-list>
+</div>

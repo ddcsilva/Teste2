@@ -3,3 +3,7 @@ export * from './ui';
 export * from './components';
 export * from './services';
 export * from './models';
+export * from './pipes';
+export * from './directives';
+export * from './utils';
+export * from './constants';

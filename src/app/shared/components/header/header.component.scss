@@ -1,0 +1,71 @@
+$cor-fundo-topo: #008542;
+$cor-texto-topo: #fff;
+$cor-tag: rgb(253, 181, 47);
+$altura-topo: 64px;
+
+:host {
+  display: block;
+  height: $altura-topo;
+}
+
+.header {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: $altura-topo;
+
+  &__toolbar {
+    background-color: $cor-fundo-topo;
+    color: $cor-texto-topo;
+    height: $altura-topo;
+    padding: 0 1rem;
+
+    display: flex;
+    align-items: center;
+  }
+
+  &__tag {
+    color: $cor-tag;
+    font-weight: bold;
+  }
+
+  &__titulo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    font-style: italic;
+    font-family: "Petrobras Sans", sans-serif;
+    line-height: 1.2;
+    padding-left: 1rem;
+  }
+
+  &__titulo {
+    font-size: 1.5rem;
+  }
+
+  &__subtitulo {
+    font-style: italic;
+    font-family: "Petrobras Sans", sans-serif;
+    margin-top: 0.2rem;
+    font-size: 1.1rem;
+  }
+
+  &__botao-menu {
+    background-color: transparent !important;
+    border: none !important;
+    color: white !important;
+  }
+
+  &__botoes-usuario {
+    display: flex;
+    margin-left: auto;
+  }
+
+  &__flex-spacer {
+    flex-grow: 1;
+  }
+}
