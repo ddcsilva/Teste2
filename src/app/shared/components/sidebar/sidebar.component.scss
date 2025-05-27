@@ -1,19 +1,23 @@
+@use "../../../../styles/tokens" as *;
+@use "../../../../styles/utilities/mixins" as *;
+
 .sidebar {
-  padding-top: 8px;
+  padding-top: $spacing-sm;
 
   .mat-mdc-list-item {
     height: 48px;
-    padding: 0 16px;
-    transition: background-color 0.2s ease;
+    padding: 0 $spacing-lg;
+    transition: $transition-hover;
+
+    @include hover-overlay();
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.04);
       cursor: pointer;
     }
   }
 
   .subitem-padding {
-    padding-left: 1rem;
+    padding-left: $spacing-lg;
   }
 
   .mat-expansion-panel-body {
@@ -23,12 +27,10 @@
   .mat-expansion-panel-header {
     height: 48px !important;
     font-size: 16px !important;
-    padding: 0 16px !important;
-    transition: background-color 0.2s ease;
+    padding: 0 $spacing-lg !important;
+    transition: $transition-hover;
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.04);
-    }
+    @include hover-overlay();
   }
 
   .mat-expansion-panel {
@@ -41,20 +43,20 @@
   }
 
   mat-icon {
-    margin-right: 0.5em;
+    margin-right: $spacing-sm;
     vertical-align: middle;
     color: #444;
   }
 
   .is-active {
     background-color: rgba(2, 104, 27, 0.08);
-    border-left: 4px solid #02681b;
+    border-left: 4px solid $color-primary-dark;
     width: calc(100% - 4px);
-    color: #02681b;
+    color: $color-primary-dark;
     font-weight: 500;
 
     mat-icon {
-      color: #02681b;
+      color: $color-primary-dark;
     }
   }
 }

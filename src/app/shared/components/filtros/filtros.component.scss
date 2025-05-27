@@ -1,13 +1,13 @@
-$filtros-spacer: 1.5rem;
-$cor-borda-card: #e0e0e0;
+@use "../../../../styles/tokens" as *;
+@use "../../../../styles/utilities/mixins" as *;
 
 .filtros-container {
   width: 100%;
 
   .filtros-card {
-    border: 1px solid $cor-borda-card;
+    border: 1px solid $color-border;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    @include card-hover();
 
     .mat-expansion-panel-header {
       .mat-panel-title {
@@ -19,7 +19,7 @@ $cor-borda-card: #e0e0e0;
       ::ng-deep {
         .mat-form-field {
           width: 100%;
-          margin-bottom: $filtros-spacer;
+          margin-bottom: $form-spacing;
 
           &__field {
             width: 100%;

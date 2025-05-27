@@ -1,5 +1,6 @@
+@use "../../../../styles/tokens" as *;
+@use "../../../../styles/utilities/mixins" as *;
+
 .equipamentos-container {
-  padding: 1rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  @include container();
 }

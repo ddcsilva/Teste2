@@ -1,69 +1,63 @@
+@use '../../../styles/tokens' as *;
+@use '../../../styles/utilities/mixins' as *;
+
 .home-container {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  @include container(1200px);
 }
 
 .welcome-section {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: $margin-section;
 
   h1 {
     font-size: 2.5rem;
-    color: #008542;
-    margin-bottom: 1rem;
+    color: $color-primary;
+    margin-bottom: $spacing-lg;
     font-weight: 600;
   }
 
   p {
     font-size: 1.2rem;
-    color: #666;
+    color: $color-text-secondary;
     max-width: 600px;
     margin: 0 auto;
   }
 }
 
 .cards-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  @include responsive-grid(300px, $gap-lg);
+  margin-top: $spacing-3xl;
 }
 
 .info-card {
-  background: #fff;
+  background: $color-surface;
   border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: $card-padding;
+  border: 1px solid $color-border;
   cursor: pointer;
   position: relative;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  }
+  @include card-hover();
 
   h3 {
-    color: #008542;
-    margin-bottom: 1rem;
+    color: $color-primary;
+    margin-bottom: $spacing-lg;
     font-size: 1.5rem;
     font-weight: 600;
   }
 
   p {
-    color: #666;
+    color: $color-text-secondary;
     line-height: 1.6;
-    margin: 0 0 1rem 0;
+    margin: 0 0 $spacing-lg 0;
   }
 
   .card-action {
-    margin-top: 1rem;
+    margin-top: $spacing-lg;
     text-align: right;
 
     span {
-      color: #008542;
+      color: $color-primary;
       font-weight: 500;
       font-size: 0.9rem;
     }
@@ -75,11 +69,11 @@
 
     &:hover {
       transform: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: $shadow-card;
     }
 
     .card-action span {
-      color: #999;
+      color: $color-text-disabled;
     }
   }
 }

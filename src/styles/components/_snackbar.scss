@@ -1,3 +1,5 @@
+@use "../tokens" as *;
+
 .mat-snack-bar-container {
   max-width: 100% !important;
 }
@@ -8,22 +10,22 @@
   max-width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  margin-bottom: 1rem !important;
+  margin-bottom: $spacing-lg !important;
   padding: 10px !important;
-  background-color: black;
+  background-color: $color-text-primary;
   font-size: 120%;
 }
 
 .success-snackbar {
-  color: #05cf6a !important;
+  color: $color-success !important;
 
   .mat-button-wrapper {
-    color: #acd6c1 !important;
+    color: $color-success-light !important;
   }
 }
 
 .warning-snackbar {
-  color: #ffeb3b !important;
+  color: $color-warning-light !important;
 
   .mat-button-wrapper {
     color: #e2c6a0 !important;
@@ -31,9 +33,9 @@
 }
 
 .error-snackbar {
-  color: #b00020 !important;
+  color: $color-error !important;
 
   .mat-button-wrapper {
-    color: #ebbabcf3 !important;
+    color: $color-error-light !important;
   }
 }

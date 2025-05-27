@@ -1,13 +1,4 @@
-// Variáveis do layout principal
-$altura-cabecalho: 64px;
-$largura-menu-lateral: 280px;
-$espacamento-conteudo: 1.25rem;
-
-// Cores do sistema
-$cor-fundo-superficie: #fff;
-$cor-borda: #e0e0e0;
-$cor-fundo-pagina: #f5f5f5;
-$cor-primaria: #008542;
+@use "../../../../styles/tokens" as *;
 
 :host {
   display: block;
@@ -21,19 +12,19 @@ $cor-primaria: #008542;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: $cor-fundo-superficie;
+  background-color: $color-surface;
 
-  --cor-superficie: #{$cor-fundo-superficie};
-  --cor-fundo: #{$cor-fundo-pagina};
-  --cor-borda: #{$cor-borda};
-  --cor-primaria: #{$cor-primaria};
+  --cor-superficie: #{$color-surface};
+  --cor-fundo: #{$color-background};
+  --cor-borda: #{$color-border};
+  --cor-primaria: #{$color-primary};
 }
 
 .container-principal {
   display: flex;
   flex: 1;
   overflow: hidden;
-  margin-top: $altura-cabecalho;
+  margin-top: $header-height;
 }
 
 .container-menu-lateral {
@@ -48,10 +39,10 @@ $cor-primaria: #008542;
 }
 
 .menu-lateral {
-  width: $largura-menu-lateral;
-  min-width: $largura-menu-lateral;
+  width: $sidebar-width;
+  min-width: $sidebar-width;
   background-color: var(--cor-superficie);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: $shadow-sidebar;
   border-right: 1px solid var(--cor-borda);
 
   &:focus-within {
@@ -75,11 +66,11 @@ $cor-primaria: #008542;
 
 .conteudo-pagina {
   flex: 1;
-  padding: $espacamento-conteudo;
+  padding: $content-padding;
   overflow: auto;
 }
 
 .transicao-menu-lateral {
   transition-duration: 250ms !important;
-  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  transition-timing-function: $ease-standard !important;
 }

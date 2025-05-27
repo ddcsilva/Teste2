@@ -1,25 +1,27 @@
+@use "../tokens" as *;
+
 .edit-icon {
-  color: #d9cd26 !important;
+  color: $color-edit !important;
 }
 
 .delete-icon {
-  color: #b00020 !important;
+  color: $color-delete !important;
 }
 
 .settings-icon {
-  color: #595588 !important;
+  color: $color-secondary !important;
 }
 
 .atach-icon {
-  color: #1976d2 !important;
+  color: $color-attachment !important;
 }
 
 .read-icon {
-  color: #05cf6a !important;
+  color: $color-view !important;
 }
 
 .help-icon {
-  color: #ff9800 !important;
+  color: $color-help !important;
 }
 
 .icon-sufix {
