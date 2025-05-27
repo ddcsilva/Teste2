@@ -1,0 +1,16 @@
+<div [class]="classesContainer()">
+  <!-- Botão Pesquisar -->
+  <app-botao *ngIf="mostrarPesquisar" variante="secondary" tipo="button" (clicado)="pesquisar.emit()" [ordem]="1">
+    Pesquisar
+  </app-botao>
+
+  <!-- Botão Incluir -->
+  <app-botao *ngIf="mostrarIncluir" variante="primary" tipo="button" (clicado)="incluir.emit()" [ordem]="2">
+    Incluir
+  </app-botao>
+
+  <!-- Botão Limpar -->
+  <app-botao *ngIf="mostrarLimpar" variante="accent" tipo="reset" (clicado)="limpar.emit()" [ordem]="3">
+    Limpar
+  </app-botao>
+</div>

@@ -1,0 +1,29 @@
+@use "theme" as *;
+@use "@angular/material" as mat;
+
+.primary-color {
+  color: mat.m2-get-color-from-palette($app-primary) !important;
+}
+
+.accent-color {
+  color: mat.m2-get-color-from-palette($app-accent) !important;
+}
+
+.warn-color {
+  color: mat.m2-get-color-from-palette($app-warn) !important;
+}
+
+.primary-bg-color {
+  background-color: mat.m2-get-color-from-palette($app-primary) !important;
+  color: white;
+}
+
+.accent-bg-color {
+  background-color: mat.m2-get-color-from-palette($app-accent) !important;
+  color: white;
+}
+
+.warn-bg-color {
+  background-color: mat.m2-get-color-from-palette($app-warn) !important;
+  color: white !important;
+}

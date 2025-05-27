@@ -1,0 +1,31 @@
+$filtros-spacer: 1.5rem;
+$cor-borda-card: #e0e0e0;
+
+.filtros-container {
+  width: 100%;
+
+  .filtros-card {
+    border: 1px solid $cor-borda-card;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    .mat-expansion-panel-header {
+      .mat-panel-title {
+        font-weight: bold;
+      }
+    }
+
+    .filtros-panel__content {
+      ::ng-deep {
+        .mat-form-field {
+          width: 100%;
+          margin-bottom: $filtros-spacer;
+
+          &__field {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

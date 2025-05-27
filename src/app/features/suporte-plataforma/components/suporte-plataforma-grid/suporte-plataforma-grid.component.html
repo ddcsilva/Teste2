@@ -1,0 +1,34 @@
+<app-cabecalho-pagina [titulo]="'Suportes da Plataforma'" />
+
+<div class="container">
+  <app-suporte-plataforma-filtros
+    (buscar)="buscar($event)"
+    (limpar)="limpar()"
+  />
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="exportarExcel()"
+    class="botao-exportar"
+  >
+    <mat-icon>file_download</mat-icon> Exportar
+  </button>
+
+  <app-grid-generico
+    [colunas]="colunas"
+    [nomesColunas]="nomesColunas"
+    [dadosObservable]="dadosObservable"
+    (mudancaPagina)="aoMudarPagina($event)"
+    [acoesTemplate]="acoesTemplate"
+  ></app-grid-generico>
+
+  <ng-template #acoesTemplate let-element>
+    <button mat-icon-button (click)="editar(element)" class="edit-icon">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="excluir(element)" class="delete-icon">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </ng-template>
+</div>

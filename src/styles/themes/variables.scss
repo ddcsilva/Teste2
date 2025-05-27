@@ -1,0 +1,56 @@
+// Cores principais
+$cor-primaria: #1976d2;
+$cor-secundaria: #424242;
+$cor-acento: #ff4081;
+
+// Cores de estado
+$cor-sucesso: #4caf50;
+$cor-erro: #f44336;
+$cor-aviso: #ff9800;
+$cor-info: #2196f3;
+
+// Cores de interação
+$cor-edicao: #2196f3;
+$cor-hover: rgba(0, 0, 0, 0.04);
+$cor-focus: rgba(0, 0, 0, 0.12);
+
+// Cores de texto
+$cor-texto-primario: rgba(0, 0, 0, 0.87);
+$cor-texto-secundario: rgba(0, 0, 0, 0.54);
+$cor-texto-desabilitado: rgba(0, 0, 0, 0.38);
+
+// Cores de fundo
+$cor-fundo-primario: #ffffff;
+$cor-fundo-secundario: #fafafa;
+$cor-fundo-card: #ffffff;
+
+// Sombras
+$sombra-baixa: 0 2px 4px rgba(0, 0, 0, 0.1);
+$sombra-media: 0 4px 8px rgba(0, 0, 0, 0.15);
+$sombra-alta: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+// Bordas
+$raio-borda-pequeno: 4px;
+$raio-borda-medio: 8px;
+$raio-borda-grande: 12px;
+
+// Espaçamentos
+$espacamento-xs: 4px;
+$espacamento-sm: 8px;
+$espacamento-md: 16px;
+$espacamento-lg: 24px;
+$espacamento-xl: 32px;
+
+// Tipografia
+$fonte-familia: "Roboto", "Helvetica Neue", sans-serif;
+$fonte-tamanho-pequeno: 0.875rem;
+$fonte-tamanho-normal: 1rem;
+$fonte-tamanho-grande: 1.125rem;
+$fonte-tamanho-titulo: 1.5rem;
+
+// Breakpoints
+$breakpoint-xs: 576px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
+$breakpoint-xl: 1400px;

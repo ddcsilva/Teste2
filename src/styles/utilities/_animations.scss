@@ -1,0 +1,37 @@
+@keyframes spin {
+  0% {
+    transform: rotate(359deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(10deg);
+    color: inherit;
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(20deg);
+    color: #b00020;
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+    color: inherit;
+  }
+}
+
+.spin {
+  animation: spin 2s infinite linear;
+}
+
+.wiggle {
+  animation: wiggle 0.5s infinite linear;
+}

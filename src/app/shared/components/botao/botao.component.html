@@ -1,0 +1,33 @@
+<button
+  mat-raised-button
+  [attr.type]="tipo()"
+  [disabled]="desabilitado() || carregando()"
+  [class]="classesComputadas()"
+  [attr.tabindex]="ordem()"
+  [attr.aria-label]="tooltip() || null"
+  [matTooltip]="tooltipConfig()?.texto || ''"
+  [matTooltipPosition]="tooltipConfig()?.posicao || 'above'"
+  [matTooltipShowDelay]="tooltipConfig()?.delay || 500"
+  [matTooltipHideDelay]="200"
+  (click)="aoClicar($event)"
+>
+  <!-- Ícone à esquerda -->
+  @if (mostrarIconeEsquerda() && !carregando()) {
+  <mat-icon class="icone-esquerda">{{ icone() }}</mat-icon>
+  }
+
+  <!-- Loading spinner -->
+  @if (carregando()) {
+  <mat-icon class="icone-carregando">refresh</mat-icon>
+  }
+
+  <!-- Conteúdo do botão -->
+  <span class="texto-botao">
+    <ng-content></ng-content>
+  </span>
+
+  <!-- Ícone à direita -->
+  @if (mostrarIconeDireita() && !carregando()) {
+  <mat-icon class="icone-direita">{{ icone() }}</mat-icon>
+  }
+</button>

@@ -1,0 +1,39 @@
+.mat-snack-bar-container {
+  max-width: 100% !important;
+}
+
+.success-snackbar,
+.warning-snackbar,
+.error-snackbar {
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 1rem !important;
+  padding: 10px !important;
+  background-color: black;
+  font-size: 120%;
+}
+
+.success-snackbar {
+  color: #05cf6a !important;
+
+  .mat-button-wrapper {
+    color: #acd6c1 !important;
+  }
+}
+
+.warning-snackbar {
+  color: #ffeb3b !important;
+
+  .mat-button-wrapper {
+    color: #e2c6a0 !important;
+  }
+}
+
+.error-snackbar {
+  color: #b00020 !important;
+
+  .mat-button-wrapper {
+    color: #ebbabcf3 !important;
+  }
+}
