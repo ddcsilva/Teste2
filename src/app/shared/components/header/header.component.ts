@@ -6,6 +6,7 @@ import {
   EventEmitter,
   inject,
   signal,
+  computed,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -32,22 +33,29 @@ import { UsuarioComponent } from '../usuario/usuario.component';
 export class HeaderComponent {
   @Output() manipularMenu = new EventEmitter<void>();
 
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
 
   readonly titulo = signal<string>('Teste');
   readonly subtitulo = signal<string>('Sistema de Testes');
 
-  usuario = this.authService.obterUsuario();
+  readonly usuario = this.authService.obterUsuario();
+  readonly usuarioEstaLogado = computed(() => !!this.usuario());
 
   atualizarTitulo(novoTitulo: string): void {
-    this.titulo.set(novoTitulo);
+    if (novoTitulo?.trim()) {
+      this.titulo.set(novoTitulo.trim());
+    }
   }
 
   atualizarSubtitulo(novoSubtitulo: string): void {
-    this.subtitulo.set(novoSubtitulo);
+    if (novoSubtitulo?.trim()) {
+      this.subtitulo.set(novoSubtitulo.trim());
+    }
   }
 
   aoClicarNoMenu(): void {
-    this.manipularMenu.emit();
+    if (this.usuarioEstaLogado()) {
+      this.manipularMenu.emit();
+    }
   }
 }
