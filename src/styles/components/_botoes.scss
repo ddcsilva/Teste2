@@ -1,18 +1,52 @@
+@use "../tokens" as *;
+
+// Classes de botões específicas (mantidas para compatibilidade)
 .color-button-cancel {
-  color: white !important;
-  background-color: #b00020 !important;
+  color: $color-text-on-primary !important;
+  background-color: $color-error !important;
 }
 
 .color-button-limpar {
-  color: black;
-  background-color: yellow;
+  color: $color-text-primary;
+  background-color: $color-warning-light;
 }
 
 .color-button-pesquisar {
-  color: white !important;
-  background-color: #595588 !important;
+  color: $color-text-on-primary !important;
+  background-color: $color-secondary !important;
 }
 
 .color-button-messages {
-  background-color: black !important;
+  background-color: $color-text-primary !important;
+}
+
+// Novas classes utilitárias para botões
+.btn-primary {
+  background-color: $color-primary;
+  color: $color-text-on-primary;
+}
+
+.btn-secondary {
+  background-color: $color-secondary;
+  color: $color-text-on-primary;
+}
+
+.btn-success {
+  background-color: $color-success;
+  color: $color-text-on-primary;
+}
+
+.btn-warning {
+  background-color: $color-warning;
+  color: $color-text-primary;
+}
+
+.btn-error {
+  background-color: $color-error;
+  color: $color-text-on-primary;
+}
+
+.btn-info {
+  background-color: $color-info;
+  color: $color-text-on-primary;
 }

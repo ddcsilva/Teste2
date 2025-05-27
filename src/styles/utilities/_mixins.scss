@@ -1,0 +1,119 @@
+@use "../tokens" as *;
+
+// Mixin para botões com hover e estados
+@mixin button-states(
+  $bg-color,
+  $text-color: $color-text-on-primary,
+  $hover-transform: true
+) {
+  background-color: $bg-color;
+  color: $text-color;
+  transition: $transition-button;
+  box-shadow: $shadow-button;
+
+  &:hover:not(:disabled) {
+    @if $hover-transform {
+      transform: translateY(-1px);
+    }
+    box-shadow: $shadow-button-hover;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 3px solid $color-focus;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: $shadow-xs;
+
+    &:hover {
+      transform: none;
+      box-shadow: $shadow-xs;
+    }
+  }
+}
+
+// Mixin para cards com hover
+@mixin card-hover(
+  $shadow-base: $shadow-card,
+  $shadow-hover: $shadow-card-hover
+) {
+  box-shadow: $shadow-base;
+  transition: $transition-card;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-hover;
+  }
+}
+
+// Mixin para ícones de ação
+@mixin action-icon($color, $hover-bg: rgba($color, 0.1)) {
+  color: $color;
+  transition: $transition-background;
+
+  &:hover {
+    background-color: $hover-bg;
+  }
+}
+
+// Mixin para overlay de hover
+@mixin hover-overlay($opacity: 0.04) {
+  transition: $transition-background;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, $opacity);
+  }
+}
+
+// Mixin para container responsivo
+@mixin container($max-width: 1400px) {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: $content-padding;
+}
+
+// Mixin para texto truncado
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Mixin para flexbox centralizado
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Mixin para grid responsivo
+@mixin responsive-grid($min-width: 300px, $gap: $gap-md) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// Mixin para loading state
+@mixin loading-state {
+  pointer-events: none;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+  }
+}

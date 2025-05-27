@@ -1,0 +1,38 @@
+// Design Tokens - Transições e Animações
+// Sistema de transições padronizado
+
+// Durações de transição
+$duration-fast: 0.1s;
+$duration-normal: 0.2s;
+$duration-slow: 0.3s;
+$duration-slower: 0.4s;
+
+// Curvas de animação (easing)
+$ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+$ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+$ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);
+
+// Transições comuns
+$transition-fast: all $duration-fast $ease-standard;
+$transition-normal: all $duration-normal $ease-standard;
+$transition-slow: all $duration-slow $ease-standard;
+
+// Transições específicas
+$transition-color: color $duration-normal $ease-standard;
+$transition-background: background-color $duration-normal $ease-standard;
+$transition-transform: transform $duration-normal $ease-standard;
+$transition-opacity: opacity $duration-normal $ease-standard;
+$transition-shadow: box-shadow $duration-normal $ease-standard;
+
+// Transições para componentes específicos
+$transition-button: all $duration-normal $ease-standard;
+$transition-card: transform $duration-normal $ease-standard,
+  box-shadow $duration-normal $ease-standard;
+$transition-sidebar: transform 250ms $ease-standard;
+$transition-hover: background-color $duration-normal ease;
+
+// Animações de loading
+$animation-spin: spin 1.2s linear infinite;
+$animation-pulse: pulse 2s ease-in-out infinite;
+$animation-fade-in: fadeInUp 0.3s ease-out;

@@ -1,13 +1,9 @@
-$altura-cabecalho: 64px;
-$cor-fundo-cabecalho: #008542;
-$cor-texto-cabecalho: #fff;
-$cor-tag-ambiente: #fdb52f;
-$espacamento-cabecalho: 1rem;
-$cor-foco: #d9cd26;
+@use "../../../../styles/tokens" as *;
+@use "../../../../styles/utilities/mixins" as *;
 
 :host {
   display: block;
-  height: $altura-cabecalho;
+  height: $header-height;
   position: fixed;
   top: 0;
   left: 0;
@@ -20,54 +16,50 @@ $cor-foco: #d9cd26;
 
 .cabecalho-app {
   width: 100%;
-  height: $altura-cabecalho;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: $header-height;
+  box-shadow: $shadow-header;
   margin: 0;
   padding: 0;
 }
 
 .barra-ferramentas-cabecalho {
-  background-color: $cor-fundo-cabecalho;
-  color: $cor-texto-cabecalho;
-  height: $altura-cabecalho;
-  padding: 0 $espacamento-cabecalho;
+  background-color: $color-primary;
+  color: $color-text-on-primary;
+  height: $header-height;
+  padding: 0 $spacing-lg;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: $spacing-lg;
   margin: 0;
-  min-height: $altura-cabecalho !important;
+  min-height: $header-height !important;
 
   // Reset Angular Material styles
   &.mat-toolbar {
-    padding: 0 $espacamento-cabecalho !important;
-    min-height: $altura-cabecalho !important;
-    height: $altura-cabecalho !important;
+    padding: 0 $spacing-lg !important;
+    min-height: $header-height !important;
+    height: $header-height !important;
   }
 }
 
 .botao-alternar-menu {
   background-color: transparent;
   border: none;
-  color: $cor-texto-cabecalho;
+  color: $color-text-on-primary;
   min-width: 40px;
   width: 40px;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   border-radius: 4px;
-  transition: background-color 0.2s ease;
+  transition: $transition-background;
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
+  @include hover-overlay(0.1);
 
   &:active {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: $color-active-overlay;
   }
 
   &:focus-visible {
-    outline: 2px solid $cor-foco;
+    outline: 2px solid $color-focus;
     outline-offset: 2px;
   }
 }
@@ -80,7 +72,7 @@ $cor-foco: #d9cd26;
   flex: 0 0 auto;
   min-width: 0;
   overflow: hidden;
-  margin-right: 2rem;
+  margin-right: $spacing-3xl;
 }
 
 .titulo-aplicacao {
@@ -88,16 +80,14 @@ $cor-foco: #d9cd26;
   font-weight: 600;
   margin: 0;
   font-family: "Petrobras Sans", "Roboto", sans-serif;
-  color: $cor-texto-cabecalho;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: $color-text-on-primary;
+  @include text-truncate;
 }
 
 .container-subtitulo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: $spacing-md;
   margin-top: 0.125rem;
   min-height: 1.2em;
 }
@@ -106,58 +96,55 @@ $cor-foco: #d9cd26;
   font-size: 1.1rem;
   font-family: "Petrobras Sans", "Roboto", sans-serif;
   opacity: 0.95;
-  color: $cor-texto-cabecalho;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: $color-text-on-primary;
+  @include text-truncate;
 }
 
 .tag-ambiente {
-  color: $cor-tag-ambiente;
+  color: $color-environment-tag;
   font-weight: 700;
   font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
+  padding: $spacing-xs $spacing-sm;
   background: linear-gradient(
     135deg,
     rgba(0, 0, 0, 0.25) 0%,
     rgba(0, 0, 0, 0.15) 100%
   );
   border-radius: 6px;
-  border: 1.5px solid $cor-tag-ambiente;
+  border: 1.5px solid $color-environment-tag;
   flex-shrink: 0;
   white-space: nowrap;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: $shadow-sm;
+  transition: $transition-card;
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    box-shadow: $shadow-md;
   }
 }
 
 .espacador-flexivel {
   flex: 1;
-  min-width: 2rem;
+  min-width: $spacing-3xl;
 }
 
 .acoes-usuario {
   display: flex;
   align-items: center;
   flex: 0 0 auto;
-  gap: 0.5rem;
+  gap: $spacing-sm;
 }
 
 .placeholder-autenticacao {
-  display: flex;
-  align-items: center;
+  @include flex-center;
   min-width: 40px;
   height: 40px;
 }
 
 .botao-alternar-menu,
 .tag-ambiente {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: $transition-card;
 }

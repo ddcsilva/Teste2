@@ -1,5 +1,8 @@
+@use "../tokens" as *;
+
+// Classes utilitárias de margem
 .margin-left {
-  margin-left: 20px;
+  margin-left: $spacing-xl;
 }
 
 .margin-top-15 {
@@ -7,13 +10,86 @@
 }
 
 .mt-12 {
-  margin-top: 12px;
+  margin-top: $spacing-md;
 }
 
+// Classes de espaçamento padronizadas
 .espacamento-vertical {
-  padding: 1rem 0rem;
+  padding: $spacing-lg 0;
 }
 
 .espacamento-horizontal {
-  padding: 0rem 1rem;
+  padding: 0 $spacing-lg;
+}
+
+// Novas classes utilitárias usando tokens
+.p-xs {
+  padding: $spacing-xs;
+}
+.p-sm {
+  padding: $spacing-sm;
+}
+.p-md {
+  padding: $spacing-md;
+}
+.p-lg {
+  padding: $spacing-lg;
+}
+.p-xl {
+  padding: $spacing-xl;
+}
+.p-2xl {
+  padding: $spacing-2xl;
+}
+.p-3xl {
+  padding: $spacing-3xl;
+}
+
+.m-xs {
+  margin: $spacing-xs;
+}
+.m-sm {
+  margin: $spacing-sm;
+}
+.m-md {
+  margin: $spacing-md;
+}
+.m-lg {
+  margin: $spacing-lg;
+}
+.m-xl {
+  margin: $spacing-xl;
+}
+.m-2xl {
+  margin: $spacing-2xl;
+}
+.m-3xl {
+  margin: $spacing-3xl;
+}
+
+// Gaps para flexbox e grid
+.gap-xs {
+  gap: $gap-xs;
+}
+.gap-sm {
+  gap: $gap-sm;
+}
+.gap-md {
+  gap: $gap-md;
+}
+.gap-lg {
+  gap: $gap-lg;
+}
+
+// Espaçamentos específicos de componentes
+.container-padding {
+  padding: $content-padding;
+}
+
+.card-padding {
+  padding: $card-padding;
+}
+
+.form-spacing {
+  margin-bottom: $form-spacing;
 }

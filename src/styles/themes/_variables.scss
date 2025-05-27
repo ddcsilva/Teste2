@@ -1,18 +1,32 @@
-// Cores semânticas
-$cor-edicao: #d9cd26;
-$cor-exclusao: #e35e6b;
-$cor-configuracoes: #4e34e48e;
-$cor-anexo: #7d7d7e;
-$cor-leitura: hsl(199, 55%, 45%);
-$cor-ajuda: #69cbfb;
-$cor-sucesso: #05cf6a;
-$cor-alerta: #e48406;
-$cor-erro: #ee0410f3;
-$cor-fundo-card: #fff;
-$cor-borda-card: #e0e0e0;
-$cor-texto: #333;
-$cor-texto-secundario: rgba(0, 0, 0, 0.6);
+// Importar tokens de design
+@use "../tokens" as *;
 
-// Contraste
-$dark-primary-text: rgba(0, 0, 0, 0.87);
-$light-primary-text: #fff;
+// Cores semânticas (usando tokens)
+$cor-edicao: $color-edit;
+$cor-exclusao: $color-delete;
+$cor-configuracoes: $color-config;
+$cor-anexo: $color-attachment;
+$cor-leitura: $color-view;
+$cor-ajuda: $color-help;
+$cor-sucesso: $color-success;
+$cor-alerta: $color-warning;
+$cor-erro: $color-error;
+$cor-fundo-card: $color-surface;
+$cor-borda-card: $color-border;
+$cor-texto: $color-text-primary;
+$cor-texto-secundario: $color-text-secondary;
+
+// Contraste (usando tokens)
+$dark-primary-text: $color-text-primary;
+$light-primary-text: $color-text-on-primary;
+
+// Layout (usando tokens)
+$altura-cabecalho: $header-height;
+$largura-menu-lateral: $sidebar-width;
+$espacamento-cabecalho: $spacing-lg;
+
+// Cores específicas do cabeçalho
+$cor-fundo-cabecalho: $color-primary;
+$cor-texto-cabecalho: $color-text-on-primary;
+$cor-tag-ambiente: $color-environment-tag;
+$cor-foco: $color-focus;

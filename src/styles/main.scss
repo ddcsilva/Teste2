@@ -1,13 +1,24 @@
+// Importar tokens de design primeiro
+@use "tokens";
+
+// Base styles
 @use "base/typography";
+
+// Layout
 @use "layout/grid";
 @use "layout/spacing";
 
+// Components
 @use "components/icons";
 @use "components/inputs";
 @use "components/snackbar";
 @use "components/botoes";
 
+// Themes
 @use "themes/theme";
 @use "themes/colors";
+@use "themes/variables";
 
+// Utilities
 @use "utilities/animations";
+@use "utilities/mixins";

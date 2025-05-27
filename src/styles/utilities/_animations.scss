@@ -1,9 +1,21 @@
+@use "../tokens" as *;
+
+// Keyframes para animações
 @keyframes spin {
   0% {
     transform: rotate(359deg);
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@keyframes spin-smooth {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
@@ -17,7 +29,7 @@
   }
   50% {
     transform: rotate(20deg);
-    color: #b00020;
+    color: $color-error;
   }
   75% {
     transform: rotate(-5deg);
@@ -28,10 +40,61 @@
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Classes utilitárias para animações
 .spin {
-  animation: spin 2s infinite linear;
+  animation: $animation-spin;
+}
+
+.spin-smooth {
+  animation: spin-smooth 1.2s linear infinite;
 }
 
 .wiggle {
   animation: wiggle 0.5s infinite linear;
+}
+
+.fade-in-up {
+  animation: $animation-fade-in;
+}
+
+.pulse {
+  animation: $animation-pulse;
+}
+
+// Classes utilitárias para transições
+.transition-fast {
+  transition: $transition-fast;
+}
+
+.transition-normal {
+  transition: $transition-normal;
+}
+
+.transition-slow {
+  transition: $transition-slow;
+}
+
+.transition-hover {
+  transition: $transition-hover;
 }
