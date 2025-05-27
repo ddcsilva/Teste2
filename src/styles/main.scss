@@ -1,6 +1,9 @@
 // Importar tokens de design primeiro
 @use "tokens";
 
+// CSS Reset (deve vir antes de tudo)
+@use "base/reset";
+
 // Base styles
 @use "base/typography";
 
