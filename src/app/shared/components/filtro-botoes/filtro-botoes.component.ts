@@ -1,6 +1,12 @@
-import { Component, Input, Output, EventEmitter, computed } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  computed,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BotaoComponent } from '../botao/botao.component';
+import { BotaoComponent } from '../../ui/botao';
 
 @Component({
   selector: 'app-filtro-botoes',

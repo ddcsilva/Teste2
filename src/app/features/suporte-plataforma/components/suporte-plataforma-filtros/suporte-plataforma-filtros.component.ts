@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FiltrosComponent } from '../../../../shared/components/filtros/filtros.component';
-import { FiltroBotoesComponent } from '../../../../shared/components/filtro-botoes/filtro-botoes.component';
 import { SuportePlataformaFiltro } from '../../models/suporte-plataforma-filtro.model';
+import { FiltroBotoesComponent } from '../../../../shared/components/filtro-botoes/filtro-botoes.component';
 
 @Component({
   selector: 'app-suporte-plataforma-filtros',
