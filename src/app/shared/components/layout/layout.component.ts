@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
 import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { AuthService } from '../../../auth/services/auth.service';
     MatSidenavModule,
     HeaderComponent,
     SidebarComponent,
+    SpinnerComponent,
   ],
   template: `
     <div
@@ -45,6 +47,9 @@ import { AuthService } from '../../../auth/services/auth.service';
     <div class="no-auth-container" *ngIf="!authService.obterUsuario()()">
       <router-outlet></router-outlet>
     </div>
+
+    <!-- Spinner global -->
+    <app-spinner></app-spinner>
   `,
   styles: [
     `

@@ -1,0 +1,24 @@
+<div class="layout-container">
+  <app-header (manipularMenu)="manipularMenu()"></app-header>
+
+  <div class="main-container">
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav
+        #drawer
+        class="sidenav"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="'side'"
+        [opened]="menuAberto"
+      >
+        <app-sidebar></app-sidebar>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <div class="content-container">
+          <app-spinner></app-spinner>
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>
