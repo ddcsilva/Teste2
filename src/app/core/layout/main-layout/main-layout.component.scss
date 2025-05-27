@@ -1,6 +1,16 @@
+$header-height: 64px;
+$sidenav-width-desktop: 280px;
+$content-padding: 1.25rem;
+
+$cor-fundo-card: #fff;
+$cor-borda-card: #e0e0e0;
+$cor-background: #f5f5f5;
+$cor-primary: #008542;
+
 :host {
   display: block;
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .layout-container {
@@ -9,43 +19,65 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  background-color: $cor-fundo-card;
+
+  --surface-color: #{$cor-fundo-card};
+  --background-color: #{$cor-background};
+  --border-color: #{$cor-borda-card};
+  --primary-color: #{$cor-primary};
 }
 
 .main-container {
   display: flex;
   flex: 1;
   overflow: hidden;
+  margin-top: $header-height;
 }
 
 .sidenav-container {
   flex: 1;
   width: 100%;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: var(--background-color);
+
+  // Otimização para animações
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .sidenav {
-  width: 17.35%;
-  min-width: 17.35%;
-  @media screen and (max-width: 1400px) {
-    min-width: 300px !important;
+  width: $sidenav-width-desktop;
+  min-width: $sidenav-width-desktop;
+  background-color: var(--surface-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid var(--border-color);
+
+  &:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -2px;
   }
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin-top: 0;
 }
 
-.mat-drawer-transition {
-  transition-duration: 10s !important;
-}
-
-mat-sidenav-content {
-  background-color: #f5f5f5;
+.main-content {
+  background-color: var(--background-color);
   height: 100%;
   overflow: auto;
+  position: relative;
 }
 
 .content-container {
-  box-sizing: border-box;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+  padding: $content-padding;
+  overflow: auto;
+}
+
+.mat-drawer-transition {
+  transition-duration: 250ms !important;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }

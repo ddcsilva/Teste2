@@ -1,10 +1,14 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import type { MatDrawerMode } from '@angular/material/sidenav';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
 import { SpinnerComponent } from '../../../shared/components/spinner/spinner.component';
@@ -22,25 +26,41 @@ import { SpinnerComponent } from '../../../shared/components/spinner/spinner.com
   ],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent {
-  private breakpointObserver = inject(BreakpointObserver);
-
   @ViewChild('drawer') sidenav?: MatSidenav;
 
-  menuAberto = true;
+  // Signals para reatividade
+  private readonly sidenavAberto = signal(true);
+  readonly sidenavEstaAberto = this.sidenavAberto.asReadonly();
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
+  // Computed para lógica derivada - sempre 'side' para desktop
+  readonly modoSidenav = computed((): MatDrawerMode => 'side');
+  readonly sidenavDeveriaEstarAberto = computed(() => this.sidenavEstaAberto());
 
   /**
-   * Alterna o estado do menu lateral
+   * Alterna o estado do sidenav
    */
-  manipularMenu(): void {
-    this.menuAberto = !this.menuAberto;
+  alternarSidenav(): void {
+    this.sidenavAberto.update((aberto) => !aberto);
+  }
+
+  /**
+   * Handler para mudanças do sidenav
+   */
+  onSidenavOpenedChange(opened: boolean): void {
+    this.sidenavAberto.set(opened);
+  }
+
+  /**
+   * Métodos públicos para controle externo
+   */
+  fecharSidenav(): void {
+    this.sidenavAberto.set(false);
+  }
+
+  abrirSidenav(): void {
+    this.sidenavAberto.set(true);
   }
 }
