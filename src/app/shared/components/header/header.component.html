@@ -1,28 +1,28 @@
-<header class="app-header">
-  <mat-toolbar color="primary" class="header-toolbar">
+<header class="cabecalho-app">
+  <mat-toolbar color="primary" class="barra-ferramentas-cabecalho">
     <button
       *ngIf="usuarioEstaLogado()"
-      class="menu-toggle"
+      class="botao-alternar-menu"
       mat-icon-button
       (click)="aoClicarNoMenu()"
     >
       <mat-icon>menu</mat-icon>
     </button>
 
-    <div class="title-section">
-      <h1 class="app-title">{{ titulo() }}</h1>
-      <div class="subtitle-container">
-        <span class="app-subtitle">{{ subtitulo() }}</span>
+    <div class="secao-titulo">
+      <h1 class="titulo-aplicacao">{{ titulo() }}</h1>
+      <div class="container-subtitulo">
+        <span class="subtitulo-aplicacao">{{ subtitulo() }}</span>
         <ng-container *ngIf="'Versão em ' | tarja as versaoAmbiente">
-          <span class="divider">-</span>
-          <span class="environment-tag">{{ versaoAmbiente }}</span>
+          <span class="divisor">-</span>
+          <span class="tag-ambiente">{{ versaoAmbiente }}</span>
         </ng-container>
       </div>
     </div>
 
-    <div class="flex-spacer"></div>
+    <div class="espacador-flexivel"></div>
 
-    <div class="user-actions" *ngIf="usuarioEstaLogado()">
+    <div class="acoes-usuario" *ngIf="usuarioEstaLogado()">
       <app-usuario></app-usuario>
     </div>
   </mat-toolbar>

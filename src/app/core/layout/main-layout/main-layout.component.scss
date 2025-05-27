@@ -1,11 +1,13 @@
-$header-height: 64px;
-$sidenav-width-desktop: 280px;
-$content-padding: 1.25rem;
+// Variáveis do layout principal
+$altura-cabecalho: 64px;
+$largura-menu-lateral: 280px;
+$espacamento-conteudo: 1.25rem;
 
-$cor-fundo-card: #fff;
-$cor-borda-card: #e0e0e0;
-$cor-background: #f5f5f5;
-$cor-primary: #008542;
+// Cores do sistema
+$cor-fundo-superficie: #fff;
+$cor-borda: #e0e0e0;
+$cor-fundo-pagina: #f5f5f5;
+$cor-primaria: #008542;
 
 :host {
   display: block;
@@ -13,71 +15,71 @@ $cor-primary: #008542;
   overflow: hidden;
 }
 
-.layout-container {
+.container-layout {
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: $cor-fundo-card;
+  background-color: $cor-fundo-superficie;
 
-  --surface-color: #{$cor-fundo-card};
-  --background-color: #{$cor-background};
-  --border-color: #{$cor-borda-card};
-  --primary-color: #{$cor-primary};
+  --cor-superficie: #{$cor-fundo-superficie};
+  --cor-fundo: #{$cor-fundo-pagina};
+  --cor-borda: #{$cor-borda};
+  --cor-primaria: #{$cor-primaria};
 }
 
-.main-container {
+.container-principal {
   display: flex;
   flex: 1;
   overflow: hidden;
-  margin-top: $header-height;
+  margin-top: $altura-cabecalho;
 }
 
-.sidenav-container {
+.container-menu-lateral {
   flex: 1;
   width: 100%;
   height: 100%;
-  background-color: var(--background-color);
+  background-color: var(--cor-fundo);
 
   // Otimização para animações
   will-change: transform;
   transform: translateZ(0);
 }
 
-.sidenav {
-  width: $sidenav-width-desktop;
-  min-width: $sidenav-width-desktop;
-  background-color: var(--surface-color);
+.menu-lateral {
+  width: $largura-menu-lateral;
+  min-width: $largura-menu-lateral;
+  background-color: var(--cor-superficie);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--cor-borda);
 
   &:focus-within {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid var(--cor-primaria);
     outline-offset: -2px;
   }
 }
 
-.main-content {
-  background-color: var(--background-color);
+.conteudo-principal {
+  background-color: var(--cor-fundo);
   height: 100%;
   overflow: auto;
   position: relative;
 }
 
-.content-container {
+.container-conteudo {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.page-content {
+.conteudo-pagina {
   flex: 1;
-  padding: $content-padding;
+  padding: $espacamento-conteudo;
   overflow: auto;
 }
 
-.mat-drawer-transition {
+.transicao-menu-lateral {
   transition-duration: 250ms !important;
   transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }

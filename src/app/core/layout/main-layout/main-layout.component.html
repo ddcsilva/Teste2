@@ -1,11 +1,11 @@
-<div class="layout-container" role="main">
+<div class="container-layout" role="main">
   <app-header (manipularMenu)="alternarSidenav()"></app-header>
 
-  <div class="main-container">
-    <mat-sidenav-container class="sidenav-container">
+  <div class="container-principal">
+    <mat-sidenav-container class="container-menu-lateral">
       <mat-sidenav
         #drawer
-        class="sidenav"
+        class="menu-lateral"
         role="navigation"
         [mode]="modoSidenav()"
         [opened]="sidenavDeveriaEstarAberto()"
@@ -16,10 +16,10 @@
         <app-sidebar></app-sidebar>
       </mat-sidenav>
 
-      <mat-sidenav-content class="main-content">
-        <div class="content-container">
+      <mat-sidenav-content class="conteudo-principal">
+        <div class="container-conteudo">
           <app-spinner></app-spinner>
-          <main class="page-content">
+          <main class="conteudo-pagina">
             <router-outlet></router-outlet>
           </main>
         </div>

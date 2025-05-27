@@ -1,43 +1,43 @@
-$header-height: 64px;
-$header-bg-color: #008542;
-$header-text-color: #fff;
-$environment-tag-color: #fdb52f;
-$header-padding: 1rem;
-$focus-color: #d9cd26;
+$altura-cabecalho: 64px;
+$cor-fundo-cabecalho: #008542;
+$cor-texto-cabecalho: #fff;
+$cor-tag-ambiente: #fdb52f;
+$espacamento-cabecalho: 1rem;
+$cor-foco: #d9cd26;
 
 :host {
   display: block;
-  height: $header-height;
+  height: $altura-cabecalho;
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.app-header {
+.cabecalho-app {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  height: $header-height;
+  height: $altura-cabecalho;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header-toolbar {
-  background-color: $header-bg-color;
-  color: $header-text-color;
-  height: $header-height;
-  padding: 0 $header-padding;
+.barra-ferramentas-cabecalho {
+  background-color: $cor-fundo-cabecalho;
+  color: $cor-texto-cabecalho;
+  height: $altura-cabecalho;
+  padding: 0 $espacamento-cabecalho;
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.menu-toggle {
+.botao-alternar-menu {
   background-color: transparent;
   border: none;
-  color: $header-text-color;
+  color: $cor-texto-cabecalho;
   min-width: 40px;
   width: 40px;
   height: 40px;
@@ -56,12 +56,12 @@ $focus-color: #d9cd26;
   }
 
   &:focus-visible {
-    outline: 2px solid $focus-color;
+    outline: 2px solid $cor-foco;
     outline-offset: 2px;
   }
 }
 
-.title-section {
+.secao-titulo {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,19 +71,18 @@ $focus-color: #d9cd26;
   overflow: hidden;
 }
 
-.app-title {
+.titulo-aplicacao {
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
   font-family: "Petrobras Sans", "Roboto", sans-serif;
-  color: $header-text-color;
-
+  color: $cor-texto-cabecalho;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.subtitle-container {
+.container-subtitulo {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -92,56 +91,55 @@ $focus-color: #d9cd26;
   min-height: 1.2em;
 }
 
-.app-subtitle {
+.subtitulo-aplicacao {
   font-size: 1.1rem;
   font-family: "Petrobras Sans", "Roboto", sans-serif;
   opacity: 0.95;
-  color: $header-text-color;
-
+  color: $cor-texto-cabecalho;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.divider {
+.divisor {
   color: rgba(255, 255, 255, 0.7);
   flex-shrink: 0;
   margin: 0 0.25rem;
 }
 
-.environment-tag {
-  color: $environment-tag-color;
+.tag-ambiente {
+  color: $cor-tag-ambiente;
   font-weight: 600;
   font-size: 0.875rem;
   padding: 0.125rem 0.375rem;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  border: 1px solid $environment-tag-color;
+  border: 1px solid $cor-tag-ambiente;
   flex-shrink: 0;
   white-space: nowrap;
-
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-.flex-spacer {
+.espacador-flexivel {
   flex: 1;
   min-width: 1rem;
 }
 
-.user-actions {
+.acoes-usuario {
   display: flex;
   align-items: center;
   flex: 0 0 auto;
   gap: 0.5rem;
 }
 
-.auth-placeholder {
+.placeholder-autenticacao {
   display: flex;
   align-items: center;
   min-width: 40px;
   height: 40px;
 }
-.menu-toggle,
-.environment-tag {
+
+.botao-alternar-menu,
+.tag-ambiente {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
