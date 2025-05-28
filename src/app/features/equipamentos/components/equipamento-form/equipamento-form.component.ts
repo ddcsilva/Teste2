@@ -26,9 +26,6 @@ import { CommonModule } from '@angular/common';
 import { Equipamento } from '../../models/equipamento.model';
 import { EquipamentoService } from '../../services/equipamento.service';
 import { CabecalhoPaginaComponent } from '../../../../shared/components/cabecalho-pagina/cabecalho-pagina.component';
-import { InputComponent } from '../../../../shared/ui/input/input.component';
-import { SelectComponent } from '../../../../shared/ui/select/select.component';
-import { OpcaoSelect } from '../../../../shared/ui/select/select.types';
 
 interface InputAutoComplete {
   id: number;
@@ -52,8 +49,6 @@ interface InputSelect {
     MatSelectModule,
     MatButtonModule,
     CabecalhoPaginaComponent,
-    InputComponent,
-    SelectComponent,
   ],
   templateUrl: './equipamento-form.component.html',
   styleUrls: ['./equipamento-form.component.scss'],

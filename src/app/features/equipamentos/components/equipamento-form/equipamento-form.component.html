@@ -5,18 +5,23 @@
     <mat-card-content class="form-content">
       <div class="form-row">
         <!-- Código do Equipamento -->
-        <app-input
-          class="form-field"
-          label="Código"
-          placeholder="Código do Equipamento"
-          [obrigatorio]="true"
-          formControlName="codigo"
-          iconeEsquerda="qr_code"
-          dica="Máximo 50 caracteres"
-        />
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Código</mat-label>
+          <input
+            type="text"
+            matInput
+            maxlength="50"
+            placeholder="Código do Equipamento"
+            formControlName="codigo"
+          />
+          <mat-error *ngIf="codigo?.hasError('required')">Campo obrigatório</mat-error>
+          <mat-error *ngIf="codigo?.hasError('maxlength')">
+            Campo Código deve ter no máximo <strong>50 caracteres</strong>
+          </mat-error>
+        </mat-form-field>
 
-        <!-- Categoria (Autocomplete simulado com Select) -->
-        <mat-form-field class="form-field">
+        <!-- Categoria -->
+        <mat-form-field appearance="outline" class="form-field">
           <mat-label>Categoria</mat-label>
           <mat-select
             placeholder="Categoria"
@@ -30,13 +35,11 @@
               {{ categoria.nome }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="categoria?.hasError('required')"
-            >Campo obrigatório</mat-error
-          >
+          <mat-error *ngIf="categoria?.hasError('required')">Campo obrigatório</mat-error>
         </mat-form-field>
 
         <!-- Localização -->
-        <mat-form-field class="form-field">
+        <mat-form-field appearance="outline" class="form-field">
           <mat-label>Localização</mat-label>
           <mat-select
             placeholder="Localização do Equipamento"
@@ -50,22 +53,25 @@
               {{ localizacao.nome }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="codigoLocalizacao?.hasError('required')"
-            >Campo obrigatório</mat-error
-          >
+          <mat-error *ngIf="codigoLocalizacao?.hasError('required')">Campo obrigatório</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-row">
         <!-- Link do Diagrama -->
-        <app-input
-          class="form-field-full"
-          label="Link do Diagrama"
-          placeholder="Link Sindotec: Diagrama do Equipamento"
-          formControlName="linkDiagrama"
-          iconeEsquerda="link"
-          dica="Máximo 500 caracteres"
-        />
+        <mat-form-field appearance="outline" class="form-field-full">
+          <mat-label>Link do Diagrama</mat-label>
+          <input
+            type="text"
+            matInput
+            maxlength="500"
+            placeholder="Link Sindotec: Diagrama do Equipamento"
+            formControlName="linkDiagrama"
+          />
+          <mat-error *ngIf="linkDiagrama?.hasError('maxlength')">
+            Campo Link deve ter no máximo <strong>500 caracteres</strong>
+          </mat-error>
+        </mat-form-field>
       </div>
 
       <div class="form-actions">
