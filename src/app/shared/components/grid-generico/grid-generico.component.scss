@@ -1,50 +1,368 @@
 @use "../../../../styles/tokens" as *;
 
-.mat-mdc-tabela-padrao {
-  width: 100%;
-  overflow: auto;
-  border-collapse: collapse;
-}
-
-.cabecalho-coluna {
-  font-weight: bold;
-  text-align: left;
-  padding: $spacing-lg;
-  background-color: $color-surface-variant;
-  border-bottom: 1px solid $color-border;
-}
-
-::ng-deep .mat-mdc-paginator-container {
-  justify-content: center !important;
-}
-
-.dados-coluna {
-  padding: $spacing-lg;
-  text-align: left;
-  vertical-align: middle;
-  border-bottom: 1px solid $color-border;
-}
-
-.coluna-acoes {
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap; /* Não quebra linhas dentro da célula */
-}
-
-.coluna-acoes .acoes-container {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: $spacing-sm; /* Espaçamento entre os botões */
-}
-
+// =============================================================================
+// CONTAINER PRINCIPAL
+// =============================================================================
 .mat-mdc-card {
   margin-top: $spacing-lg;
   margin-bottom: $spacing-lg;
   padding: 0;
   position: relative;
+  overflow: hidden;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  transition: $transition-normal;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
 }
 
-mat-icon-button {
-  margin: 0 $spacing-sm;
+// =============================================================================
+// ESTADOS DE CARREGAMENTO E ERRO
+// =============================================================================
+.grid-loading-container,
+.grid-error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl * 2;
+  min-height: 200px;
+  text-align: center;
+}
+
+.loading-text {
+  margin-top: $spacing-lg;
+  color: $color-text-secondary;
+  font-size: 14px;
+}
+
+.grid-error-container {
+  .error-icon {
+    font-size: 48px;
+    color: $color-error;
+    margin-bottom: $spacing-md;
+  }
+
+  .error-text {
+    color: $color-error;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+// =============================================================================
+// CONTAINER DA TABELA
+// =============================================================================
+.table-container {
+  overflow-x: auto;
+  position: relative;
+}
+
+.grid-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: $color-surface;
+
+  // Estados de densidade
+  &.grid-compact {
+    .grid-header-cell,
+    .grid-data-cell {
+      padding: $spacing-sm $spacing-md;
+      font-size: 13px;
+    }
+  }
+
+  &.grid-comfortable {
+    .grid-header-cell,
+    .grid-data-cell {
+      padding: $spacing-md $spacing-lg;
+      font-size: 14px;
+    }
+  }
+
+  &.grid-spacious {
+    .grid-header-cell,
+    .grid-data-cell {
+      padding: $spacing-lg $spacing-xl;
+      font-size: 15px;
+    }
+  }
+
+  &.grid-carregando {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+// =============================================================================
+// CABEÇALHO DA TABELA
+// =============================================================================
+.grid-header-cell {
+  background-color: $color-surface-variant;
+  color: $color-text-primary;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 2px solid $color-border;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  white-space: nowrap;
+  user-select: none;
+
+  &.sortable {
+    cursor: pointer;
+    transition: $transition-background;
+
+    &:hover {
+      background-color: darken($color-surface-variant, 5%);
+    }
+  }
+
+  &.grid-actions-header {
+    text-align: center;
+    width: 120px;
+    min-width: 120px;
+  }
+}
+
+// =============================================================================
+// CÉLULAS DE DADOS
+// =============================================================================
+.grid-data-cell {
+  padding: $spacing-md $spacing-lg;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid $color-border;
+  background-color: $color-surface;
+  transition: $transition-background;
+
+  .cell-content {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+  }
+
+  &.grid-actions-cell {
+    text-align: center;
+    white-space: nowrap;
+    width: 120px;
+    min-width: 120px;
+  }
+}
+
+// =============================================================================
+// LINHAS DA TABELA
+// =============================================================================
+.grid-row {
+  transition: $transition-background;
+
+  &:hover {
+    background-color: $color-surface-variant;
+  }
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: lighten($color-primary, 45%);
+    }
+  }
+
+  &:nth-child(even) {
+    background-color: rgba($color-surface-variant, 0.3);
+  }
+}
+
+// =============================================================================
+// AÇÕES
+// =============================================================================
+.actions-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  flex-wrap: nowrap;
+
+  mat-icon-button {
+    margin: 0;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// =============================================================================
+// ESTADO VAZIO
+// =============================================================================
+.grid-no-data-row {
+  .grid-no-data-cell {
+    padding: 0;
+    border: none;
+  }
+}
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl * 2;
+  text-align: center;
+
+  .no-data-icon {
+    font-size: 64px;
+    color: $color-text-disabled;
+    margin-bottom: $spacing-lg;
+  }
+
+  .no-data-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: $color-text-secondary;
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  .no-data-subtitle {
+    font-size: 14px;
+    color: $color-text-disabled;
+    margin: 0;
+  }
+}
+
+// =============================================================================
+// PAGINAÇÃO
+// =============================================================================
+.grid-paginator {
+  border-top: 1px solid $color-border;
+  background-color: $color-surface;
+
+  ::ng-deep .mat-mdc-paginator-container {
+    justify-content: center;
+    padding: $spacing-md $spacing-lg;
+  }
+
+  ::ng-deep .mat-mdc-paginator-page-size {
+    align-items: center;
+  }
+
+  ::ng-deep .mat-mdc-paginator-range-label {
+    margin: 0 $spacing-lg;
+  }
+}
+
+// =============================================================================
+// RESPONSIVIDADE
+// =============================================================================
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .grid-table {
+    min-width: 600px;
+  }
+
+  .grid-header-cell,
+  .grid-data-cell {
+    padding: $spacing-sm;
+    font-size: 13px;
+
+    .cell-content {
+      max-width: 120px;
+    }
+  }
+
+  .actions-container {
+    gap: $spacing-xs;
+
+    mat-icon-button {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .no-data-container {
+    padding: $spacing-xl;
+
+    .no-data-icon {
+      font-size: 48px;
+    }
+
+    .no-data-text {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-table {
+    min-width: 500px;
+  }
+
+  .grid-header-cell,
+  .grid-data-cell {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 12px;
+
+    .cell-content {
+      max-width: 100px;
+    }
+  }
+
+  .grid-paginator {
+    ::ng-deep .mat-mdc-paginator-container {
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+  }
+}
+
+// =============================================================================
+// ACESSIBILIDADE
+// =============================================================================
+@media (prefers-reduced-motion: reduce) {
+  .mat-mdc-card,
+  .grid-table,
+  .grid-row,
+  .grid-data-cell {
+    transition: none;
+  }
+}
+
+// Focus states para acessibilidade
+.grid-row:focus,
+.grid-header-cell:focus {
+  outline: 2px solid $color-primary;
+  outline-offset: -2px;
+}
+
+// Alto contraste
+@media (prefers-contrast: high) {
+  .grid-table {
+    border: 2px solid $color-text-primary;
+  }
+
+  .grid-header-cell,
+  .grid-data-cell {
+    border-color: $color-text-primary;
+  }
 }

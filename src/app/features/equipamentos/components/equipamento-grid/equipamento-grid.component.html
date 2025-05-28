@@ -16,15 +16,28 @@
     [colunas]="colunas"
     [nomesColunas]="nomesColunas"
     [dadosObservable]="dadosObservable"
-    (mudancaPagina)="aoMudarPagina($event)"
     [acoesTemplate]="acoesTemplate"
+    [config]="gridConfig"
+    (mudancaPagina)="aoMudarPagina($event)"
+    (ordenacaoMudou)="aoMudarOrdenacao($event)"
+    (linhaSelecionada)="aoSelecionarLinha($event)"
   ></app-grid-generico>
 
   <ng-template #acoesTemplate let-element>
-    <button mat-icon-button (click)="editar(element)" class="edit-icon">
+    <button
+      mat-icon-button
+      (click)="editar(element)"
+      class="edit-icon"
+      matTooltip="Editar equipamento"
+    >
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button (click)="excluir(element)" class="delete-icon">
+    <button
+      mat-icon-button
+      (click)="excluir(element)"
+      class="delete-icon"
+      matTooltip="Excluir equipamento"
+    >
       <mat-icon>delete</mat-icon>
     </button>
   </ng-template>

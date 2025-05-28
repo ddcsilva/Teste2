@@ -1,81 +1,120 @@
-<mat-card appearance="outlined">
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    class="mat-elevation-z8 mat-tabela-padrao"
-    matSort
-  >
-    <!-- Colunas Dinâmicas -->
-    <ng-container
-      [matColumnDef]="coluna"
-      *ngFor="let coluna of colunasComAcoes; trackBy: rastrearPorColuna"
+<mat-card appearance="outlined" [ngClass]="classesTabela()">
+  <!-- Estado de Carregamento -->
+  @if (estaCarregando()) {
+  <div class="grid-loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="loading-text">Carregando dados...</p>
+  </div>
+  }
+
+  <!-- Estado de Erro -->
+  @if (temErro() && !estaCarregando()) {
+  <div class="grid-error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p class="error-text">{{ erro() }}</p>
+  </div>
+  }
+
+  <!-- Tabela Principal -->
+  @if (!estaCarregando() && !temErro()) {
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="dataSource().data"
+      class="grid-table"
+      matSort
+      matSortDisableClear
     >
-      <!-- Cabeçalho da Coluna de Dados -->
-      <ng-container *ngIf="coluna !== 'Ações'">
+      <!-- Colunas Dinâmicas -->
+      @for (coluna of colunasComAcoes(); track trackByColuna($index, coluna)) {
+      <ng-container [matColumnDef]="coluna">
+        <!-- Cabeçalho da Coluna -->
+        @if (coluna !== 'acoes') {
         <th
           mat-header-cell
           *matHeaderCellDef
           mat-sort-header
-          class="cabecalho-coluna"
+          class="grid-header-cell"
+          [class.sortable]="configCompleta().mostrarOrdenacao"
         >
-          {{ nomesColunas[coluna] || coluna | titlecase }}
+          {{ obterNomeColuna(coluna) }}
         </th>
-      </ng-container>
-
-      <!-- Cabeçalho da Coluna de Ações -->
-      <ng-container *ngIf="coluna === 'Ações'">
+        } @else {
         <th
           mat-header-cell
           *matHeaderCellDef
-          class="cabecalho-coluna coluna-acoes"
+          class="grid-header-cell grid-actions-header"
         >
-          {{ nomesColunas[coluna] || coluna | titlecase }}
+          Ações
         </th>
-      </ng-container>
+        }
 
-      <!-- Conteúdo da Coluna de Dados -->
-      <ng-container *ngIf="coluna !== 'Ações'">
-        <td mat-cell *matCellDef="let element" class="dados-coluna">
-          {{ element[coluna] }}
-        </td>
-      </ng-container>
-
-      <!-- Conteúdo da Coluna de Ações -->
-      <ng-container *ngIf="coluna === 'Ações'">
+        <!-- Conteúdo da Coluna -->
+        @if (coluna !== 'acoes') {
         <td
           mat-cell
-          *matCellDef="let element"
-          class="dados-coluna coluna-acoes"
+          *matCellDef="let element; trackBy: trackByItem"
+          class="grid-data-cell"
+          [attr.data-label]="obterNomeColuna(coluna)"
         >
-          <div class="acoes-container">
+          <span class="cell-content">
+            {{ obterValorColuna(element, coluna) }}
+          </span>
+        </td>
+        } @else {
+        <td
+          mat-cell
+          *matCellDef="let element; trackBy: trackByItem"
+          class="grid-data-cell grid-actions-cell"
+        >
+          <div class="actions-container">
+            @if (acoesTemplate(); as template) {
             <ng-container
-              *ngTemplateOutlet="acoesTemplate || null; context: { $implicit: element }"
+              *ngTemplateOutlet="template; context: { $implicit: element }"
             ></ng-container>
+            }
           </div>
         </td>
+        }
       </ng-container>
-    </ng-container>
+      }
 
-    <tr mat-header-row *matHeaderRowDef="colunasComAcoes"></tr>
-    <tr mat-row *matRowDef="let row; columns: colunasComAcoes"></tr>
+      <!-- Cabeçalho da Tabela -->
+      <tr mat-header-row *matHeaderRowDef="colunasComAcoes()"></tr>
 
-    <!-- Mensagem de Nenhum Dado Encontrado -->
-    <tr class="mat-row" *matNoDataRow>
-      <td
-        class="mat-cell"
-        [attr.colspan]="colunas.length + (acoesTemplate ? 1 : 0)"
-      >
-        Nenhum dado encontrado
-      </td>
-    </tr>
-  </table>
+      <!-- Linhas de Dados -->
+      <tr
+        mat-row
+        *matRowDef="let row; columns: colunasComAcoes(); trackBy: trackByItem"
+        class="grid-row"
+        (click)="aoSelecionarLinha(row)"
+      ></tr>
+
+      <!-- Estado Vazio -->
+      <tr class="grid-no-data-row" *matNoDataRow>
+        <td class="grid-no-data-cell" [attr.colspan]="colunasComAcoes().length">
+          <div class="no-data-container">
+            <mat-icon class="no-data-icon">inbox</mat-icon>
+            <p class="no-data-text">Nenhum dado encontrado</p>
+            <p class="no-data-subtitle">
+              Tente ajustar os filtros ou adicionar novos registros
+            </p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 
   <!-- Paginação -->
+  @if (configCompleta().mostrarPaginacao && totalItens() > 0) {
   <mat-paginator
-    [length]="totalItens"
-    [pageIndex]="paginaAtual"
-    [pageSize]="itensPorPagina"
-    [pageSizeOptions]="[10, 20, 50, 100]"
+    [length]="totalItens()"
+    [pageIndex]="configCompleta().paginaAtual"
+    [pageSize]="configCompleta().itensPorPagina"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+    [showFirstLastButtons]="true"
     (page)="aoMudarPagina($event)"
+    class="grid-paginator"
   ></mat-paginator>
+  } }
 </mat-card>

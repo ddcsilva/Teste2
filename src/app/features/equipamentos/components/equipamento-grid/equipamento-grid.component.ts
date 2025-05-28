@@ -9,13 +9,17 @@ import { Equipamento } from '../../models/equipamento.model';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CabecalhoPaginaComponent } from '../../../../shared/components/cabecalho-pagina/cabecalho-pagina.component';
 import { FiltrosComponent } from '../../../../shared/components/filtros/filtros.component';
 import {
   FiltroCampo,
   FiltroBotoes,
 } from '../../../../shared/components/filtros/models';
-import { GridGenericoComponent } from '../../../../shared/components/grid-generico/grid-generico.component';
+import {
+  GridGenericoComponent,
+  GridConfig,
+} from '../../../../shared/components/grid-generico/grid-generico.component';
 
 @Component({
   selector: 'app-equipamento-grid',
@@ -24,6 +28,7 @@ import { GridGenericoComponent } from '../../../../shared/components/grid-generi
     CommonModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
     CabecalhoPaginaComponent,
     FiltrosComponent,
     GridGenericoComponent,
@@ -37,6 +42,17 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
     codigo: 'Código',
     categoria: 'Categoria',
     localizacao: 'Localização',
+  };
+
+  // =============================================================================
+  // CONFIGURAÇÃO DO GRID MODERNIZADO
+  // =============================================================================
+  readonly gridConfig: Partial<GridConfig> = {
+    itensPorPagina: 10,
+    paginaAtual: 0,
+    mostrarPaginacao: true,
+    mostrarOrdenacao: true,
+    densidade: 'comfortable', // 'compact' | 'comfortable' | 'spacious'
   };
 
   // =============================================================================
@@ -137,6 +153,21 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
 
   aoMudarPagina(evento: PageEvent): void {
     this.carregarDados(evento.pageIndex + 1, evento.pageSize);
+  }
+
+  // =============================================================================
+  // NOVOS MÉTODOS PARA GRID MODERNIZADO
+  // =============================================================================
+  aoMudarOrdenacao(evento: { coluna: string; direcao: 'asc' | 'desc' }): void {
+    console.log('Ordenação alterada:', evento);
+    // Aqui você pode implementar ordenação server-side
+    // this.carregarDados(1, this.gridConfig.itensPorPagina, evento);
+  }
+
+  aoSelecionarLinha(equipamento: Equipamento): void {
+    console.log('Linha selecionada:', equipamento);
+    // Implementar ação de seleção se necessário
+    // this.router.navigate([`/equipamentos/detalhes/${equipamento.id}`]);
   }
 
   buscar(valores: Record<string, any>): void {
