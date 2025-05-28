@@ -72,6 +72,7 @@
     .grid-data-cell {
       padding: $spacing-sm $spacing-md;
       font-size: 13px;
+      height: 44px;
     }
   }
 
@@ -80,6 +81,7 @@
     .grid-data-cell {
       padding: $spacing-md $spacing-lg;
       font-size: 14px;
+      height: 52px;
     }
   }
 
@@ -88,6 +90,7 @@
     .grid-data-cell {
       padding: $spacing-lg $spacing-xl;
       font-size: 15px;
+      height: 60px;
     }
   }
 
@@ -105,12 +108,19 @@
   color: $color-text-primary;
   font-weight: 600;
   text-align: left;
+  vertical-align: middle;
   border-bottom: 2px solid $color-border;
   position: sticky;
   top: 0;
   z-index: 10;
   white-space: nowrap;
   user-select: none;
+  padding: $spacing-md $spacing-lg;
+  height: 56px;
+  line-height: 1.4;
+  display: table-cell;
+  vertical-align: middle;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
   &.sortable {
     cursor: pointer;
@@ -119,13 +129,28 @@
     &:hover {
       background-color: darken($color-surface-variant, 5%);
     }
+
+    .mat-sort-header-arrow {
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover .mat-sort-header-arrow {
+      opacity: 1;
+    }
   }
 
   &.grid-actions-header {
-    text-align: center;
+    text-align: left;
     width: 120px;
     min-width: 120px;
+    padding-left: $spacing-lg;
   }
+
+  font-size: 14px;
+  font-family: inherit;
+  letter-spacing: 0.025em;
+  text-transform: none;
 }
 
 // =============================================================================
@@ -138,6 +163,9 @@
   border-bottom: 1px solid $color-border;
   background-color: $color-surface;
   transition: $transition-background;
+  height: 52px;
+  line-height: 1.4;
+  font-size: 14px;
 
   .cell-content {
     display: block;
@@ -145,6 +173,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 200px;
+    line-height: inherit;
   }
 
   &.grid-actions-cell {
@@ -152,6 +181,7 @@
     white-space: nowrap;
     width: 120px;
     min-width: 120px;
+    padding: $spacing-sm $spacing-md;
   }
 }
 
