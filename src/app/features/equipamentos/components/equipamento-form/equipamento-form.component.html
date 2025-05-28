@@ -7,16 +7,19 @@
         <!-- Código do Equipamento -->
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Código</mat-label>
+          <mat-icon matPrefix>tag</mat-icon>
           <input
             type="text"
             matInput
             maxlength="50"
             placeholder="Código do Equipamento"
             formControlName="codigo"
+            matTooltip="Digite o código único do equipamento"
+            matTooltipPosition="above"
           />
-          <mat-error *ngIf="codigo?.hasError('required')"
-            >Campo obrigatório</mat-error
-          >
+          <mat-error *ngIf="codigo?.hasError('required')">
+            Campo obrigatório
+          </mat-error>
           <mat-error *ngIf="codigo?.hasError('maxlength')">
             Campo Código deve ter no máximo <strong>50 caracteres</strong>
           </mat-error>
@@ -25,6 +28,7 @@
         <!-- Categoria (Autocomplete) -->
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Categoria</mat-label>
+          <mat-icon matPrefix>category</mat-icon>
           <input
             type="text"
             matInput
@@ -32,6 +36,8 @@
             formControlName="categoria"
             [matAutocomplete]="autoCategoria"
             (input)="aoDigitarCategoria($event)"
+            matTooltip="Digite para buscar uma categoria"
+            matTooltipPosition="above"
           />
           <mat-icon matSuffix>search</mat-icon>
           <mat-autocomplete
@@ -66,18 +72,21 @@
               </mat-option>
             </ng-container>
           </mat-autocomplete>
-          <mat-error *ngIf="categoria?.hasError('required')"
-            >Campo obrigatório</mat-error
-          >
+          <mat-error *ngIf="categoria?.hasError('required')">
+            Campo obrigatório
+          </mat-error>
         </mat-form-field>
 
         <!-- Localização -->
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Localização</mat-label>
+          <mat-icon matPrefix>location_on</mat-icon>
           <mat-select
             placeholder="Localização do Equipamento"
             formControlName="codigoLocalizacao"
             [compareWith]="aoCompararOptionValue"
+            matTooltip="Selecione onde o equipamento está localizado"
+            matTooltipPosition="above"
           >
             <mat-option
               *ngFor="let localizacao of localizacoes"
@@ -86,9 +95,9 @@
               {{ localizacao.nome }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="codigoLocalizacao?.hasError('required')"
-            >Campo obrigatório</mat-error
-          >
+          <mat-error *ngIf="codigoLocalizacao?.hasError('required')">
+            Campo obrigatório
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -96,13 +105,25 @@
         <!-- Link do Diagrama -->
         <mat-form-field appearance="outline" class="form-field-full">
           <mat-label>Link do Diagrama</mat-label>
+          <mat-icon matPrefix>link</mat-icon>
           <input
-            type="text"
+            type="url"
             matInput
             maxlength="500"
             placeholder="Link Sindotec: Diagrama do Equipamento"
             formControlName="linkDiagrama"
+            matTooltip="Cole aqui o link do diagrama do equipamento"
+            matTooltipPosition="above"
           />
+          <mat-icon
+            matSuffix
+            class="clickable-icon"
+            (click)="aoAbrirDiagramaEquipamento()"
+            *ngIf="linkDiagrama?.value"
+            matTooltip="Abrir link em nova aba"
+          >
+            open_in_new
+          </mat-icon>
           <mat-error *ngIf="linkDiagrama?.hasError('maxlength')">
             Campo Link deve ter no máximo <strong>500 caracteres</strong>
           </mat-error>
@@ -111,31 +132,32 @@
 
       <div class="form-actions">
         <div class="action-buttons-left">
-          <button
-            class="color-button-cancel"
-            mat-raised-button
-            (click)="aoCancelar(formEquipamento)"
+          <app-botao
+            variante="danger"
+            icone="cancel"
+            (clicado)="aoCancelar(formEquipamento)"
           >
             Cancelar
-          </button>
-          <button
-            type="reset"
-            mat-raised-button
-            color="accent"
-            (click)="aoLimpar(formEquipamento)"
+          </app-botao>
+
+          <app-botao
+            variante="secondary"
+            icone="clear"
+            (clicado)="aoLimpar(formEquipamento)"
           >
             Limpar
-          </button>
+          </app-botao>
         </div>
+
         <div class="action-buttons-right">
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="aoSalvar()"
-            [disabled]="formulario.invalid"
+          <app-botao
+            variante="primary"
+            icone="save"
+            [desabilitado]="formulario.invalid"
+            (clicado)="aoSalvar()"
           >
             {{ botaoSubmit }}
-          </button>
+          </app-botao>
         </div>
       </div>
     </mat-card-content>

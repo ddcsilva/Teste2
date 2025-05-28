@@ -1,108 +1,29 @@
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-.form-card {
-  margin-top: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-  mat-card-content {
-    padding: 32px;
-  }
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.full-width {
-  width: 100%;
-}
-
-.form-actions {
-  display: flex;
-  gap: 16px;
-  justify-content: flex-end;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-// Responsividade
-@media (max-width: 768px) {
-  .container {
-    padding: 16px;
-  }
-
-  .form-card {
-    margin-top: 16px;
-
-    mat-card-content {
-      padding: 24px 16px;
-    }
-  }
-
-  .form-actions {
-    flex-direction: column-reverse;
-
-    app-botao {
-      width: 100%;
-    }
-  }
-}
-
-// Melhorias visuais para os campos
-mat-form-field {
-  .mat-mdc-form-field-subscript-wrapper {
-    margin-top: 8px;
-  }
-}
-
-// Estados de loading
-.loading-overlay {
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-  }
-}
+@use "../../../../../styles/tokens" as *;
 
 .form-container {
   margin: 5px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: $spacing-lg;
+  padding: $spacing-3xl;
 }
 
 .form-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1%;
+  gap: $spacing-lg;
 }
 
 .form-field {
   flex: 1;
 
-  // Garantir que todos os campos tenham a mesma aparência
+  // Garantir que todos os form-fields tenham a mesma aparência
   .mat-mdc-form-field {
     width: 100%;
 
@@ -115,7 +36,39 @@ mat-form-field {
     }
 
     .mdc-text-field--focused .mdc-notched-outline {
-      border-color: #1976d2;
+      border-color: $color-primary;
+    }
+  }
+
+  // Estilos para ícones de prefixo
+  .mat-mdc-form-field-icon-prefix {
+    color: $color-text-secondary;
+    margin-right: $spacing-sm;
+
+    .mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // Estilos para ícones de sufixo
+  .mat-mdc-form-field-icon-suffix {
+    color: $color-text-secondary;
+
+    .mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+
+      &.clickable-icon {
+        cursor: pointer;
+        transition: $transition-color;
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
     }
   }
 }
@@ -124,7 +77,6 @@ mat-form-field {
   flex: 1;
   width: 100%;
 
-  // Garantir que o campo full tenha a mesma aparência
   .mat-mdc-form-field {
     width: 100%;
 
@@ -137,50 +89,59 @@ mat-form-field {
     }
 
     .mdc-text-field--focused .mdc-notched-outline {
-      border-color: #1976d2;
+      border-color: $color-primary;
+    }
+  }
+
+  // Estilos para ícones
+  .mat-mdc-form-field-icon-prefix,
+  .mat-mdc-form-field-icon-suffix {
+    color: $color-text-secondary;
+
+    .mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+
+      &.clickable-icon {
+        cursor: pointer;
+        transition: $transition-color;
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
     }
   }
 }
 
 .form-actions {
-  margin-top: 20px;
+  margin-top: $spacing-2xl;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $color-border;
 }
 
 .action-buttons-left {
   display: flex;
-  gap: 10px;
+  gap: $spacing-md;
 }
 
 .action-buttons-right {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
-.color-button-cancel {
-  background-color: #f44336 !important;
-  color: white !important;
-}
-
-// Garantir que todos os mat-form-field tenham a mesma altura
-mat-form-field {
-  .mat-mdc-form-field-subscript-wrapper {
-    margin-top: 8px;
-  }
-
-  // Forçar fundo branco em todos os campos
-  .mdc-text-field--outlined {
-    background-color: white !important;
-  }
-
-  // Garantir altura uniforme
+// Garantir altura uniforme entre os componentes
+.mat-mdc-form-field {
+  // Altura padrão do Material Design
   .mdc-text-field {
     height: 56px;
   }
 
-  // Estilo uniforme para selects
+  // Garantir altura uniforme para selects
   .mat-mdc-select {
     .mat-mdc-select-trigger {
       height: 56px;
@@ -190,15 +151,51 @@ mat-form-field {
   }
 }
 
-// Responsividade
+// Melhorias específicas para autocomplete
+.mat-mdc-form-field {
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: 8px;
+  }
+}
+
+// Estados de hover melhorados
+.form-field,
+.form-field-full {
+  .mat-mdc-form-field {
+    transition: $transition-normal;
+
+    &:hover:not(.mdc-text-field--focused) {
+      .mdc-notched-outline {
+        border-color: rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+}
+
+// Responsividade melhorada
+@media (max-width: 1024px) {
+  .form-container {
+    margin: 5px 15px;
+  }
+
+  .form-row {
+    gap: $spacing-md;
+  }
+}
+
 @media (max-width: 768px) {
   .form-container {
     margin: 5px 10px;
   }
 
+  .form-content {
+    gap: $spacing-md;
+    padding: $spacing-2xl $spacing-lg;
+  }
+
   .form-row {
     flex-direction: column;
-    gap: 16px;
+    gap: $spacing-lg;
   }
 
   .form-field,
@@ -208,7 +205,8 @@ mat-form-field {
 
   .form-actions {
     flex-direction: column;
-    gap: 16px;
+    gap: $spacing-lg;
+    align-items: stretch;
   }
 
   .action-buttons-left,
@@ -218,10 +216,87 @@ mat-form-field {
   }
 
   .action-buttons-left {
-    order: 2;
+    order: 2; // Botões de ação secundária ficam embaixo
   }
 
   .action-buttons-right {
-    order: 1;
+    order: 1; // Botão principal fica em cima
   }
+}
+
+// Melhorias de acessibilidade
+.clickable-icon {
+  &:focus {
+    outline: 2px solid $color-focus;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+// Estilos para progress bar no autocomplete
+.mat-mdc-progress-bar {
+  height: 2px;
+
+  &.mat-mdc-progress-bar-indeterminate {
+    .mdc-linear-progress__bar {
+      .mdc-linear-progress__bar-inner {
+        border-color: $color-primary;
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .form-actions {
+    display: none;
+  }
+
+  .form-container {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  .clickable-icon {
+    display: none;
+  }
+}
+
+// Estados de validação melhorados
+.mat-mdc-form-field {
+  &.mat-form-field-invalid {
+    .mdc-notched-outline {
+      border-color: $color-error;
+    }
+  }
+
+  .mat-error {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    margin-top: $spacing-xs;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+}
+
+// Melhorar espaçamento dos ícones
+.mat-mdc-form-field-icon-prefix {
+  margin-right: 12px;
+
+  + .mat-mdc-form-field-infix {
+    padding-left: 0;
+  }
+}
+
+.mat-mdc-form-field-icon-suffix {
+  margin-left: 12px;
+}
+
+// Garantir que os tooltips funcionem bem
+.mat-tooltip {
+  font-size: 12px;
+  max-width: 200px;
+  text-align: center;
 }

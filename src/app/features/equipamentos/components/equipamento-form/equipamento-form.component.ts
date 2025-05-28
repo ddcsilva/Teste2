@@ -29,17 +29,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { Equipamento } from '../../models/equipamento.model';
 import { EquipamentoService } from '../../services/equipamento.service';
 import { CabecalhoPaginaComponent } from '../../../../shared/components/cabecalho-pagina/cabecalho-pagina.component';
+
+// Importar apenas o componente de botão personalizado
+import { BotaoComponent } from '../../../../shared/ui/botao/botao.component';
 
 interface InputAutoComplete {
   id: number;
@@ -61,12 +64,14 @@ interface InputSelect {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule,
     MatAutocompleteModule,
     MatOptionModule,
     MatIconModule,
     MatProgressBarModule,
+    MatTooltipModule,
     CabecalhoPaginaComponent,
+    // Apenas o componente de botão personalizado
+    BotaoComponent,
   ],
   templateUrl: './equipamento-form.component.html',
   styleUrls: ['./equipamento-form.component.scss'],
@@ -74,8 +79,8 @@ interface InputSelect {
 export class EquipamentoFormComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @Input() titulo: string = '';
-  @Input() botaoSubmit: string = '';
+  @Input() titulo = '';
+  @Input() botaoSubmit = '';
   @Input() codigoEquipamento: number | null = null;
   @Output() formularioEnviado = new EventEmitter<Equipamento>();
 
@@ -176,31 +181,6 @@ export class EquipamentoFormComponent
     }
   }
 
-  configurarAutoCompleteGenerico(
-    valueChanges: Observable<any>,
-    searchFunction: (filtro: string) => Observable<InputAutoComplete[]>,
-    errorMessage: string
-  ): Observable<InputAutoComplete[]> {
-    return valueChanges.pipe(
-      takeUntil(this.unsubscribe$),
-      catchError((error) => {
-        console.error(errorMessage, error);
-        return of([]);
-      })
-    );
-  }
-
-  pesquisarCategorias(filtro: string): Observable<InputAutoComplete[]> {
-    if (typeof filtro === 'string' && filtro.length >= 3) {
-      return this.equipamentoService.obterCategorias().pipe(
-        takeUntil(this.unsubscribe$),
-        catchError(() => of([]))
-      );
-    } else {
-      return of([]);
-    }
-  }
-
   obterDadosIniciais(): void {
     // Carregar categorias
     this.equipamentoService
@@ -290,8 +270,13 @@ export class EquipamentoFormComponent
 
   aoAbrirDiagramaEquipamento(): void {
     const linkDiagrama = this.formulario.get('linkDiagrama')?.value;
-    if (linkDiagrama) {
-      window.open(linkDiagrama);
+    if (linkDiagrama && linkDiagrama.trim()) {
+      // Garantir que o link tenha um protocolo
+      let url = linkDiagrama.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
   }
 
