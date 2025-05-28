@@ -217,17 +217,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: $spacing-xl * 2;
+  padding: $spacing-xl;
   text-align: center;
 
-  .no-data-icon {
-    font-size: 64px;
-    color: $color-text-disabled;
-    margin-bottom: $spacing-lg;
-  }
-
   .no-data-text {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     color: $color-text-secondary;
     margin: 0 0 $spacing-sm 0;
@@ -301,14 +295,14 @@
   }
 
   .no-data-container {
-    padding: $spacing-xl;
-
-    .no-data-icon {
-      font-size: 48px;
-    }
+    padding: $spacing-lg;
 
     .no-data-text {
-      font-size: 16px;
+      font-size: 15px;
+    }
+
+    .no-data-subtitle {
+      font-size: 13px;
     }
   }
 }
