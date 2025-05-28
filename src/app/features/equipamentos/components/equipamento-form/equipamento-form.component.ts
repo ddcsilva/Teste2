@@ -22,28 +22,30 @@ import {
   takeUntil,
   startWith,
   map,
+  debounceTime,
+  distinctUntilChanged,
 } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { Equipamento } from '../../models/equipamento.model';
 import { EquipamentoService } from '../../services/equipamento.service';
 import { CabecalhoPaginaComponent } from '../../../../shared/components/cabecalho-pagina/cabecalho-pagina.component';
+import { InputComponent } from '../../../../shared/ui/input/input.component';
+import { SelectComponent } from '../../../../shared/ui/select/select.component';
+import { AutocompleteComponent } from '../../../../shared/ui/autocomplete/autocomplete.component';
+import { OpcaoAutocomplete } from '../../../../shared/ui/autocomplete/autocomplete.types';
+import { OpcaoSelect } from '../../../../shared/ui/select/select.types';
 
 interface InputAutoComplete {
   id: number;
-  nome: string;
-}
-
-interface InputSelect {
-  id: any;
   nome: string;
 }
 
@@ -54,13 +56,16 @@ interface InputSelect {
     CommonModule,
     ReactiveFormsModule,
     MatCardModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
     MatAutocompleteModule,
     MatOptionModule,
+    MatIconModule,
     CabecalhoPaginaComponent,
+    InputComponent,
+    SelectComponent,
+    AutocompleteComponent,
   ],
   templateUrl: './equipamento-form.component.html',
   styleUrls: ['./equipamento-form.component.scss'],
@@ -74,10 +79,12 @@ export class EquipamentoFormComponent
   @Output() formularioEnviado = new EventEmitter<Equipamento>();
 
   formulario!: FormGroup;
-  categoriasAutoComplete$!: Observable<InputAutoComplete[]>;
+  categoriasAutoComplete$!: Observable<OpcaoAutocomplete[]>;
   localizacoes: { codigo: string; nome: string }[] = [];
   equipamento: Equipamento | null = null;
   categorias: InputAutoComplete[] = [];
+  carregandoCategorias = false;
+  opcoesLocalizacao: OpcaoSelect[] = [];
 
   private unsubscribe$ = new Subject<void>();
 
@@ -119,53 +126,59 @@ export class EquipamentoFormComponent
     if (categoriaControl) {
       this.categoriasAutoComplete$ = categoriaControl.valueChanges.pipe(
         startWith(''),
+        debounceTime(300),
+        distinctUntilChanged(),
         map((value) => {
           const nome = typeof value === 'string' ? value : value?.nome || '';
-          return nome ? this.filtrarCategorias(nome) : this.categorias.slice();
+
+          if (
+            typeof value === 'string' &&
+            value.length > 0 &&
+            value.length < 3
+          ) {
+            return [];
+          }
+
+          return nome
+            ? this.filtrarCategorias(nome)
+            : this.categorias.map((cat) => ({
+                id: cat.id,
+                nome: cat.nome,
+              }));
         }),
         takeUntil(this.unsubscribe$)
       );
     }
   }
 
-  filtrarCategorias(nome: string): InputAutoComplete[] {
+  filtrarCategorias(nome: string): OpcaoAutocomplete[] {
     const filtro = nome.toLowerCase();
-    return this.categorias.filter((categoria) =>
-      categoria.nome.toLowerCase().includes(filtro)
-    );
+    return this.categorias
+      .filter((categoria) => categoria.nome.toLowerCase().includes(filtro))
+      .map((categoria) => ({
+        id: categoria.id,
+        nome: categoria.nome,
+      }));
   }
 
-  exibirCategoria(categoria: InputAutoComplete): string {
+  exibirCategoria = (categoria: any): string => {
     return categoria && categoria.nome ? categoria.nome : '';
-  }
+  };
 
-  aoSelecionarCategoria(event: any): void {
-    const categoria = event.option.value;
+  aoSelecionarCategoria(categoria: any): void {
     this.formulario.patchValue({ categoria });
   }
 
-  configurarAutoCompleteGenerico(
-    valueChanges: Observable<any>,
-    searchFunction: (filtro: string) => Observable<InputAutoComplete[]>,
-    errorMessage: string
-  ): Observable<InputAutoComplete[]> {
-    return valueChanges.pipe(
-      takeUntil(this.unsubscribe$),
-      catchError((error) => {
-        console.error(errorMessage, error);
-        return of([]);
-      })
-    );
-  }
+  aoDigitarCategoria(termo: string): void {
+    if (termo && termo.length >= 3) {
+      this.carregandoCategorias = true;
 
-  pesquisarCategorias(filtro: string): Observable<InputAutoComplete[]> {
-    if (typeof filtro === 'string' && filtro.length >= 3) {
-      return this.equipamentoService.obterCategorias().pipe(
-        takeUntil(this.unsubscribe$),
-        catchError(() => of([]))
-      );
+      // Simular delay de busca (remover em produção se não houver API real)
+      setTimeout(() => {
+        this.carregandoCategorias = false;
+      }, 500);
     } else {
-      return of([]);
+      this.carregandoCategorias = false;
     }
   }
 
@@ -194,7 +207,13 @@ export class EquipamentoFormComponent
         }),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe((localizacoes) => (this.localizacoes = localizacoes));
+      .subscribe((localizacoes) => {
+        this.localizacoes = localizacoes;
+        this.opcoesLocalizacao = localizacoes.map((loc) => ({
+          valor: { id: loc.codigo, nome: loc.nome },
+          texto: loc.nome,
+        }));
+      });
   }
 
   carregarEquipamento(codigo: number): void {
@@ -252,20 +271,10 @@ export class EquipamentoFormComponent
     formulario.reset();
   }
 
-  aoCompararOptionValue(option: InputSelect, value: InputSelect): boolean {
-    return option?.id === value?.id;
-  }
-
-  aoAbrirDiagramaEquipamento(): void {
-    const linkDiagrama = this.formulario.get('linkDiagrama')?.value;
-    if (linkDiagrama) {
-      window.open(linkDiagrama);
-    }
-  }
-
   prepararObjetoEquipamento(): Equipamento {
     const formValue = this.formulario.value;
     const categoria = formValue.categoria;
+    const localizacao = formValue.codigoLocalizacao;
 
     return {
       id: formValue.codigoEquipamento,
@@ -273,9 +282,9 @@ export class EquipamentoFormComponent
       categoriaId: categoria?.id || categoria,
       categoria: categoria?.nome || categoria,
       codigoLocalizacao: this.determinarLocalizacaoAoSalvar(
-        formValue.codigoLocalizacao.id
+        localizacao?.id || localizacao
       ),
-      localizacao: formValue.codigoLocalizacao.nome,
+      localizacao: localizacao?.nome || localizacao,
       linkDiagrama: formValue.linkDiagrama,
     };
   }

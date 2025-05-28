@@ -1,0 +1,122 @@
+// Estilos mínimos para o autocomplete
+:host {
+  display: block;
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+// Garantir fundo branco
+.mdc-text-field--outlined {
+  background-color: white !important;
+}
+
+// Altura uniforme
+.mdc-text-field {
+  height: 56px;
+}
+
+// Estilos base do autocomplete
+.app-autocomplete {
+  display: block;
+  width: 100%;
+
+  // Tamanhos
+  &--pequeno {
+    .mat-mdc-form-field {
+      font-size: 0.875rem;
+    }
+  }
+
+  &--grande {
+    .mat-mdc-form-field {
+      font-size: 1.125rem;
+    }
+  }
+
+  // Largura completa
+  &--full {
+    width: 100%;
+  }
+
+  // Estados
+  &--desabilitado {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &--readonly {
+    .mat-mdc-text-field-wrapper {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  // Ícones
+  &--com-icone-esquerda {
+    .mat-mdc-form-field-icon-prefix {
+      margin-right: 8px;
+    }
+  }
+
+  &--com-icone-direita {
+    .mat-mdc-form-field-icon-suffix {
+      margin-left: 8px;
+    }
+  }
+}
+
+// Estilos específicos do Material Design
+.mat-mdc-form-field {
+  width: 100%;
+
+  // Bordas
+  .mdc-notched-outline {
+    border-color: rgba(0, 0, 0, 0.38);
+  }
+
+  .mdc-text-field--focused .mdc-notched-outline {
+    border-color: #1976d2;
+  }
+}
+
+// Estilos do autocomplete dropdown
+.mat-mdc-autocomplete-panel {
+  max-height: 256px;
+  overflow-y: auto;
+
+  .mat-mdc-option {
+    min-height: 48px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+
+    &:hover:not(.mat-mdc-option-disabled) {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    &.mat-mdc-option-selected:not(.mat-mdc-option-disabled) {
+      background-color: rgba(25, 118, 210, 0.12);
+    }
+
+    // Loading state
+    mat-progress-bar {
+      width: 100%;
+      height: 4px;
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .app-autocomplete {
+    &--pequeno,
+    &--medio,
+    &--grande {
+      .mat-mdc-form-field {
+        font-size: 1rem;
+      }
+    }
+  }
+}

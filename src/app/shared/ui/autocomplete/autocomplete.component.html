@@ -1,0 +1,42 @@
+<mat-form-field [appearance]="aparencia()">
+  <mat-label *ngIf="label()">{{ label() }}</mat-label>
+
+  <input
+    matInput
+    type="text"
+    [placeholder]="placeholder()"
+    [required]="obrigatorio()"
+    [disabled]="desabilitado()"
+    [readonly]="somenteLeitura()"
+    [value]="exibirValor()"
+    [matAutocomplete]="auto"
+    (input)="onInput($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+  />
+
+  <mat-icon *ngIf="iconeEsquerda()" matPrefix>{{ iconeEsquerda() }}</mat-icon>
+  <mat-icon *ngIf="iconeDireita()" matSuffix>{{ iconeDireita() }}</mat-icon>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="onOpcaoSelecionada($event)"
+  >
+    <mat-option *ngIf="carregando()" disabled>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      {{ mensagemCarregando() }}
+    </mat-option>
+
+    <ng-container *ngIf="!carregando()">
+      <mat-option *ngFor="let opcao of opcoes()" [value]="opcao">
+        {{ opcao.nome }}
+      </mat-option>
+
+      <mat-option *ngIf="opcoes().length === 0" disabled>
+        {{ mensagemSemResultados() }}
+      </mat-option>
+    </ng-container>
+  </mat-autocomplete>
+
+  <mat-hint *ngIf="dica()">{{ dica() }}</mat-hint>
+</mat-form-field>

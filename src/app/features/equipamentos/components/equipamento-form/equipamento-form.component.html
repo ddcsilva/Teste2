@@ -5,86 +5,48 @@
     <mat-card-content class="form-content">
       <div class="form-row">
         <!-- Código do Equipamento -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Código</mat-label>
-          <input
-            type="text"
-            matInput
-            maxlength="50"
-            placeholder="Código do Equipamento"
-            formControlName="codigo"
-          />
-          <mat-error *ngIf="codigo?.hasError('required')"
-            >Campo obrigatório</mat-error
-          >
-          <mat-error *ngIf="codigo?.hasError('maxlength')">
-            Campo Código deve ter no máximo <strong>50 caracteres</strong>
-          </mat-error>
-        </mat-form-field>
+        <app-input
+          class="form-field"
+          label="Código"
+          placeholder="Código do Equipamento"
+          [obrigatorio]="true"
+          formControlName="codigo"
+        />
 
         <!-- Categoria (Autocomplete) -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Categoria</mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Categoria"
-            formControlName="categoria"
-            [matAutocomplete]="autoCategoria"
-          />
-          <mat-autocomplete
-            #autoCategoria="matAutocomplete"
-            [displayWith]="exibirCategoria"
-            (optionSelected)="aoSelecionarCategoria($event)"
-          >
-            <mat-option
-              *ngFor="let categoria of categoriasAutoComplete$ | async"
-              [value]="categoria"
-            >
-              {{ categoria.nome }}
-            </mat-option>
-          </mat-autocomplete>
-          <mat-error *ngIf="categoria?.hasError('required')"
-            >Campo obrigatório</mat-error
-          >
-        </mat-form-field>
+        <app-autocomplete
+          class="form-field"
+          label="Categoria"
+          placeholder="Categoria"
+          [obrigatorio]="true"
+          formControlName="categoria"
+          iconeEsquerda="search"
+          [opcoes]="(categoriasAutoComplete$ | async) || []"
+          [carregando]="carregandoCategorias"
+          [exibirFuncao]="exibirCategoria"
+          (busca)="aoDigitarCategoria($event)"
+          (opcaoSelecionada)="aoSelecionarCategoria($event)"
+        />
 
         <!-- Localização -->
-        <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Localização</mat-label>
-          <mat-select
-            placeholder="Localização do Equipamento"
-            formControlName="codigoLocalizacao"
-            [compareWith]="aoCompararOptionValue"
-          >
-            <mat-option
-              *ngFor="let localizacao of localizacoes"
-              [value]="{ id: localizacao.codigo, nome: localizacao.nome }"
-            >
-              {{ localizacao.nome }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="codigoLocalizacao?.hasError('required')"
-            >Campo obrigatório</mat-error
-          >
-        </mat-form-field>
+        <app-select
+          class="form-field"
+          label="Localização"
+          placeholder="Localização do Equipamento"
+          [obrigatorio]="true"
+          formControlName="codigoLocalizacao"
+          [opcoes]="opcoesLocalizacao"
+        />
       </div>
 
       <div class="form-row">
         <!-- Link do Diagrama -->
-        <mat-form-field appearance="outline" class="form-field-full">
-          <mat-label>Link do Diagrama</mat-label>
-          <input
-            type="text"
-            matInput
-            maxlength="500"
-            placeholder="Link Sindotec: Diagrama do Equipamento"
-            formControlName="linkDiagrama"
-          />
-          <mat-error *ngIf="linkDiagrama?.hasError('maxlength')">
-            Campo Link deve ter no máximo <strong>500 caracteres</strong>
-          </mat-error>
-        </mat-form-field>
+        <app-input
+          class="form-field-full"
+          label="Link do Diagrama"
+          placeholder="Link Sindotec: Diagrama do Equipamento"
+          formControlName="linkDiagrama"
+        />
       </div>
 
       <div class="form-actions">

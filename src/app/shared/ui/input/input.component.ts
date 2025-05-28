@@ -14,7 +14,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -39,7 +38,6 @@ import {
     MatTooltipModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatAutocompleteModule,
     ReactiveFormsModule,
   ],
   templateUrl: './input.component.html',
@@ -69,7 +67,7 @@ export class InputComponent implements ControlValueAccessor {
   iconeDireita = input<string>();
   tooltip = input<string | ConfiguracaoTooltipInput>();
 
-  // Para select/autocomplete
+  // Para select
   opcoes = input<OpcaoSelect[]>([]);
 
   // Outputs
