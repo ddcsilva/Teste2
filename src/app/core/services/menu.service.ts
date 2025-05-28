@@ -5,106 +5,77 @@ import { MenuItem } from '../../shared/models/menu.model';
   providedIn: 'root',
 })
 export class MenuService {
-  public obterItensMenu(): MenuItem[] {
-    return [
-      this.criarItemMenu('home', 'ITEM_MENU_HOME', '/', 'Início'),
-      this.criarItemMenuComSubMenu(
-        'apps',
-        'ITEM_MENU_CADASTROS_BASICOS',
-        '',
-        'Cadastros Básicos',
-        [
-          this.criarItemMenu(
-            'devices',
-            'ITEM_MENU_EQUIPAMENTOS',
-            'equipamentos',
-            'Equipamentos'
-          ),
-          this.criarItemMenu(
-            'category',
-            'ITEM_MENU_CATEGORIAS',
-            'cadastrosBasicos/categorias',
-            'Categorias'
-          ),
-          this.criarItemMenu(
-            'location_on',
-            'ITEM_MENU_LOCALIZACOES',
-            'cadastrosBasicos/localizacoes',
-            'Localizações'
-          ),
-        ]
-      ),
-      this.criarItemMenuComSubMenu(
-        'assessment',
-        'ITEM_MENU_RELATORIOS',
-        '',
-        'Relatórios',
-        [
-          this.criarItemMenu(
-            'description',
-            'ITEM_MENU_RELATORIO_EQUIPAMENTOS',
-            'relatorios/equipamentos',
-            'Relatório de Equipamentos'
-          ),
-          this.criarItemMenu(
-            'list_alt',
-            'ITEM_MENU_RELATORIO_CATEGORIAS',
-            'relatorios/categorias',
-            'Relatório de Categorias'
-          ),
-        ]
-      ),
-      this.criarItemMenuComSubMenu(
-        'settings',
-        'ITEM_MENU_CONFIGURACOES',
-        '',
-        'Configurações',
-        [
-          this.criarItemMenu(
-            'people',
-            'ITEM_MENU_USUARIOS',
-            'configuracoes/usuarios',
-            'Usuários'
-          ),
-          this.criarItemMenu(
-            'admin_panel_settings',
-            'ITEM_MENU_PERFIS',
-            'configuracoes/perfis',
-            'Perfis'
-          ),
-        ]
-      ),
-    ];
-  }
-
-  private criarItemMenu(
-    icone: string,
-    permissao: string,
-    routerLink: string,
-    tooltip: string
-  ): MenuItem {
-    return {
-      icon: icone,
-      permission: permissao,
-      routerLink,
-      tooltip,
+  // Dados estáticos - criados uma única vez
+  private readonly itensMenu: MenuItem[] = [
+    {
+      icon: 'home',
+      permission: 'ITEM_MENU_HOME',
+      routerLink: '/',
+      tooltip: 'Início',
       subMenuItem: [],
-    };
-  }
+    },
+    {
+      icon: 'apps',
+      permission: 'ITEM_MENU_CADASTROS_BASICOS',
+      routerLink: '',
+      tooltip: 'Cadastros Básicos',
+      subMenuItem: [
+        {
+          permission: 'ITEM_MENU_EQUIPAMENTOS',
+          routerLink: 'equipamentos',
+          tooltip: 'Equipamentos',
+        },
+        {
+          permission: 'ITEM_MENU_CATEGORIAS',
+          routerLink: 'cadastrosBasicos/categorias',
+          tooltip: 'Categorias',
+        },
+        {
+          permission: 'ITEM_MENU_LOCALIZACOES',
+          routerLink: 'cadastrosBasicos/localizacoes',
+          tooltip: 'Localizações',
+        },
+      ],
+    },
+    {
+      icon: 'assessment',
+      permission: 'ITEM_MENU_RELATORIOS',
+      routerLink: '',
+      tooltip: 'Relatórios',
+      subMenuItem: [
+        {
+          permission: 'ITEM_MENU_RELATORIO_EQUIPAMENTOS',
+          routerLink: 'relatorios/equipamentos',
+          tooltip: 'Relatório de Equipamentos',
+        },
+        {
+          permission: 'ITEM_MENU_RELATORIO_CATEGORIAS',
+          routerLink: 'relatorios/categorias',
+          tooltip: 'Relatório de Categorias',
+        },
+      ],
+    },
+    {
+      icon: 'settings',
+      permission: 'ITEM_MENU_CONFIGURACOES',
+      routerLink: '',
+      tooltip: 'Configurações',
+      subMenuItem: [
+        {
+          permission: 'ITEM_MENU_USUARIOS',
+          routerLink: 'configuracoes/usuarios',
+          tooltip: 'Usuários',
+        },
+        {
+          permission: 'ITEM_MENU_PERFIS',
+          routerLink: 'configuracoes/perfis',
+          tooltip: 'Perfis',
+        },
+      ],
+    },
+  ];
 
-  private criarItemMenuComSubMenu(
-    icone: string,
-    permissao: string,
-    routerLink: string,
-    tooltip: string,
-    subMenuItem: MenuItem[]
-  ): MenuItem {
-    return {
-      icon: icone,
-      permission: permissao,
-      routerLink,
-      tooltip,
-      subMenuItem,
-    };
+  public obterItensMenu(): MenuItem[] {
+    return this.itensMenu;
   }
 }

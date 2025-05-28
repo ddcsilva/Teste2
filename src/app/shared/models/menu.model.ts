@@ -1,14 +1,14 @@
 export interface MenuItem {
-  icon: string;
-  permission: string;
-  routerLink: any;
-  tooltip: string;
-  subMenuItem: SubMenuItem[];
+  readonly icon: string;
+  readonly permission: string;
+  readonly routerLink: string;
+  readonly tooltip: string;
+  readonly subMenuItem: readonly SubMenuItem[];
 }
 
 export interface SubMenuItem {
-  icon: string;
-  permission: string;
-  routerLink: any;
-  tooltip: string;
+  readonly icon?: string;
+  readonly permission: string;
+  readonly routerLink: string;
+  readonly tooltip: string;
 }

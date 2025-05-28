@@ -89,19 +89,13 @@
 
       .sidebar-submenu-item {
         height: 40px;
-        padding: 0 $spacing-lg;
+        padding: 0 $spacing-lg 0 $spacing-xl;
         transition: $transition-hover;
         border-radius: 4px;
         margin: 0 $spacing-xs $spacing-xs $spacing-xs;
         @include overlay-hover();
         &:hover {
           cursor: pointer;
-        }
-
-        .sidebar-submenu-icon {
-          margin-right: $spacing-sm;
-          color: $color-text-secondary;
-          font-size: 18px;
         }
 
         .sidebar-submenu-text {
@@ -114,9 +108,6 @@
           background-color: rgba(0, 133, 66, 0.06);
           border-left: 3px solid $color-primary;
           color: $color-primary-dark;
-          .sidebar-submenu-icon {
-            color: $color-primary-dark;
-          }
           .sidebar-submenu-text {
             color: $color-primary-dark;
           }

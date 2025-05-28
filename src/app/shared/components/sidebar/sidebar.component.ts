@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
@@ -22,16 +22,11 @@ import { HasPermissionDirective } from '../../directives/has-permission.directiv
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
   private menuService = inject(MenuService);
 
-  menuItems: MenuItem[] = [];
+  readonly menuItems: MenuItem[] = this.menuService.obterItensMenu();
 
-  ngOnInit(): void {
-    this.menuItems = this.menuService.obterItensMenu();
-  }
-
-  // Métodos trackBy para otimização de performance
   trackByMenuItem(index: number, item: MenuItem): string {
     return item.permission + item.routerLink;
   }
