@@ -5,14 +5,6 @@
   @include container-completo;
 }
 
-.botao-exportar {
-  margin: $spacing-lg 0;
-
-  mat-icon {
-    margin-right: $spacing-sm;
-  }
-}
-
 .edit-icon {
   @include icone-acao($color-edit);
 }

@@ -110,6 +110,10 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
     );
   }
 
+  incluir(): void {
+    this.router.navigate(['/equipamentos/incluir']);
+  }
+
   exportarExcel(): void {
     this.gridService.exportarDadosParaExcel(
       () => this.equipamentoService.exportarExcel(this.filtrosSubject.value),

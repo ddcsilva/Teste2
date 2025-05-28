@@ -1,8 +1,169 @@
-<mat-expansion-panel [expanded]="true" class="filtros-card">
+<mat-expansion-panel [expanded]="expandido" class="filtros-card">
   <mat-expansion-panel-header>
-    <mat-panel-title>Filtros</mat-panel-title>
+    <mat-panel-title>{{ titulo }}</mat-panel-title>
   </mat-expansion-panel-header>
-  <section class="filtros-panel__content">
-    <ng-content></ng-content>
-  </section>
+
+  <div class="filtros-content" [formGroup]="formulario">
+    <!-- Grid de Campos -->
+    <div class="filtros-campos" *ngIf="campos.length > 0">
+      <div
+        class="filtros-linha"
+        *ngFor="let linha of camposOrganizados(); trackBy: trackByIndex"
+      >
+        <div
+          class="filtro-campo-wrapper"
+          [class]="'campos-' + linha.length"
+          *ngFor="let campo of linha; trackBy: trackByCampo"
+        >
+          <!-- Campo Text/Email/Number -->
+          <mat-form-field
+            *ngIf="
+              campo.tipo === 'text' ||
+              campo.tipo === 'email' ||
+              campo.tipo === 'number'
+            "
+            appearance="outline"
+            [class]="obterClassesCampo(campo)"
+          >
+            <mat-label>{{ campo.label }}</mat-label>
+            <input
+              matInput
+              [formControlName]="campo.nome"
+              [type]="obterTipoCampo(campo)"
+              [placeholder]="campo.placeholder || ''"
+              [required]="campo.obrigatorio || false"
+            />
+            <mat-hint *ngIf="campo.dica">{{ campo.dica }}</mat-hint>
+          </mat-form-field>
+
+          <!-- Campo Select -->
+          <mat-form-field
+            *ngIf="campo.tipo === 'select'"
+            appearance="outline"
+            [class]="obterClassesCampo(campo)"
+          >
+            <mat-label>{{ campo.label }}</mat-label>
+            <mat-select [formControlName]="campo.nome">
+              <mat-option
+                *ngFor="let opcao of campo.opcoes; trackBy: trackByOpcao"
+                [value]="opcao.valor"
+                [disabled]="opcao.desabilitado"
+              >
+                {{ opcao.texto }}
+              </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="campo.dica">{{ campo.dica }}</mat-hint>
+          </mat-form-field>
+
+          <!-- Campo Date -->
+          <mat-form-field
+            *ngIf="campo.tipo === 'date'"
+            appearance="outline"
+            [class]="obterClassesCampo(campo)"
+          >
+            <mat-label>{{ campo.label }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [formControlName]="campo.nome"
+              [placeholder]="campo.placeholder || ''"
+              readonly
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-hint *ngIf="campo.dica">{{ campo.dica }}</mat-hint>
+          </mat-form-field>
+
+          <!-- Campo Autocomplete -->
+          <mat-form-field
+            *ngIf="campo.tipo === 'autocomplete'"
+            appearance="outline"
+            [class]="obterClassesCampo(campo)"
+          >
+            <mat-label>{{ campo.label }}</mat-label>
+            <input
+              matInput
+              [formControlName]="campo.nome"
+              [matAutocomplete]="auto"
+              [placeholder]="campo.placeholder || ''"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let opcao of campo.opcoes; trackBy: trackByOpcao"
+                [value]="opcao.valor"
+                [disabled]="opcao.desabilitado"
+              >
+                {{ opcao.texto }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-hint *ngIf="campo.dica">{{ campo.dica }}</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Área de Botões -->
+    <div class="filtros-botoes" *ngIf="botoesConfig()">
+      <!-- Botões da Esquerda -->
+      <div class="botoes-esquerda">
+        <!-- Exportar -->
+        <app-botao
+          *ngIf="botoesConfig().exportar as botao"
+          [variante]="botao.cor || 'accent'"
+          [desabilitado]="botao.desabilitado || false || carregando"
+          [carregando]="botao.loading || false"
+          [tooltip]="botao.tooltip"
+          [icone]="botao.icone"
+          (clicado)="onExportar()"
+        >
+          {{ botao.texto }}
+        </app-botao>
+
+        <!-- Limpar -->
+        <app-botao
+          *ngIf="botoesConfig().limpar as botao"
+          [variante]="botao.cor || 'secondary'"
+          [desabilitado]="botao.desabilitado || false || carregando"
+          [carregando]="botao.loading || false"
+          [tooltip]="botao.tooltip"
+          [icone]="botao.icone"
+          (clicado)="onLimpar()"
+        >
+          {{ botao.texto }}
+        </app-botao>
+
+        <!-- Pesquisar -->
+        <app-botao
+          *ngIf="botoesConfig().pesquisar as botao"
+          [variante]="botao.cor || 'primary'"
+          [desabilitado]="botao.desabilitado || false || carregando"
+          [carregando]="botao.loading || false"
+          [tooltip]="botao.tooltip"
+          [icone]="botao.icone"
+          (clicado)="onFiltrar()"
+        >
+          {{ botao.texto }}
+        </app-botao>
+      </div>
+
+      <!-- Botões da Direita -->
+      <div class="botoes-direita">
+        <!-- Incluir -->
+        <app-botao
+          *ngIf="botoesConfig().incluir as botao"
+          [variante]="botao.cor || 'primary'"
+          [desabilitado]="botao.desabilitado || false || carregando"
+          [carregando]="botao.loading || false"
+          [tooltip]="botao.tooltip"
+          [icone]="botao.icone"
+          (clicado)="onIncluir()"
+        >
+          {{ botao.texto }}
+        </app-botao>
+      </div>
+    </div>
+  </div>
 </mat-expansion-panel>

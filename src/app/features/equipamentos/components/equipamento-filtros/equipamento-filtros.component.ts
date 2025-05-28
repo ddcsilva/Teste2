@@ -1,96 +1,138 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FiltrosComponent } from '../../../../shared/components/filtros/filtros.component';
+import {
+  FiltroCampo,
+  FiltroBotoes,
+} from '../../../../shared/components/filtros/models';
 import { EquipamentoFiltro } from '../../models/equipamento-filtro.model';
-import { FiltroBotoesComponent } from '../../../../shared/components/filtro-botoes/filtro-botoes.component';
 
 @Component({
   selector: 'app-equipamento-filtros',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FiltrosComponent,
-    FiltroBotoesComponent,
-  ],
+  imports: [CommonModule, FiltrosComponent],
   template: `
-    <app-filtros>
-      <div class="filtros-container">
-        <mat-form-field appearance="outline">
-          <mat-label>Código</mat-label>
-          <input
-            matInput
-            [(ngModel)]="filtros.codigo"
-            placeholder="Digite o código do equipamento"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Categoria</mat-label>
-          <input
-            matInput
-            [(ngModel)]="filtros.categoria"
-            placeholder="Digite a categoria"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Localização</mat-label>
-          <input
-            matInput
-            [(ngModel)]="filtros.localizacao"
-            placeholder="Digite a localização"
-          />
-        </mat-form-field>
-
-        <app-filtro-botoes
-          (pesquisar)="onBuscar()"
-          (limpar)="onLimpar()"
-        ></app-filtro-botoes>
-      </div>
-    </app-filtros>
+    <app-filtros
+      titulo="Filtros de Equipamentos"
+      [campos]="camposFiltro"
+      [botoes]="botoesConfig"
+      [valoresIniciais]="valoresIniciais"
+      [carregando]="carregando()"
+      (filtrar)="onFiltrar($event)"
+      (limpar)="onLimpar()"
+      (incluir)="onIncluir()"
+      (exportar)="onExportar()"
+    ></app-filtros>
   `,
-  styles: [
-    `
-      .filtros-container {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        align-items: flex-end;
-      }
-
-      .filtros-container mat-form-field {
-        flex: 1;
-        min-width: 200px;
-      }
-    `,
-  ],
 })
 export class EquipamentoFiltrosComponent {
+  // =============================================================================
+  // OUTPUTS
+  // =============================================================================
   @Output() buscar = new EventEmitter<EquipamentoFiltro>();
   @Output() limpar = new EventEmitter<void>();
+  @Output() incluir = new EventEmitter<void>();
+  @Output() exportar = new EventEmitter<void>();
 
-  filtros: EquipamentoFiltro = {
+  // =============================================================================
+  // CONFIGURAÇÃO DOS CAMPOS
+  // =============================================================================
+  readonly camposFiltro: FiltroCampo[] = [
+    {
+      nome: 'codigo',
+      label: 'Código',
+      tipo: 'text',
+      placeholder: 'Digite o código do equipamento',
+    },
+    {
+      nome: 'categoria',
+      label: 'Categoria',
+      tipo: 'text',
+      placeholder: 'Digite a categoria',
+    },
+    {
+      nome: 'localizacao',
+      label: 'Localização',
+      tipo: 'text',
+      placeholder: 'Digite a localização',
+    },
+  ];
+
+  // =============================================================================
+  // CONFIGURAÇÃO DOS BOTÕES
+  // =============================================================================
+  readonly botoesConfig: FiltroBotoes = {
+    exportar: {
+      habilitado: true,
+      texto: 'Exportar',
+      icone: 'file_download',
+      cor: 'accent',
+      tooltip: 'Exportar dados para Excel',
+    },
+    limpar: {
+      habilitado: true,
+      texto: 'Limpar',
+      icone: 'clear',
+      cor: 'secondary',
+      tooltip: 'Limpar todos os filtros',
+    },
+    pesquisar: {
+      habilitado: true,
+      texto: 'Pesquisar',
+      icone: 'search',
+      cor: 'primary',
+      tooltip: 'Buscar equipamentos',
+    },
+    incluir: {
+      habilitado: true,
+      texto: 'Incluir',
+      icone: 'add',
+      cor: 'primary',
+      tooltip: 'Adicionar novo equipamento',
+    },
+  };
+
+  // =============================================================================
+  // ESTADO
+  // =============================================================================
+  readonly valoresIniciais: EquipamentoFiltro = {
     codigo: '',
     categoria: '',
     localizacao: '',
   };
 
-  onBuscar(): void {
-    this.buscar.emit({ ...this.filtros });
+  // Signal para estado de carregamento
+  readonly carregando = signal(false);
+
+  // =============================================================================
+  // MÉTODOS DE EVENTO
+  // =============================================================================
+  onFiltrar(valores: Record<string, any>): void {
+    const filtros: EquipamentoFiltro = {
+      codigo: valores['codigo'] || '',
+      categoria: valores['categoria'] || '',
+      localizacao: valores['localizacao'] || '',
+    };
+
+    this.buscar.emit(filtros);
   }
 
   onLimpar(): void {
-    this.filtros = {
-      codigo: '',
-      categoria: '',
-      localizacao: '',
-    };
     this.limpar.emit();
+  }
+
+  onIncluir(): void {
+    this.incluir.emit();
+  }
+
+  onExportar(): void {
+    this.exportar.emit();
+  }
+
+  // =============================================================================
+  // MÉTODOS PÚBLICOS
+  // =============================================================================
+  definirCarregando(carregando: boolean): void {
+    this.carregando.set(carregando);
   }
 }

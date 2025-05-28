@@ -1,16 +1,12 @@
 <app-cabecalho-pagina [titulo]="'Equipamentos'" />
 
 <div class="container">
-  <app-equipamento-filtros (buscar)="buscar($event)" (limpar)="limpar()" />
-
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="exportarExcel()"
-    class="botao-exportar"
-  >
-    <mat-icon>file_download</mat-icon> Exportar
-  </button>
+  <app-equipamento-filtros
+    (buscar)="buscar($event)"
+    (limpar)="limpar()"
+    (incluir)="incluir()"
+    (exportar)="exportarExcel()"
+  />
 
   <app-grid-generico
     [colunas]="colunas"
