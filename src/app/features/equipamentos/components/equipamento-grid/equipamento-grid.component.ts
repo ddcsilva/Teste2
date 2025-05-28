@@ -10,7 +10,11 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CabecalhoPaginaComponent } from '../../../../shared/components/cabecalho-pagina/cabecalho-pagina.component';
-import { EquipamentoFiltrosComponent } from '../equipamento-filtros/equipamento-filtros.component';
+import { FiltrosComponent } from '../../../../shared/components/filtros/filtros.component';
+import {
+  FiltroCampo,
+  FiltroBotoes,
+} from '../../../../shared/components/filtros/models';
 import { GridGenericoComponent } from '../../../../shared/components/grid-generico/grid-generico.component';
 
 @Component({
@@ -21,7 +25,7 @@ import { GridGenericoComponent } from '../../../../shared/components/grid-generi
     MatButtonModule,
     MatIconModule,
     CabecalhoPaginaComponent,
-    EquipamentoFiltrosComponent,
+    FiltrosComponent,
     GridGenericoComponent,
   ],
   templateUrl: './equipamento-grid.component.html',
@@ -33,6 +37,61 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
     codigo: 'Código',
     categoria: 'Categoria',
     localizacao: 'Localização',
+  };
+
+  // =============================================================================
+  // CONFIGURAÇÃO DOS FILTROS
+  // =============================================================================
+  readonly camposFiltroEquipamentos: FiltroCampo[] = [
+    {
+      nome: 'codigo',
+      label: 'Código',
+      tipo: 'text',
+      placeholder: 'Digite o código do equipamento',
+    },
+    {
+      nome: 'categoria',
+      label: 'Categoria',
+      tipo: 'text',
+      placeholder: 'Digite a categoria',
+    },
+    {
+      nome: 'localizacao',
+      label: 'Localização',
+      tipo: 'text',
+      placeholder: 'Digite a localização',
+    },
+  ];
+
+  readonly botoesConfigEquipamentos: FiltroBotoes = {
+    exportar: {
+      habilitado: true,
+      texto: 'Exportar',
+      icone: 'file_download',
+      cor: 'accent',
+      tooltip: 'Exportar dados para Excel',
+    },
+    limpar: {
+      habilitado: true,
+      texto: 'Limpar',
+      icone: 'clear',
+      cor: 'secondary',
+      tooltip: 'Limpar todos os filtros',
+    },
+    pesquisar: {
+      habilitado: true,
+      texto: 'Pesquisar',
+      icone: 'search',
+      cor: 'primary',
+      tooltip: 'Buscar equipamentos',
+    },
+    incluir: {
+      habilitado: true,
+      texto: 'Incluir',
+      icone: 'add',
+      cor: 'primary',
+      tooltip: 'Adicionar novo equipamento',
+    },
   };
 
   filtrosSubject = new BehaviorSubject<EquipamentoFiltro>({
@@ -80,7 +139,12 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
     this.carregarDados(evento.pageIndex + 1, evento.pageSize);
   }
 
-  buscar(filtros: EquipamentoFiltro): void {
+  buscar(valores: Record<string, any>): void {
+    const filtros: EquipamentoFiltro = {
+      codigo: valores['codigo'] || '',
+      categoria: valores['categoria'] || '',
+      localizacao: valores['localizacao'] || '',
+    };
     this.filtrosSubject.next(filtros);
     this.carregarDados();
   }

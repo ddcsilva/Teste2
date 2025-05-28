@@ -1,8 +1,12 @@
 <app-cabecalho-pagina [titulo]="'Equipamentos'" />
 
 <div class="container">
-  <app-equipamento-filtros
-    (buscar)="buscar($event)"
+  <app-filtros
+    titulo="Filtros de Equipamentos"
+    [campos]="camposFiltroEquipamentos"
+    [botoes]="botoesConfigEquipamentos"
+    [valoresIniciais]="filtrosSubject.value"
+    (filtrar)="buscar($event)"
     (limpar)="limpar()"
     (incluir)="incluir()"
     (exportar)="exportarExcel()"
