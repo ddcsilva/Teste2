@@ -103,11 +103,20 @@ mat-form-field {
   flex: 1;
 
   // Garantir que todos os campos tenham a mesma aparência
-  app-input,
-  app-autocomplete,
-  app-select {
+  .mat-mdc-form-field {
     width: 100%;
-    display: block;
+
+    .mdc-text-field--outlined {
+      background-color: white;
+    }
+
+    .mdc-notched-outline {
+      border-color: rgba(0, 0, 0, 0.38);
+    }
+
+    .mdc-text-field--focused .mdc-notched-outline {
+      border-color: #1976d2;
+    }
   }
 }
 
@@ -115,9 +124,21 @@ mat-form-field {
   flex: 1;
   width: 100%;
 
-  app-input {
+  // Garantir que o campo full tenha a mesma aparência
+  .mat-mdc-form-field {
     width: 100%;
-    display: block;
+
+    .mdc-text-field--outlined {
+      background-color: white;
+    }
+
+    .mdc-notched-outline {
+      border-color: rgba(0, 0, 0, 0.38);
+    }
+
+    .mdc-text-field--focused .mdc-notched-outline {
+      border-color: #1976d2;
+    }
   }
 }
 
@@ -143,32 +164,28 @@ mat-form-field {
   color: white !important;
 }
 
-// Garantir que todos os form fields tenham a mesma altura e aparência
-::ng-deep {
-  .form-field {
-    app-input,
-    app-autocomplete,
-    app-select {
-      .mat-mdc-form-field {
-        width: 100%;
+// Garantir que todos os mat-form-field tenham a mesma altura
+mat-form-field {
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: 8px;
+  }
 
-        .mdc-text-field--outlined {
-          background-color: white !important;
-        }
+  // Forçar fundo branco em todos os campos
+  .mdc-text-field--outlined {
+    background-color: white !important;
+  }
 
-        .mdc-notched-outline {
-          border-color: rgba(0, 0, 0, 0.38);
-        }
+  // Garantir altura uniforme
+  .mdc-text-field {
+    height: 56px;
+  }
 
-        .mdc-text-field--focused .mdc-notched-outline {
-          border-color: #1976d2;
-        }
-
-        // Garantir altura uniforme
-        .mdc-text-field {
-          height: 56px;
-        }
-      }
+  // Estilo uniforme para selects
+  .mat-mdc-select {
+    .mat-mdc-select-trigger {
+      height: 56px;
+      display: flex;
+      align-items: center;
     }
   }
 }

@@ -5,48 +5,108 @@
     <mat-card-content class="form-content">
       <div class="form-row">
         <!-- Código do Equipamento -->
-        <app-input
-          class="form-field"
-          label="Código"
-          placeholder="Código do Equipamento"
-          [obrigatorio]="true"
-          formControlName="codigo"
-        />
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Código</mat-label>
+          <input
+            type="text"
+            matInput
+            maxlength="50"
+            placeholder="Código do Equipamento"
+            formControlName="codigo"
+          />
+          <mat-error *ngIf="codigo?.hasError('required')"
+            >Campo obrigatório</mat-error
+          >
+          <mat-error *ngIf="codigo?.hasError('maxlength')">
+            Campo Código deve ter no máximo <strong>50 caracteres</strong>
+          </mat-error>
+        </mat-form-field>
 
         <!-- Categoria (Autocomplete) -->
-        <app-autocomplete
-          class="form-field"
-          label="Categoria"
-          placeholder="Categoria"
-          [obrigatorio]="true"
-          formControlName="categoria"
-          iconeEsquerda="search"
-          [opcoes]="(categoriasAutoComplete$ | async) || []"
-          [carregando]="carregandoCategorias"
-          [exibirFuncao]="exibirCategoria"
-          (busca)="aoDigitarCategoria($event)"
-          (opcaoSelecionada)="aoSelecionarCategoria($event)"
-        />
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Categoria</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Categoria"
+            formControlName="categoria"
+            [matAutocomplete]="autoCategoria"
+            (input)="aoDigitarCategoria($event)"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+          <mat-autocomplete
+            #autoCategoria="matAutocomplete"
+            [displayWith]="exibirCategoria"
+            (optionSelected)="aoSelecionarCategoria($event)"
+          >
+            <!-- Loading state -->
+            <mat-option *ngIf="carregandoCategorias" disabled>
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              <span style="margin-left: 8px">Buscando...</span>
+            </mat-option>
+
+            <!-- Opções normais -->
+            <ng-container *ngIf="!carregandoCategorias">
+              <mat-option
+                *ngFor="let categoria of categoriasAutoComplete$ | async"
+                [value]="categoria"
+              >
+                {{ categoria.nome }}
+              </mat-option>
+
+              <!-- Nenhum resultado -->
+              <mat-option
+                *ngIf="
+                  (categoriasAutoComplete$ | async)?.length === 0 &&
+                  !carregandoCategorias
+                "
+                disabled
+              >
+                Nenhuma categoria encontrada
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+          <mat-error *ngIf="categoria?.hasError('required')"
+            >Campo obrigatório</mat-error
+          >
+        </mat-form-field>
 
         <!-- Localização -->
-        <app-select
-          class="form-field"
-          label="Localização"
-          placeholder="Localização do Equipamento"
-          [obrigatorio]="true"
-          formControlName="codigoLocalizacao"
-          [opcoes]="opcoesLocalizacao"
-        />
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Localização</mat-label>
+          <mat-select
+            placeholder="Localização do Equipamento"
+            formControlName="codigoLocalizacao"
+            [compareWith]="aoCompararOptionValue"
+          >
+            <mat-option
+              *ngFor="let localizacao of localizacoes"
+              [value]="{ id: localizacao.codigo, nome: localizacao.nome }"
+            >
+              {{ localizacao.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="codigoLocalizacao?.hasError('required')"
+            >Campo obrigatório</mat-error
+          >
+        </mat-form-field>
       </div>
 
       <div class="form-row">
         <!-- Link do Diagrama -->
-        <app-input
-          class="form-field-full"
-          label="Link do Diagrama"
-          placeholder="Link Sindotec: Diagrama do Equipamento"
-          formControlName="linkDiagrama"
-        />
+        <mat-form-field appearance="outline" class="form-field-full">
+          <mat-label>Link do Diagrama</mat-label>
+          <input
+            type="text"
+            matInput
+            maxlength="500"
+            placeholder="Link Sindotec: Diagrama do Equipamento"
+            formControlName="linkDiagrama"
+          />
+          <mat-error *ngIf="linkDiagrama?.hasError('maxlength')">
+            Campo Link deve ter no máximo <strong>500 caracteres</strong>
+          </mat-error>
+        </mat-form-field>
       </div>
 
       <div class="form-actions">

@@ -21,9 +21,3 @@ export interface OpcaoSelect {
   texto: string;
   desabilitado?: boolean;
 }
-
-export interface OpcaoAutocomplete {
-  id: any;
-  nome: string;
-  desabilitado?: boolean;
-}
