@@ -87,7 +87,7 @@ ol {
   list-style: none;
 }
 
-/* Formulários
+/* Formulários - RESET BÁSICO SEM CONFLITAR COM ANGULAR MATERIAL
    ========================================================================== */
 
 button,
@@ -139,22 +139,9 @@ button::-moz-focus-inner,
   padding: 0;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-textarea {
-  border: 1px solid $color-border;
-  border-radius: 4px;
-  padding: $spacing-sm $spacing-md;
-  transition: $transition-normal;
-
-  &:focus {
-    outline: none;
-    border-color: $color-primary;
-    box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
-  }
-}
+/* REMOVIDOS OS ESTILOS DE INPUT QUE CONFLITAVAM COM ANGULAR MATERIAL
+   Os inputs dentro de mat-form-field devem usar apenas os estilos do Angular Material
+   ========================================================================== */
 
 textarea {
   resize: vertical;
