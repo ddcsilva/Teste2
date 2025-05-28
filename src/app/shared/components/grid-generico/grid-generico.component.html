@@ -36,6 +36,7 @@
           mat-sort-header
           class="grid-header-cell"
           [class.sortable]="configCompleta().mostrarOrdenacao"
+          [ngStyle]="obterEstilosColuna(coluna, $index)"
         >
           {{ obterNomeColuna(coluna) }}
         </th>
@@ -44,6 +45,7 @@
           mat-header-cell
           *matHeaderCellDef
           class="grid-header-cell grid-actions-header"
+          [ngStyle]="obterEstilosColuna(coluna, $index)"
         >
           <!-- Header vazio - ícones são auto-explicativos -->
         </th>
@@ -56,6 +58,7 @@
           *matCellDef="let element"
           class="grid-data-cell"
           [attr.data-label]="obterNomeColuna(coluna)"
+          [ngStyle]="obterEstilosColuna(coluna, $index)"
         >
           <span class="cell-content">
             {{ obterValorColuna(element, coluna) }}
@@ -66,6 +69,7 @@
           mat-cell
           *matCellDef="let element"
           class="grid-data-cell grid-actions-cell"
+          [ngStyle]="obterEstilosColuna(coluna, $index)"
         >
           <div class="actions-container">
             @if (acoesTemplate(); as template) {

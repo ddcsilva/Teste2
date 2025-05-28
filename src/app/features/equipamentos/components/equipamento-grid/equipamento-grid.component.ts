@@ -19,6 +19,7 @@ import {
 import {
   GridGenericoComponent,
   GridConfig,
+  ColunaConfig,
 } from '../../../../shared/components/grid-generico/grid-generico.component';
 
 @Component({
@@ -53,6 +54,32 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
     mostrarPaginacao: true,
     mostrarOrdenacao: true,
     densidade: 'comfortable', // 'compact' | 'comfortable' | 'spacious'
+    colunas: [
+      {
+        nome: 'codigo',
+        largura: '15%',
+        larguraMinima: '120px',
+        alinhamento: 'left',
+      },
+      {
+        nome: 'categoria',
+        largura: '25%',
+        larguraMinima: '150px',
+        alinhamento: 'left',
+      },
+      {
+        nome: 'localizacao',
+        largura: '45%',
+        larguraMinima: '200px',
+        alinhamento: 'left',
+      },
+      {
+        nome: 'acoes',
+        largura: '15%',
+        larguraMinima: '120px',
+        alinhamento: 'center',
+      },
+    ],
   };
 
   // =============================================================================

@@ -65,6 +65,13 @@ export class PaginadorPortugues extends MatPaginatorIntl {
 // =============================================================================
 // INTERFACES E TIPOS
 // =============================================================================
+export interface ColunaConfig {
+  nome: string;
+  largura?: string; // Ex: '15%', '200px', 'auto'
+  larguraMinima?: string; // Ex: '120px'
+  alinhamento?: 'left' | 'center' | 'right';
+}
+
 export interface GridDados<T = any> {
   itens: T[];
   totalItens: number;
@@ -76,6 +83,7 @@ export interface GridConfig {
   mostrarPaginacao: boolean;
   mostrarOrdenacao: boolean;
   densidade: 'compact' | 'comfortable' | 'spacious';
+  colunas?: ColunaConfig[]; // Configuração opcional das colunas
 }
 
 @Component({
@@ -171,6 +179,39 @@ export class GridGenericoComponent<T = any>
   readonly totalItens = computed(() => this.dados().totalItens);
   readonly paginaAtual = computed(() => this.paginaAtualSignal());
 
+  readonly configColunas = computed(() => {
+    const config = this.configCompleta();
+    const colunas = this.colunas();
+    const colunasComAcoes = this.colunasComAcoes();
+
+    // Se há configuração personalizada, usar ela
+    if (config.colunas && config.colunas.length > 0) {
+      return config.colunas;
+    }
+
+    // Senão, criar configuração padrão baseada no número de colunas
+    const totalColunas = colunasComAcoes.length;
+    const temAcoes = this.acoesTemplate() !== undefined;
+
+    return this.criarConfiguracaoPadrao(colunas, temAcoes);
+  });
+
+  readonly estilosColunas = computed(() => {
+    const configColunas = this.configColunas();
+    const estilos: { [key: string]: any } = {};
+
+    configColunas.forEach((config, index) => {
+      const seletor = `nth-child(${index + 1})`;
+      estilos[seletor] = {
+        width: config.largura || 'auto',
+        minWidth: config.larguraMinima || 'auto',
+        textAlign: config.alinhamento || 'left',
+      };
+    });
+
+    return estilos;
+  });
+
   readonly classesTabela = computed(() => {
     const densidade = this.configCompleta().densidade;
     return {
@@ -258,6 +299,19 @@ export class GridGenericoComponent<T = any>
     return Math.ceil(total / porPagina);
   }
 
+  obterEstilosColuna(coluna: string, index: number): any {
+    const configColunas = this.configColunas();
+    const config = configColunas[index];
+
+    if (!config) return {};
+
+    return {
+      width: config.largura || 'auto',
+      'min-width': config.larguraMinima || 'auto',
+      'text-align': config.alinhamento || 'left',
+    };
+  }
+
   // =============================================================================
   // TRACK BY FUNCTIONS (PERFORMANCE)
   // =============================================================================
@@ -316,5 +370,29 @@ export class GridGenericoComponent<T = any>
       .replace(/([A-Z])/g, ' $1')
       .replace(/^./, (str) => str.toUpperCase())
       .trim();
+  }
+
+  private criarConfiguracaoPadrao(
+    colunas: string[],
+    temAcoes: boolean
+  ): ColunaConfig[] {
+    const config: ColunaConfig[] = [];
+    colunas.forEach((nome, index) => {
+      config.push({
+        nome,
+        alinhamento: 'left',
+        largura: 'auto',
+        larguraMinima: 'auto',
+      });
+    });
+    if (temAcoes) {
+      config.push({
+        nome: 'acoes',
+        alinhamento: 'center',
+        largura: '100px',
+        larguraMinima: '100px',
+      });
+    }
+    return config;
   }
 }
