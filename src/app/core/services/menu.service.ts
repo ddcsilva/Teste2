@@ -15,57 +15,59 @@ export class MenuService {
       subMenuItem: [
         {
           permission: 'ITEM_MENU_EQUIPAMENTOS',
-          routerLink: 'equipamentos',
+          routerLink: 'cadastrosBasicos/equipamentos',
           tooltip: 'Equipamentos',
         },
-        {
-          permission: 'ITEM_MENU_CATEGORIAS',
-          routerLink: 'cadastrosBasicos/categorias',
-          tooltip: 'Categorias',
-        },
-        {
-          permission: 'ITEM_MENU_LOCALIZACOES',
-          routerLink: 'cadastrosBasicos/localizacoes',
-          tooltip: 'Localizações',
-        },
+        // Rotas futuras - comentadas até implementação
+        // {
+        //   permission: 'ITEM_MENU_CATEGORIAS',
+        //   routerLink: 'cadastrosBasicos/categorias',
+        //   tooltip: 'Categorias',
+        // },
+        // {
+        //   permission: 'ITEM_MENU_LOCALIZACOES',
+        //   routerLink: 'cadastrosBasicos/localizacoes',
+        //   tooltip: 'Localizações',
+        // },
       ],
     },
-    {
-      icon: 'assessment',
-      permission: 'ITEM_MENU_RELATORIOS',
-      routerLink: '',
-      tooltip: 'Relatórios',
-      subMenuItem: [
-        {
-          permission: 'ITEM_MENU_RELATORIO_EQUIPAMENTOS',
-          routerLink: 'relatorios/equipamentos',
-          tooltip: 'Relatório de Equipamentos',
-        },
-        {
-          permission: 'ITEM_MENU_RELATORIO_CATEGORIAS',
-          routerLink: 'relatorios/categorias',
-          tooltip: 'Relatório de Categorias',
-        },
-      ],
-    },
-    {
-      icon: 'settings',
-      permission: 'ITEM_MENU_CONFIGURACOES',
-      routerLink: '',
-      tooltip: 'Configurações',
-      subMenuItem: [
-        {
-          permission: 'ITEM_MENU_USUARIOS',
-          routerLink: 'configuracoes/usuarios',
-          tooltip: 'Usuários',
-        },
-        {
-          permission: 'ITEM_MENU_PERFIS',
-          routerLink: 'configuracoes/perfis',
-          tooltip: 'Perfis',
-        },
-      ],
-    },
+    // Módulos futuros - comentados até implementação
+    // {
+    //   icon: 'assessment',
+    //   permission: 'ITEM_MENU_RELATORIOS',
+    //   routerLink: '',
+    //   tooltip: 'Relatórios',
+    //   subMenuItem: [
+    //     {
+    //       permission: 'ITEM_MENU_RELATORIO_EQUIPAMENTOS',
+    //       routerLink: 'relatorios/equipamentos',
+    //       tooltip: 'Relatório de Equipamentos',
+    //     },
+    //     {
+    //       permission: 'ITEM_MENU_RELATORIO_CATEGORIAS',
+    //       routerLink: 'relatorios/categorias',
+    //       tooltip: 'Relatório de Categorias',
+    //     },
+    //   ],
+    // },
+    // {
+    //   icon: 'settings',
+    //   permission: 'ITEM_MENU_CONFIGURACOES',
+    //   routerLink: '',
+    //   tooltip: 'Configurações',
+    //   subMenuItem: [
+    //     {
+    //       permission: 'ITEM_MENU_USUARIOS',
+    //       routerLink: 'configuracoes/usuarios',
+    //       tooltip: 'Usuários',
+    //     },
+    //     {
+    //       permission: 'ITEM_MENU_PERFIS',
+    //       routerLink: 'configuracoes/perfis',
+    //       tooltip: 'Perfis',
+    //     },
+    //   ],
+    // },
   ];
 
   public obterItensMenu(): MenuItem[] {

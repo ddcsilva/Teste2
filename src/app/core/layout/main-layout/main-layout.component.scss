@@ -44,11 +44,6 @@
   background-color: var(--cor-superficie);
   box-shadow: $shadow-sidebar;
   border-right: 1px solid var(--cor-borda);
-
-  &:focus-within {
-    outline: 2px solid var(--cor-primaria);
-    outline-offset: -2px;
-  }
 }
 
 .conteudo-principal {

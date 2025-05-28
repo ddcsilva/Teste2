@@ -14,22 +14,14 @@ export const routes: Routes = [
           import('./features/home/home.routes').then((m) => m.homeRoutes),
       },
       {
-        path: 'equipamentos',
+        path: 'cadastrosBasicos',
         loadChildren: () =>
-          import('./features/equipamentos/equipamentos.routes').then(
-            (m) => m.equipamentosRoutes
+          import('./features/cadastros-basicos/cadastros-basicos.routes').then(
+            (m) => m.cadastrosBasicosRoutes
           ),
         data: { preload: true },
       },
       // Rotas futuras - comentadas até implementação
-      // {
-      //   path: 'cadastrosBasicos',
-      //   loadChildren: () =>
-      //     import('./features/cadastros-basicos/cadastros-basicos.routes').then(
-      //       (m) => m.cadastrosBasicosRoutes
-      //     ),
-      //   data: { preload: true },
-      // },
       // {
       //   path: 'relatorios',
       //   loadChildren: () =>
@@ -45,10 +37,10 @@ export const routes: Routes = [
       //     ),
       // },
 
-      // Redirecionamentos para compatibilidade
+      // Redirecionamento para compatibilidade
       {
-        path: 'cadastrosBasicos/equipamentos',
-        redirectTo: 'equipamentos',
+        path: 'equipamentos',
+        redirectTo: 'cadastrosBasicos/equipamentos',
         pathMatch: 'full',
       },
     ],
