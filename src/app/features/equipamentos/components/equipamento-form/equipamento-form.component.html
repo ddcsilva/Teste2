@@ -1,78 +1,102 @@
-<app-cabecalho-pagina
-  [titulo]="isEdicao ? 'Editar Equipamento' : 'Incluir Equipamento'"
-/>
+<form #formEquipamento="ngForm" [formGroup]="formulario">
+  <app-cabecalho-pagina [titulo]="titulo"></app-cabecalho-pagina>
 
-<div class="container">
-  <mat-card class="form-card">
-    <mat-card-content>
-      <form [formGroup]="formulario" (ngSubmit)="salvar()" novalidate>
+  <mat-card appearance="outlined" class="form-container">
+    <mat-card-content class="form-content">
+      <div class="form-row">
         <!-- Código do Equipamento -->
         <app-input
-          label="Código do Equipamento"
-          placeholder="Digite o código do equipamento"
-          dica="Máximo 50 caracteres"
+          class="form-field"
+          label="Código"
+          placeholder="Código do Equipamento"
           [obrigatorio]="true"
           formControlName="codigo"
           iconeEsquerda="qr_code"
+          dica="Máximo 50 caracteres"
         />
 
-        <!-- Categoria -->
-        <app-select
-          label="Categoria"
-          placeholder="Selecione uma categoria"
-          [obrigatorio]="true"
-          [opcoes]="opcoesCategoria()"
-          [carregando]="carregando()"
-          textoCarregando="Carregando categorias..."
-          formControlName="categoriaId"
-          iconeEsquerda="category"
-        />
+        <!-- Categoria (Autocomplete simulado com Select) -->
+        <mat-form-field class="form-field">
+          <mat-label>Categoria</mat-label>
+          <mat-select
+            placeholder="Categoria"
+            formControlName="categoria"
+            [compareWith]="aoCompararOptionValue"
+          >
+            <mat-option
+              *ngFor="let categoria of localizacoes"
+              [value]="{ id: categoria.codigo, nome: categoria.nome }"
+            >
+              {{ categoria.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="categoria?.hasError('required')"
+            >Campo obrigatório</mat-error
+          >
+        </mat-form-field>
 
         <!-- Localização -->
-        <app-select
-          label="Localização"
-          placeholder="Selecione uma localização"
-          [obrigatorio]="true"
-          [opcoes]="opcoesLocalizacao()"
-          [carregando]="carregando()"
-          textoCarregando="Carregando localizações..."
-          formControlName="codigoLocalizacao"
-          iconeEsquerda="location_on"
-        />
+        <mat-form-field class="form-field">
+          <mat-label>Localização</mat-label>
+          <mat-select
+            placeholder="Localização do Equipamento"
+            formControlName="codigoLocalizacao"
+            [compareWith]="aoCompararOptionValue"
+          >
+            <mat-option
+              *ngFor="let localizacao of localizacoes"
+              [value]="{ id: localizacao.codigo, nome: localizacao.nome }"
+            >
+              {{ localizacao.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="codigoLocalizacao?.hasError('required')"
+            >Campo obrigatório</mat-error
+          >
+        </mat-form-field>
+      </div>
 
+      <div class="form-row">
         <!-- Link do Diagrama -->
         <app-input
+          class="form-field-full"
           label="Link do Diagrama"
-          placeholder="Digite o link do diagrama (opcional)"
-          dica="Máximo 500 caracteres"
-          tipo="url"
+          placeholder="Link Sindotec: Diagrama do Equipamento"
           formControlName="linkDiagrama"
           iconeEsquerda="link"
+          dica="Máximo 500 caracteres"
         />
+      </div>
 
-        <!-- Botões de Ação -->
-        <div class="form-actions">
-          <app-botao
-            variante="secondary"
-            tipo="button"
-            icone="arrow_back"
-            (clicado)="voltar()"
-            [desabilitado]="salvando()"
+      <div class="form-actions">
+        <div class="action-buttons-left">
+          <button
+            class="color-button-cancel"
+            mat-raised-button
+            (click)="aoCancelar(formEquipamento)"
           >
-            Voltar
-          </app-botao>
-
-          <app-botao
-            variante="primary"
-            tipo="submit"
-            icone="save"
-            [carregando]="salvando()"
-            [desabilitado]="formulario.invalid || carregando()"
+            Cancelar
+          </button>
+          <button
+            type="reset"
+            mat-raised-button
+            color="accent"
+            (click)="aoLimpar(formEquipamento)"
           >
-            {{ isEdicao ? "Atualizar" : "Salvar" }}
-          </app-botao>
+            Limpar
+          </button>
         </div>
-      </form>
+        <div class="action-buttons-right">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="aoSalvar()"
+            [disabled]="formulario.invalid"
+          >
+            {{ botaoSubmit }}
+          </button>
+        </div>
+      </div>
     </mat-card-content>
   </mat-card>
-</div>
+</form>

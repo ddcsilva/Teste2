@@ -11,15 +11,15 @@ export const equipamentosRoutes: Routes = [
   {
     path: 'incluir',
     loadComponent: () =>
-      import('./components/equipamento-form/equipamento-form.component').then(
-        (m) => m.EquipamentoFormComponent
+      import('./pages/equipamento-create.component').then(
+        (m) => m.EquipamentoCreateComponent
       ),
   },
   {
     path: 'editar/:id',
     loadComponent: () =>
-      import('./components/equipamento-form/equipamento-form.component').then(
-        (m) => m.EquipamentoFormComponent
+      import('./pages/equipamento-edit.component').then(
+        (m) => m.EquipamentoEditComponent
       ),
   },
   // Futuras rotas do módulo equipamentos podem ser adicionadas aqui
