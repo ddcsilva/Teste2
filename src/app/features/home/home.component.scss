@@ -1,8 +1,8 @@
-@use '../../../styles/tokens' as *;
-@use '../../../styles/utilities/mixins' as *;
+@use "../../../styles/tokens" as *;
+@use "../../../styles/utilities/mixins" as *;
 
 .home-container {
-  @include container(1200px);
+  @include container-full;
 }
 
 .welcome-section {

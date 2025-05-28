@@ -1,8 +1,8 @@
 @use "../../../../styles/tokens" as *;
 
 .cabecalho-pagina {
-  padding: $spacing-md 0 $spacing-sm 0;
-  margin-bottom: $spacing-lg;
+  padding: $spacing-sm 0;
+  margin-bottom: $spacing-md;
   border-bottom: 1px solid $color-border;
   background-color: transparent;
 
@@ -18,8 +18,8 @@
 
 // Variação para páginas com menos espaçamento
 .cabecalho-pagina--compact {
-  padding: $spacing-sm 0;
-  margin-bottom: $spacing-md;
+  padding: $spacing-xs 0;
+  margin-bottom: $spacing-sm;
 
   .titulo {
     font-size: 1.5rem;

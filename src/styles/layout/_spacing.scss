@@ -22,6 +22,30 @@
   padding: 0 $spacing-lg;
 }
 
+// Classes para remover espaçamentos
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-padding-horizontal {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.no-padding-vertical {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.full-width {
+  width: 100% !important;
+  max-width: none !important;
+}
+
 // Novas classes utilitárias usando tokens
 .p-xs {
   padding: $spacing-xs;

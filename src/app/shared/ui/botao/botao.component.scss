@@ -1,148 +1,78 @@
 @use "../../../../styles/tokens" as *;
 @use "../../../../styles/utilities/mixins" as *;
 
-:host {
-  .app-botao {
-    margin: 0 $spacing-sm;
-    min-width: 100px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    border-radius: 6px;
-    position: relative;
-    overflow: hidden;
+.app-botao {
+  margin: 0 $spacing-sm;
+  min-width: 100px;
+  font-weight: 500;
+  border-radius: 6px;
 
-    // Estados base usando mixin
-    &.app-danger {
-      @include button-states($color-error);
-    }
+  // Estados usando mixin
+  &.app-danger {
+    @include button-states($color-error);
+  }
+  &.app-secondary {
+    @include button-states($color-secondary);
+  }
+  &.app-warning {
+    @include button-states($color-warning-light, $color-text-primary);
+  }
+  &.app-success {
+    @include button-states($color-success);
+  }
+  &.mat-primary,
+  &.mat-accent {
+    @include button-states($color-primary);
+  }
 
-    &.app-secondary {
-      @include button-states($color-secondary);
-    }
+  // Tamanhos
+  &.app-botao--pequeno {
+    font-size: 0.875rem;
+    padding: $spacing-sm $spacing-lg;
+    min-height: 32px;
+    font-weight: 400;
+  }
 
-    &.app-warning {
-      @include button-states($color-warning-light, $color-text-primary);
-    }
+  &.app-botao--grande {
+    font-size: 1.125rem;
+    padding: $spacing-md $spacing-2xl;
+    min-height: 48px;
+    font-weight: 600;
+  }
 
-    &.app-success {
-      @include button-states($color-success);
-    }
+  &.app-botao--full {
+    width: 100%;
+  }
 
-    &.mat-primary,
-    &.mat-accent {
-      @include button-states($color-primary);
-    }
+  // Loading
+  &.app-botao--loading {
+    @include loading-state;
 
-    // Tamanhos
-    &.app-botao--pequeno {
-      font-size: 0.875rem;
-      padding: $spacing-sm $spacing-lg;
-      min-height: 32px;
-      font-weight: 400;
-    }
-
-    &.app-botao--grande {
-      font-size: 1.125rem;
-      padding: $spacing-md $spacing-2xl;
-      min-height: 48px;
-      font-weight: 600;
-    }
-
-    &.app-botao--full {
-      width: 100%;
-    }
-
-    // Estado de loading
-    &.app-botao--loading {
-      @include loading-state;
-
-      .icone-carregando {
-        animation: $animation-spin;
-        margin-right: $spacing-sm;
-        font-size: 18px;
-        z-index: 2;
-        position: relative;
-      }
-    }
-
-    // Efeito ripple
-    &::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    &:active::after {
-      width: 120%;
-      height: 120%;
-      opacity: 1;
-      transition: width 0.1s ease, height 0.1s ease, opacity 0.1s ease;
-    }
-
-    // Media queries
-    @media (prefers-color-scheme: dark) {
-      box-shadow: $shadow-dark-sm;
-
-      &:hover:not(:disabled) {
-        box-shadow: $shadow-dark-md;
-      }
-    }
-
-    @media print {
-      box-shadow: none;
-      background: white !important;
-      color: black !important;
-      border: 1px solid black;
-    }
-
-    // Performance optimization
-    &:hover {
-      will-change: transform, box-shadow;
-    }
-
-    &:not(:hover) {
-      will-change: auto;
+    .icone-carregando {
+      animation: $animation-spin;
+      margin-right: $spacing-sm;
     }
   }
 }
 
-// Estilos para ícones
-.icone-esquerda {
-  margin-right: $spacing-sm;
+// Ícones
+.icone-esquerda,
+.icone-direita,
+.icone-carregando {
   font-size: 18px;
   width: 18px;
   height: 18px;
 }
 
-.icone-direita {
-  margin-left: $spacing-sm;
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-}
-
+.icone-esquerda,
 .icone-carregando {
   margin-right: $spacing-sm;
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
+}
+.icone-direita {
+  margin-left: $spacing-sm;
 }
 
 .texto-botao {
   display: inline-flex;
   align-items: center;
-}
-
-// Animação fade-in para o host
-:host {
-  animation: $animation-fade-in;
 }

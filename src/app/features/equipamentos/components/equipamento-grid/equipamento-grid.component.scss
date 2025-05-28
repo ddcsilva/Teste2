@@ -2,7 +2,7 @@
 @use "../../../../../styles/utilities/mixins" as *;
 
 .container {
-  @include container();
+  @include container-full;
 }
 
 .botao-exportar {

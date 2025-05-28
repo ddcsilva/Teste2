@@ -2,5 +2,5 @@
 @use "../../../../styles/utilities/mixins" as *;
 
 .equipamentos-container {
-  @include container();
+  @include container-full;
 }

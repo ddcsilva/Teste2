@@ -73,11 +73,38 @@
   }
 }
 
-// Mixin para container responsivo
-@mixin container($max-width: 1400px) {
+// Mixin para container responsivo - VERSÃO ATUALIZADA
+@mixin container($max-width: none, $padding: 0) {
+  @if $max-width != none {
+    max-width: $max-width;
+    margin: 0 auto;
+  }
+  @if $padding != 0 {
+    padding: $padding;
+  }
+}
+
+// Mixin para container full-width (aproveita todo o espaço)
+@mixin container-full {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Mixin para container com padding mínimo
+@mixin container-minimal($padding: $spacing-sm) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: $padding;
+}
+
+// Mixin para container centrado sem padding
+@mixin container-centered($max-width: 1400px) {
   max-width: $max-width;
   margin: 0 auto;
-  padding: $content-padding;
+  padding: 0;
 }
 
 // Mixin para texto truncado
