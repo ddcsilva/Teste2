@@ -14,6 +14,7 @@ import {
   input,
   output,
   AfterViewInit,
+  afterNextRender,
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -162,6 +163,18 @@ export class GridGenericoComponent<T = any>
   // =============================================================================
   // LIFECYCLE
   // =============================================================================
+  constructor() {
+    // Configurar sort após a view estar renderizada
+    afterNextRender(() => {
+      if (this.sort) {
+        const ds = this.dataSource();
+        if (ds) {
+          ds.sort = this.sort;
+        }
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.configurarPaginacao();
   }
@@ -172,19 +185,8 @@ export class GridGenericoComponent<T = any>
   }
 
   ngAfterViewInit(): void {
-    // Configurar ordenação após a view estar inicializada
-    if (this.sort) {
-      // Usar um effect para reagir a mudanças no dataSource e configurar o sort
-      effect(
-        () => {
-          const ds = this.dataSource();
-          if (ds && this.sort) {
-            ds.sort = this.sort;
-          }
-        },
-        { allowSignalWrites: true }
-      );
-    }
+    // Sort será configurado automaticamente pelo sortEffect
+    // quando o ViewChild estiver disponível
   }
 
   // =============================================================================
