@@ -213,7 +213,9 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
   }
 
   editar(equipamento: Equipamento): void {
-    this.router.navigate([`/equipamentos/editar/${equipamento.id}`]);
+    this.router.navigate([
+      `/cadastrosBasicos/equipamentos/editar/${equipamento.id}`,
+    ]);
   }
 
   excluir(equipamento: Equipamento): void {
@@ -233,7 +235,7 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
   }
 
   incluir(): void {
-    this.router.navigate(['/equipamentos/incluir']);
+    this.router.navigate(['/cadastrosBasicos/equipamentos/incluir']);
   }
 
   exportarExcel(): void {

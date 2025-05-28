@@ -3,9 +3,9 @@ import { Routes } from '@angular/router';
 export const cadastrosBasicosRoutes: Routes = [
   {
     path: 'equipamentos',
-    loadComponent: () =>
-      import('../equipamentos/pages/equipamentos.component').then(
-        (m) => m.EquipamentosComponent
+    loadChildren: () =>
+      import('../equipamentos/equipamentos.routes').then(
+        (m) => m.equipamentosRoutes
       ),
   },
   // Rotas futuras - comentadas até implementação dos componentes

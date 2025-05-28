@@ -1,0 +1,83 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.form-card {
+  margin-top: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  mat-card-content {
+    padding: 32px;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .form-card {
+    margin-top: 16px;
+
+    mat-card-content {
+      padding: 24px 16px;
+    }
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+
+    app-botao {
+      width: 100%;
+    }
+  }
+}
+
+// Melhorias visuais para os campos
+mat-form-field {
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: 8px;
+  }
+}
+
+// Estados de loading
+.loading-overlay {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+}

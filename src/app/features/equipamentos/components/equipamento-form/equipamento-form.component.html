@@ -1,0 +1,106 @@
+<app-cabecalho-pagina
+  [titulo]="isEdicao ? 'Editar Equipamento' : 'Incluir Equipamento'"
+/>
+
+<div class="container">
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="formulario" (ngSubmit)="salvar()" novalidate>
+        <!-- Código do Equipamento -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Código do Equipamento</mat-label>
+          <input
+            matInput
+            formControlName="codigo"
+            placeholder="Digite o código do equipamento"
+            maxlength="50"
+          />
+          <mat-hint>Máximo 50 caracteres</mat-hint>
+          @if (temErro('codigo', 'required')) {
+          <mat-error>{{ obterMensagemErro("codigo") }}</mat-error>
+          } @if (temErro('codigo', 'maxlength')) {
+          <mat-error>{{ obterMensagemErro("codigo") }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Categoria -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Categoria</mat-label>
+          <mat-select
+            formControlName="categoriaId"
+            placeholder="Selecione uma categoria"
+          >
+            @if (carregando()) {
+            <mat-option disabled>Carregando categorias...</mat-option>
+            } @else { @for (categoria of categorias; track categoria.id) {
+            <mat-option [value]="categoria.id">{{ categoria.nome }}</mat-option>
+            } }
+          </mat-select>
+          @if (temErro('categoriaId', 'required')) {
+          <mat-error>{{ obterMensagemErro("categoriaId") }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Localização -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Localização</mat-label>
+          <mat-select
+            formControlName="codigoLocalizacao"
+            placeholder="Selecione uma localização"
+          >
+            @if (carregando()) {
+            <mat-option disabled>Carregando localizações...</mat-option>
+            } @else { @for (localizacao of localizacoes; track
+            localizacao.codigo) {
+            <mat-option [value]="localizacao.codigo">{{
+              localizacao.nome
+            }}</mat-option>
+            } }
+          </mat-select>
+          @if (temErro('codigoLocalizacao', 'required')) {
+          <mat-error>{{ obterMensagemErro("codigoLocalizacao") }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Link do Diagrama -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Link do Diagrama</mat-label>
+          <input
+            matInput
+            formControlName="linkDiagrama"
+            placeholder="Digite o link do diagrama (opcional)"
+            maxlength="500"
+            type="url"
+          />
+          <mat-hint>Máximo 500 caracteres</mat-hint>
+          @if (temErro('linkDiagrama', 'maxlength')) {
+          <mat-error>{{ obterMensagemErro("linkDiagrama") }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Botões de Ação -->
+        <div class="form-actions">
+          <app-botao
+            variante="secondary"
+            tipo="button"
+            icone="arrow_back"
+            (clicado)="voltar()"
+            [desabilitado]="salvando()"
+          >
+            Voltar
+          </app-botao>
+
+          <app-botao
+            variante="primary"
+            tipo="submit"
+            icone="save"
+            [carregando]="salvando()"
+            [desabilitado]="formulario.invalid || carregando()"
+          >
+            {{ isEdicao ? "Atualizar" : "Salvar" }}
+          </app-botao>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
