@@ -2,7 +2,7 @@
 @use "../../../styles/utilities/mixins" as *;
 
 .home-container {
-  @include container-full;
+  @include container-completo;
 }
 
 .welcome-section {
@@ -25,7 +25,7 @@
 }
 
 .cards-section {
-  @include responsive-grid(300px, $gap-lg);
+  @include grid-responsivo(300px, $gap-lg);
   margin-top: $spacing-3xl;
 }
 
@@ -37,7 +37,7 @@
   cursor: pointer;
   position: relative;
 
-  @include card-hover();
+  @include hover-card();
 
   h3 {
     color: $color-primary;

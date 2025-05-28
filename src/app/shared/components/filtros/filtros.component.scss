@@ -7,7 +7,7 @@
   .filtros-card {
     border: 1px solid $color-border;
     border-radius: 8px;
-    @include card-hover();
+    @include hover-card();
 
     .mat-expansion-panel-header {
       .mat-panel-title {

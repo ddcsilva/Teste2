@@ -9,7 +9,7 @@
     padding: 0 $spacing-lg;
     transition: $transition-hover;
 
-    @include hover-overlay();
+    @include overlay-hover();
 
     &:hover {
       cursor: pointer;
@@ -30,7 +30,7 @@
     padding: 0 $spacing-lg !important;
     transition: $transition-hover;
 
-    @include hover-overlay();
+    @include overlay-hover();
   }
 
   .mat-expansion-panel {

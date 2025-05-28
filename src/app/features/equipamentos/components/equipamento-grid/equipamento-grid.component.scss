@@ -2,7 +2,7 @@
 @use "../../../../../styles/utilities/mixins" as *;
 
 .container {
-  @include container-full;
+  @include container-completo;
 }
 
 .botao-exportar {
@@ -14,9 +14,9 @@
 }
 
 .edit-icon {
-  @include action-icon($color-edit);
+  @include icone-acao($color-edit);
 }
 
 .delete-icon {
-  @include action-icon($color-delete);
+  @include icone-acao($color-delete);
 }

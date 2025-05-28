@@ -1,11 +1,11 @@
 @use "../tokens" as *;
 
 // Classes utilitárias de margem
-.margin-left {
+.margem-esquerda {
   margin-left: $spacing-xl;
 }
 
-.margin-top-15 {
+.margem-topo-15 {
   margin-top: 15px;
 }
 
@@ -23,30 +23,30 @@
 }
 
 // Classes para remover espaçamentos
-.no-padding {
+.sem-padding {
   padding: 0 !important;
 }
 
-.no-margin {
+.sem-margem {
   margin: 0 !important;
 }
 
-.no-padding-horizontal {
+.sem-padding-horizontal {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
 
-.no-padding-vertical {
+.sem-padding-vertical {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
-.full-width {
+.largura-completa {
   width: 100% !important;
   max-width: none !important;
 }
 
-// Novas classes utilitárias usando tokens
+// Classes utilitárias de padding usando tokens
 .p-xs {
   padding: $spacing-xs;
 }
@@ -69,6 +69,7 @@
   padding: $spacing-3xl;
 }
 
+// Classes utilitárias de margem usando tokens
 .m-xs {
   margin: $spacing-xs;
 }
@@ -106,14 +107,55 @@
 }
 
 // Espaçamentos específicos de componentes
-.container-padding {
+.padding-container {
   padding: $content-padding;
 }
 
-.card-padding {
+.padding-card {
   padding: $card-padding;
 }
 
-.form-spacing {
+.espacamento-formulario {
   margin-bottom: $form-spacing;
+}
+
+// Classes de compatibilidade (mantém nomes antigos)
+.margin-left {
+  @extend .margem-esquerda;
+}
+
+.margin-top-15 {
+  @extend .margem-topo-15;
+}
+
+.no-padding {
+  @extend .sem-padding;
+}
+
+.no-margin {
+  @extend .sem-margem;
+}
+
+.no-padding-horizontal {
+  @extend .sem-padding-horizontal;
+}
+
+.no-padding-vertical {
+  @extend .sem-padding-vertical;
+}
+
+.full-width {
+  @extend .largura-completa;
+}
+
+.container-padding {
+  @extend .padding-container;
+}
+
+.card-padding {
+  @extend .padding-card;
+}
+
+.form-spacing {
+  @extend .espacamento-formulario;
 }

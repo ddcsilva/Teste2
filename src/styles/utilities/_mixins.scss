@@ -1,18 +1,18 @@
 @use "../tokens" as *;
 
 // Mixin para botões com hover e estados
-@mixin button-states(
-  $bg-color,
-  $text-color: $color-text-on-primary,
-  $hover-transform: true
+@mixin estados-botao(
+  $cor-fundo,
+  $cor-texto: $color-text-on-primary,
+  $transformar-hover: true
 ) {
-  background-color: $bg-color;
-  color: $text-color;
+  background-color: $cor-fundo;
+  color: $cor-texto;
   transition: $transition-button;
   box-shadow: $shadow-button;
 
   &:hover:not(:disabled) {
-    @if $hover-transform {
+    @if $transformar-hover {
       transform: translateY(-1px);
     }
     box-shadow: $shadow-button-hover;
@@ -41,51 +41,51 @@
 }
 
 // Mixin para cards com hover
-@mixin card-hover(
-  $shadow-base: $shadow-card,
-  $shadow-hover: $shadow-card-hover
+@mixin hover-card(
+  $sombra-base: $shadow-card,
+  $sombra-hover: $shadow-card-hover
 ) {
-  box-shadow: $shadow-base;
+  box-shadow: $sombra-base;
   transition: $transition-card;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: $shadow-hover;
+    box-shadow: $sombra-hover;
   }
 }
 
 // Mixin para ícones de ação
-@mixin action-icon($color, $hover-bg: rgba($color, 0.1)) {
-  color: $color;
+@mixin icone-acao($cor, $fundo-hover: rgba($cor, 0.1)) {
+  color: $cor;
   transition: $transition-background;
 
   &:hover {
-    background-color: $hover-bg;
+    background-color: $fundo-hover;
   }
 }
 
 // Mixin para overlay de hover
-@mixin hover-overlay($opacity: 0.04) {
+@mixin overlay-hover($opacidade: 0.04) {
   transition: $transition-background;
 
   &:hover {
-    background-color: rgba(0, 0, 0, $opacity);
+    background-color: rgba(0, 0, 0, $opacidade);
   }
 }
 
 // Mixin para container responsivo - VERSÃO ATUALIZADA
-@mixin container($max-width: none, $padding: 0) {
-  @if $max-width != none {
-    max-width: $max-width;
+@mixin container($largura-maxima: none, $espacamento: 0) {
+  @if $largura-maxima != none {
+    max-width: $largura-maxima;
     margin: 0 auto;
   }
-  @if $padding != 0 {
-    padding: $padding;
+  @if $espacamento != 0 {
+    padding: $espacamento;
   }
 }
 
 // Mixin para container full-width (aproveita todo o espaço)
-@mixin container-full {
+@mixin container-completo {
   width: 100%;
   max-width: none;
   margin: 0;
@@ -93,43 +93,43 @@
 }
 
 // Mixin para container com padding mínimo
-@mixin container-minimal($padding: $spacing-sm) {
+@mixin container-minimo($espacamento: $spacing-sm) {
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: $padding;
+  padding: $espacamento;
 }
 
 // Mixin para container centrado sem padding
-@mixin container-centered($max-width: 1400px) {
-  max-width: $max-width;
+@mixin container-centralizado($largura-maxima: 1400px) {
+  max-width: $largura-maxima;
   margin: 0 auto;
   padding: 0;
 }
 
 // Mixin para texto truncado
-@mixin text-truncate {
+@mixin texto-truncado {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 // Mixin para flexbox centralizado
-@mixin flex-center {
+@mixin flex-centralizado {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 // Mixin para grid responsivo
-@mixin responsive-grid($min-width: 300px, $gap: $gap-md) {
+@mixin grid-responsivo($largura-minima: 300px, $espacamento: $gap-md) {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
-  gap: $gap;
+  grid-template-columns: repeat(auto-fit, minmax($largura-minima, 1fr));
+  gap: $espacamento;
 }
 
-// Mixin para loading state
-@mixin loading-state {
+// Mixin para estado de carregamento
+@mixin estado-carregando {
   pointer-events: none;
   position: relative;
 
@@ -143,4 +143,48 @@
     background: rgba(255, 255, 255, 0.1);
     z-index: 1;
   }
+}
+
+// Mixins de compatibilidade (mantém nomes antigos)
+@mixin button-states(
+  $bg-color,
+  $text-color: $color-text-on-primary,
+  $hover-transform: true
+) {
+  @include estados-botao($bg-color, $text-color, $hover-transform);
+}
+
+@mixin card-hover(
+  $shadow-base: $shadow-card,
+  $shadow-hover: $shadow-card-hover
+) {
+  @include hover-card($shadow-base, $shadow-hover);
+}
+
+@mixin action-icon($color, $hover-bg: rgba($color, 0.1)) {
+  @include icone-acao($color, $hover-bg);
+}
+
+@mixin hover-overlay($opacity: 0.04) {
+  @include overlay-hover($opacity);
+}
+
+@mixin container-full {
+  @include container-completo;
+}
+
+@mixin text-truncate {
+  @include texto-truncado;
+}
+
+@mixin flex-center {
+  @include flex-centralizado;
+}
+
+@mixin responsive-grid($min-width: 300px, $gap: $gap-md) {
+  @include grid-responsivo($min-width, $gap);
+}
+
+@mixin loading-state {
+  @include estado-carregando;
 }

@@ -9,20 +9,20 @@
 
   // Estados usando mixin
   &.app-danger {
-    @include button-states($color-error);
+    @include estados-botao($color-error);
   }
   &.app-secondary {
-    @include button-states($color-secondary);
+    @include estados-botao($color-secondary);
   }
   &.app-warning {
-    @include button-states($color-warning-light, $color-text-primary);
+    @include estados-botao($color-warning-light, $color-text-primary);
   }
   &.app-success {
-    @include button-states($color-success);
+    @include estados-botao($color-success);
   }
   &.mat-primary,
   &.mat-accent {
-    @include button-states($color-primary);
+    @include estados-botao($color-primary);
   }
 
   // Tamanhos
@@ -44,9 +44,9 @@
     width: 100%;
   }
 
-  // Loading
+  // Carregamento
   &.app-botao--loading {
-    @include loading-state;
+    @include estado-carregando;
 
     .icone-carregando {
       animation: $animation-spin;
