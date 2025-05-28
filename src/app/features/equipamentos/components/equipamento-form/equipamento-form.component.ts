@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -20,6 +20,9 @@ import { EquipamentoService } from '../../services/equipamento.service';
 import { Equipamento } from '../../models/equipamento.model';
 import { CabecalhoPaginaComponent } from '../../../../shared/components/cabecalho-pagina/cabecalho-pagina.component';
 import { BotaoComponent } from '../../../../shared/ui/botao/botao.component';
+import { InputComponent } from '../../../../shared/ui/input/input.component';
+import { SelectComponent } from '../../../../shared/ui/select/select.component';
+import { OpcaoSelect } from '../../../../shared/ui/select/select.types';
 
 @Component({
   selector: 'app-equipamento-form',
@@ -35,6 +38,8 @@ import { BotaoComponent } from '../../../../shared/ui/botao/botao.component';
     MatCardModule,
     CabecalhoPaginaComponent,
     BotaoComponent,
+    InputComponent,
+    SelectComponent,
   ],
   templateUrl: './equipamento-form.component.html',
   styleUrls: ['./equipamento-form.component.scss'],
@@ -51,6 +56,21 @@ export class EquipamentoFormComponent implements OnInit, OnDestroy {
   // Dados para selects
   categorias: { id: number; nome: string }[] = [];
   localizacoes: { codigo: string; nome: string }[] = [];
+
+  // Computed para opções dos selects
+  opcoesCategoria = computed<OpcaoSelect[]>(() =>
+    this.categorias.map((categoria) => ({
+      valor: categoria.id,
+      texto: categoria.nome,
+    }))
+  );
+
+  opcoesLocalizacao = computed<OpcaoSelect[]>(() =>
+    this.localizacoes.map((localizacao) => ({
+      valor: localizacao.codigo,
+      texto: localizacao.nome,
+    }))
+  );
 
   private destroy$ = new Subject<void>();
 

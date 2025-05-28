@@ -1,0 +1,43 @@
+<mat-form-field
+  [appearance]="aparencia()"
+  [class]="classesComputadas()"
+  [matTooltip]="tooltipConfig()?.texto || ''"
+  [matTooltipPosition]="tooltipConfig()?.posicao || 'above'"
+  [matTooltipShowDelay]="tooltipConfig()?.delay || 500"
+>
+  <mat-label *ngIf="label()">{{ label() }}</mat-label>
+
+  <!-- Ícone à esquerda -->
+  <mat-icon *ngIf="iconeEsquerda()" matPrefix>{{ iconeEsquerda() }}</mat-icon>
+
+  <!-- Select -->
+  <mat-select
+    [placeholder]="placeholder()"
+    [required]="obrigatorio()"
+    [disabled]="desabilitado() || carregando()"
+    [value]="valor()"
+    (selectionChange)="onSelectionChange($event.value)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+  >
+    <!-- Estado de carregamento -->
+    @if (carregando()) {
+    <mat-option disabled>{{ textoCarregando() }}</mat-option>
+    } @else if (opcoes().length === 0) {
+    <!-- Estado vazio -->
+    <mat-option disabled>{{ textoVazio() }}</mat-option>
+    } @else {
+    <!-- Opções -->
+    @for (opcao of opcoes(); track trackByOpcao($index, opcao)) {
+    <mat-option [value]="opcao.valor" [disabled]="opcao.desabilitado">
+      {{ opcao.texto }}
+    </mat-option>
+    } }
+  </mat-select>
+
+  <!-- Ícone à direita -->
+  <mat-icon *ngIf="iconeDireita()" matSuffix>{{ iconeDireita() }}</mat-icon>
+
+  <!-- Dica/hint -->
+  <mat-hint *ngIf="dica()">{{ dica() }}</mat-hint>
+</mat-form-field>

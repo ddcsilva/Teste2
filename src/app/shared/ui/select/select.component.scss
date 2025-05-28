@@ -1,0 +1,49 @@
+.app-select {
+  width: 100%;
+
+  &--full {
+    width: 100%;
+  }
+
+  &--pequeno {
+    .mat-mdc-form-field {
+      font-size: 0.875rem;
+    }
+  }
+
+  &--grande {
+    .mat-mdc-form-field {
+      font-size: 1.125rem;
+    }
+  }
+
+  &--com-icone-esquerda {
+    .mat-mdc-form-field-prefix {
+      margin-right: 8px;
+    }
+  }
+
+  &--com-icone-direita {
+    .mat-mdc-form-field-suffix {
+      margin-left: 8px;
+    }
+  }
+
+  &--desabilitado {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &--carregando {
+    .mat-mdc-select {
+      cursor: wait;
+    }
+  }
+}
+
+// Melhorias visuais
+.mat-mdc-form-field {
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: 8px;
+  }
+}
