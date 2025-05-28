@@ -1,0 +1,32 @@
+<mat-form-field
+  [appearance]="aparencia()"
+  [class]="classesComputadas()"
+  [matTooltip]="tooltipConfig()?.texto || ''"
+  [matTooltipPosition]="tooltipConfig()?.posicao || 'above'"
+  [matTooltipShowDelay]="tooltipConfig()?.delay || 500"
+>
+  <mat-label *ngIf="label()">{{ label() }}</mat-label>
+
+  <!-- Ícone à esquerda -->
+  <mat-icon *ngIf="iconeEsquerda()" matPrefix>{{ iconeEsquerda() }}</mat-icon>
+
+  <!-- Input de texto -->
+  <input
+    matInput
+    [type]="tipo()"
+    [placeholder]="placeholder()"
+    [required]="obrigatorio()"
+    [disabled]="desabilitado()"
+    [readonly]="somenteLeitura()"
+    [value]="valor()"
+    (input)="onInput($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+  />
+
+  <!-- Ícone à direita -->
+  <mat-icon *ngIf="iconeDireita()" matSuffix>{{ iconeDireita() }}</mat-icon>
+
+  <!-- Dica/hint -->
+  <mat-hint *ngIf="dica()">{{ dica() }}</mat-hint>
+</mat-form-field>
