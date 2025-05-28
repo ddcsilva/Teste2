@@ -29,18 +29,26 @@
       @for (coluna of colunasComAcoes(); track trackByColuna($index, coluna)) {
       <ng-container [matColumnDef]="coluna">
         <!-- Cabeçalho da Coluna -->
-        @if (coluna !== 'acoes') {
+        @if (coluna !== 'acoes') { @if (configCompleta().mostrarOrdenacao) {
         <th
           mat-header-cell
           *matHeaderCellDef
           mat-sort-header
-          class="grid-header-cell"
-          [class.sortable]="configCompleta().mostrarOrdenacao"
+          class="grid-header-cell sortable"
           [ngStyle]="obterEstilosColuna(coluna, $index)"
         >
           {{ obterNomeColuna(coluna) }}
         </th>
         } @else {
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="grid-header-cell"
+          [ngStyle]="obterEstilosColuna(coluna, $index)"
+        >
+          {{ obterNomeColuna(coluna) }}
+        </th>
+        } } @else {
         <th
           mat-header-cell
           *matHeaderCellDef

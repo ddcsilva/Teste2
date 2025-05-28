@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { SortDirection } from '@angular/material/sort';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { EquipamentoService } from '../../services/equipamento.service';
 import { GridService } from '../../../../shared/services/grid.service';
@@ -184,7 +185,7 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
   // =============================================================================
   // NOVOS MÉTODOS PARA GRID MODERNIZADO
   // =============================================================================
-  aoMudarOrdenacao(evento: { coluna: string; direcao: 'asc' | 'desc' }): void {
+  aoMudarOrdenacao(evento: { coluna: string; direcao: SortDirection }): void {
     console.log('Ordenação alterada:', evento);
     // Aqui você pode implementar ordenação server-side
     // this.carregarDados(1, this.gridConfig.itensPorPagina, evento);

@@ -2,6 +2,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  AfterViewInit,
   TemplateRef,
   ViewChild,
   ChangeDetectionStrategy,
@@ -10,11 +11,10 @@ import {
   effect,
   input,
   output,
-  afterNextRender,
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, SortDirection } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { catchError, Observable, of, Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -99,7 +99,9 @@ export interface GridConfig {
   styleUrls: ['./grid-generico.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GridGenericoComponent<T = unknown> implements OnInit, OnDestroy {
+export class GridGenericoComponent<T = unknown>
+  implements OnInit, OnDestroy, AfterViewInit
+{
   // =============================================================================
   // VIEW CHILDREN
   // =============================================================================
@@ -122,7 +124,7 @@ export class GridGenericoComponent<T = unknown> implements OnInit, OnDestroy {
   readonly mudancaPagina = output<PageEvent>();
   readonly ordenacaoMudou = output<{
     coluna: string;
-    direcao: 'asc' | 'desc';
+    direcao: SortDirection;
   }>();
   readonly linhaSelecionada = output<T>();
 
@@ -230,19 +232,18 @@ export class GridGenericoComponent<T = unknown> implements OnInit, OnDestroy {
     { allowSignalWrites: true }
   );
 
+  private readonly sortEffect = effect(() => {
+    const ds = this.dataSource();
+    if (this.sort && ds) {
+      ds.sort = this.sort;
+    }
+  });
+
   // =============================================================================
   // LIFECYCLE
   // =============================================================================
   constructor() {
-    // Configurar sort após a view estar renderizada
-    afterNextRender(() => {
-      if (this.sort) {
-        const ds = this.dataSource();
-        if (ds) {
-          ds.sort = this.sort;
-        }
-      }
-    });
+    // A configuração do sort agora é feita no ngAfterViewInit
   }
 
   ngOnInit(): void {
@@ -254,6 +255,15 @@ export class GridGenericoComponent<T = unknown> implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  ngAfterViewInit(): void {
+    // Configurar listener para o evento de ordenação do MatSort
+    if (this.sort) {
+      this.sort.sortChange.pipe(takeUntil(this.destroy$)).subscribe((event) => {
+        this.aoMudarOrdenacao(event.active, event.direction);
+      });
+    }
+  }
+
   // =============================================================================
   // MÉTODOS PÚBLICOS
   // =============================================================================
@@ -263,8 +273,11 @@ export class GridGenericoComponent<T = unknown> implements OnInit, OnDestroy {
     this.salvarEstadoPaginacao(evento);
   }
 
-  aoMudarOrdenacao(coluna: string, direcao: 'asc' | 'desc'): void {
-    this.ordenacaoMudou.emit({ coluna, direcao });
+  aoMudarOrdenacao(coluna: string, direcao: SortDirection): void {
+    // Só emitir se há uma direção válida
+    if (direcao === 'asc' || direcao === 'desc') {
+      this.ordenacaoMudou.emit({ coluna, direcao });
+    }
   }
 
   aoSelecionarLinha(item: T): void {
