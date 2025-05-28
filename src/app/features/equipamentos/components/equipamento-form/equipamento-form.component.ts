@@ -14,12 +14,22 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, of, catchError, Subject, takeUntil } from 'rxjs';
+import {
+  Observable,
+  of,
+  catchError,
+  Subject,
+  takeUntil,
+  startWith,
+  map,
+} from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatOptionModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -48,6 +58,8 @@ interface InputSelect {
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    MatAutocompleteModule,
+    MatOptionModule,
     CabecalhoPaginaComponent,
   ],
   templateUrl: './equipamento-form.component.html',
@@ -65,6 +77,7 @@ export class EquipamentoFormComponent
   categoriasAutoComplete$!: Observable<InputAutoComplete[]>;
   localizacoes: { codigo: string; nome: string }[] = [];
   equipamento: Equipamento | null = null;
+  categorias: InputAutoComplete[] = [];
 
   private unsubscribe$ = new Subject<void>();
 
@@ -104,12 +117,31 @@ export class EquipamentoFormComponent
   configurarAutoComplete(): void {
     const categoriaControl = this.formulario.get('categoria');
     if (categoriaControl) {
-      this.categoriasAutoComplete$ = this.configurarAutoCompleteGenerico(
-        categoriaControl.valueChanges,
-        (filtro) => this.pesquisarCategorias(filtro),
-        'Erro ao Buscar Categorias'
+      this.categoriasAutoComplete$ = categoriaControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => {
+          const nome = typeof value === 'string' ? value : value?.nome || '';
+          return nome ? this.filtrarCategorias(nome) : this.categorias.slice();
+        }),
+        takeUntil(this.unsubscribe$)
       );
     }
+  }
+
+  filtrarCategorias(nome: string): InputAutoComplete[] {
+    const filtro = nome.toLowerCase();
+    return this.categorias.filter((categoria) =>
+      categoria.nome.toLowerCase().includes(filtro)
+    );
+  }
+
+  exibirCategoria(categoria: InputAutoComplete): string {
+    return categoria && categoria.nome ? categoria.nome : '';
+  }
+
+  aoSelecionarCategoria(event: any): void {
+    const categoria = event.option.value;
+    this.formulario.patchValue({ categoria });
   }
 
   configurarAutoCompleteGenerico(
@@ -131,8 +163,6 @@ export class EquipamentoFormComponent
       return this.equipamentoService.obterCategorias().pipe(
         takeUntil(this.unsubscribe$),
         catchError(() => of([]))
-        // Simular busca por nome
-        // Em um caso real, o serviço teria um método específico para busca
       );
     } else {
       return of([]);
@@ -140,6 +170,21 @@ export class EquipamentoFormComponent
   }
 
   obterDadosIniciais(): void {
+    // Carregar categorias
+    this.equipamentoService
+      .obterCategorias()
+      .pipe(
+        catchError((error) => {
+          console.error('Erro ao Buscar as Categorias', error);
+          return of([]);
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((categorias) => {
+        this.categorias = categorias;
+      });
+
+    // Carregar localizações
     this.equipamentoService
       .obterLocalizacoes()
       .pipe(
@@ -220,11 +265,13 @@ export class EquipamentoFormComponent
 
   prepararObjetoEquipamento(): Equipamento {
     const formValue = this.formulario.value;
+    const categoria = formValue.categoria;
+
     return {
       id: formValue.codigoEquipamento,
       codigo: formValue.codigo,
-      categoriaId: formValue.categoria.id,
-      categoria: formValue.categoria.nome,
+      categoriaId: categoria?.id || categoria,
+      categoria: categoria?.nome || categoria,
       codigoLocalizacao: this.determinarLocalizacaoAoSalvar(
         formValue.codigoLocalizacao.id
       ),

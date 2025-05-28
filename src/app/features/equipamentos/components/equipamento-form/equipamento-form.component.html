@@ -14,28 +14,39 @@
             placeholder="Código do Equipamento"
             formControlName="codigo"
           />
-          <mat-error *ngIf="codigo?.hasError('required')">Campo obrigatório</mat-error>
+          <mat-error *ngIf="codigo?.hasError('required')"
+            >Campo obrigatório</mat-error
+          >
           <mat-error *ngIf="codigo?.hasError('maxlength')">
             Campo Código deve ter no máximo <strong>50 caracteres</strong>
           </mat-error>
         </mat-form-field>
 
-        <!-- Categoria -->
+        <!-- Categoria (Autocomplete) -->
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Categoria</mat-label>
-          <mat-select
+          <input
+            type="text"
+            matInput
             placeholder="Categoria"
             formControlName="categoria"
-            [compareWith]="aoCompararOptionValue"
+            [matAutocomplete]="autoCategoria"
+          />
+          <mat-autocomplete
+            #autoCategoria="matAutocomplete"
+            [displayWith]="exibirCategoria"
+            (optionSelected)="aoSelecionarCategoria($event)"
           >
             <mat-option
-              *ngFor="let categoria of localizacoes"
-              [value]="{ id: categoria.codigo, nome: categoria.nome }"
+              *ngFor="let categoria of categoriasAutoComplete$ | async"
+              [value]="categoria"
             >
               {{ categoria.nome }}
             </mat-option>
-          </mat-select>
-          <mat-error *ngIf="categoria?.hasError('required')">Campo obrigatório</mat-error>
+          </mat-autocomplete>
+          <mat-error *ngIf="categoria?.hasError('required')"
+            >Campo obrigatório</mat-error
+          >
         </mat-form-field>
 
         <!-- Localização -->
@@ -53,7 +64,9 @@
               {{ localizacao.nome }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="codigoLocalizacao?.hasError('required')">Campo obrigatório</mat-error>
+          <mat-error *ngIf="codigoLocalizacao?.hasError('required')"
+            >Campo obrigatório</mat-error
+          >
         </mat-form-field>
       </div>
 
