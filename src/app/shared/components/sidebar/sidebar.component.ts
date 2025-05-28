@@ -5,7 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MenuService } from '../../../core/services/menu.service';
-import { MenuItem } from '../../models/menu.model';
+import { MenuItem, SubMenuItem } from '../../models/menu.model';
 import { HasPermissionDirective } from '../../directives/has-permission.directive';
 
 @Component({
@@ -29,5 +29,14 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.menuItems = this.menuService.obterItensMenu();
+  }
+
+  // Métodos trackBy para otimização de performance
+  trackByMenuItem(index: number, item: MenuItem): string {
+    return item.permission + item.routerLink;
+  }
+
+  trackBySubMenuItem(index: number, item: SubMenuItem): string {
+    return item.permission + item.routerLink;
   }
 }

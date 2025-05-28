@@ -7,7 +7,7 @@ import { MenuItem } from '../../shared/models/menu.model';
 export class MenuService {
   public obterItensMenu(): MenuItem[] {
     return [
-      this.criarItemMenu('home', 'ITEM_MENU_HOME', '', 'Início'),
+      this.criarItemMenu('home', 'ITEM_MENU_HOME', '/', 'Início'),
       this.criarItemMenuComSubMenu(
         'apps',
         'ITEM_MENU_CADASTROS_BASICOS',
@@ -15,19 +15,19 @@ export class MenuService {
         'Cadastros Básicos',
         [
           this.criarItemMenu(
-            '',
+            'devices',
             'ITEM_MENU_EQUIPAMENTOS',
             'equipamentos',
             'Equipamentos'
           ),
           this.criarItemMenu(
-            '',
+            'category',
             'ITEM_MENU_CATEGORIAS',
             'cadastrosBasicos/categorias',
             'Categorias'
           ),
           this.criarItemMenu(
-            '',
+            'location_on',
             'ITEM_MENU_LOCALIZACOES',
             'cadastrosBasicos/localizacoes',
             'Localizações'
@@ -41,13 +41,13 @@ export class MenuService {
         'Relatórios',
         [
           this.criarItemMenu(
-            '',
+            'description',
             'ITEM_MENU_RELATORIO_EQUIPAMENTOS',
             'relatorios/equipamentos',
             'Relatório de Equipamentos'
           ),
           this.criarItemMenu(
-            '',
+            'list_alt',
             'ITEM_MENU_RELATORIO_CATEGORIAS',
             'relatorios/categorias',
             'Relatório de Categorias'
@@ -61,13 +61,13 @@ export class MenuService {
         'Configurações',
         [
           this.criarItemMenu(
-            '',
+            'people',
             'ITEM_MENU_USUARIOS',
             'configuracoes/usuarios',
             'Usuários'
           ),
           this.criarItemMenu(
-            '',
+            'admin_panel_settings',
             'ITEM_MENU_PERFIS',
             'configuracoes/perfis',
             'Perfis'

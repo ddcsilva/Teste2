@@ -1,7 +1,7 @@
 <div class="sidebar">
+  <!-- Itens sem submenu -->
   <mat-nav-list>
-    <ng-container *ngFor="let menu of menuItems">
-      <!-- Item sem submenu -->
+    <ng-container *ngFor="let menu of menuItems; trackBy: trackByMenuItem">
       <ng-container *ngIf="menu.subMenuItem.length === 0">
         <mat-list-item
           *appHasPermission="menu.permission"
@@ -9,34 +9,53 @@
           routerLinkActive="is-active"
           [routerLinkActiveOptions]="{ exact: false }"
         >
-          <mat-icon>{{ menu.icon }}</mat-icon>
-          <span>{{ menu.tooltip }}</span>
+          <mat-icon matListItemIcon>{{ menu.icon }}</mat-icon>
+          <span matListItemTitle>{{ menu.tooltip }}</span>
         </mat-list-item>
-      </ng-container>
-
-      <!-- Item com submenu -->
-      <ng-container *ngIf="menu.subMenuItem.length > 0">
-        <mat-expansion-panel
-          *appHasPermission="menu.permission"
-          [class.mat-elevation-z0]="true"
-        >
-          <mat-expansion-panel-header>
-            <mat-icon>{{ menu.icon }}</mat-icon>
-            <span>{{ menu.tooltip }}</span>
-          </mat-expansion-panel-header>
-
-          <div *ngFor="let submenu of menu.subMenuItem">
-            <mat-list-item
-              *appHasPermission="submenu.permission"
-              [routerLink]="submenu.routerLink"
-              routerLinkActive="is-active"
-              [routerLinkActiveOptions]="{ exact: false }"
-            >
-              <span class="subitem-padding">{{ submenu.tooltip }}</span>
-            </mat-list-item>
-          </div>
-        </mat-expansion-panel>
       </ng-container>
     </ng-container>
   </mat-nav-list>
+
+  <!-- Itens com submenu -->
+  <div class="sidebar-expandable-section">
+    <ng-container *ngFor="let menu of menuItems; trackBy: trackByMenuItem">
+      <ng-container *ngIf="menu.subMenuItem.length > 0">
+        <mat-expansion-panel
+          *appHasPermission="menu.permission"
+          class="sidebar-expansion-panel"
+        >
+          <mat-expansion-panel-header class="sidebar-expansion-header">
+            <mat-panel-title class="sidebar-panel-title">
+              <mat-icon class="sidebar-section-icon">{{ menu.icon }}</mat-icon>
+              <span class="sidebar-section-text">{{ menu.tooltip }}</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-nav-list class="sidebar-submenu-list">
+            <ng-container
+              *ngFor="
+                let submenu of menu.subMenuItem;
+                trackBy: trackBySubMenuItem
+              "
+            >
+              <mat-list-item
+                *appHasPermission="submenu.permission"
+                [routerLink]="submenu.routerLink"
+                routerLinkActive="is-active"
+                [routerLinkActiveOptions]="{ exact: false }"
+                class="sidebar-submenu-item"
+              >
+                <mat-icon matListItemIcon class="sidebar-submenu-icon">{{
+                  submenu.icon
+                }}</mat-icon>
+                <span matListItemTitle class="sidebar-submenu-text">{{
+                  submenu.tooltip
+                }}</span>
+              </mat-list-item>
+            </ng-container>
+          </mat-nav-list>
+        </mat-expansion-panel>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>
