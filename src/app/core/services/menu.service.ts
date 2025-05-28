@@ -5,15 +5,8 @@ import { MenuItem } from '../../shared/models/menu.model';
   providedIn: 'root',
 })
 export class MenuService {
-  // Dados estáticos - criados uma única vez
+  // Dados estáticos - criados uma única vez (sem o Home que agora é hardcoded)
   private readonly itensMenu: MenuItem[] = [
-    {
-      icon: 'home',
-      permission: 'ITEM_MENU_HOME',
-      routerLink: '/',
-      tooltip: 'Início',
-      subMenuItem: [],
-    },
     {
       icon: 'apps',
       permission: 'ITEM_MENU_CADASTROS_BASICOS',

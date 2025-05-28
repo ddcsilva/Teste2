@@ -6,10 +6,16 @@ $color-primary: #008542;
 $color-primary-light: #00b058;
 $color-primary-dark: #0c3310;
 
+// Valores RGB para uso com rgba()
+$color-primary-rgb: 0, 133, 66;
+
 // Cores secundárias
 $color-secondary: #595588;
 $color-secondary-light: #7b72aa;
 $color-secondary-dark: #4a4a7a;
+
+// Valores RGB para uso com rgba()
+$color-secondary-rgb: 89, 85, 136;
 
 // Cores de estado/semânticas
 $color-success: #05cf6a;
@@ -60,3 +66,10 @@ $color-text-on-dark: #fff;
 
 // Cores específicas do ambiente
 $color-environment-tag: #fdb52f;
+
+// Border radius tokens
+$border-radius-xs: 2px;
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
