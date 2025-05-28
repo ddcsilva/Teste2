@@ -9,9 +9,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './cabecalho-pagina.component.scss',
 })
 export class CabecalhoPaginaComponent {
-  @Input() titulo: string = '';
-  @Input() compact: boolean = false;
-  @Input() noBorder: boolean = false;
+  @Input() titulo = '';
+  @Input() compact = false;
+  @Input() noBorder = false;
 
   get cssClasses(): string {
     const classes = ['cabecalho-pagina'];

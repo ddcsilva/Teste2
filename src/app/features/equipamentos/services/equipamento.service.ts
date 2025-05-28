@@ -11,9 +11,9 @@ export class EquipamentoService {
   obterDadosParaGrid(
     paginaAtual: number,
     itensPorPagina: number,
-    codigo: string,
-    categoria: string,
-    localizacao: string
+    _codigo: string,
+    _categoria: string,
+    _localizacao: string
   ): Observable<{ itens: Equipamento[]; totalItens: number }> {
     // Dados de exemplo expandidos para teste de paginação
     const mockData: Equipamento[] = [
@@ -208,11 +208,11 @@ export class EquipamentoService {
     return of({ itens: itensPaginados, totalItens: totalItens });
   }
 
-  excluir(id: number): Observable<ResponseGeneric> {
+  excluir(_id: number): Observable<ResponseGeneric> {
     return of({ success: true, message: 'Equipamento excluído com sucesso' });
   }
 
-  exportarExcel(filtros: EquipamentoFiltro): Observable<any> {
+  exportarExcel(_filtros: EquipamentoFiltro): Observable<unknown> {
     return of({ data: 'excel data' });
   }
 }

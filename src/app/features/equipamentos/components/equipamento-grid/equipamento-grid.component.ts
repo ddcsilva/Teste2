@@ -19,7 +19,6 @@ import {
 import {
   GridGenericoComponent,
   GridConfig,
-  ColunaConfig,
 } from '../../../../shared/components/grid-generico/grid-generico.component';
 
 @Component({
@@ -58,25 +57,25 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
       {
         nome: 'codigo',
         largura: '15%',
-        larguraMinima: '120px',
+        larguraMinima: '140px',
         alinhamento: 'left',
       },
       {
         nome: 'categoria',
         largura: '25%',
-        larguraMinima: '150px',
+        larguraMinima: '180px',
         alinhamento: 'left',
       },
       {
         nome: 'localizacao',
         largura: '45%',
-        larguraMinima: '200px',
+        larguraMinima: '250px',
         alinhamento: 'left',
       },
       {
         nome: 'acoes',
         largura: '15%',
-        larguraMinima: '120px',
+        larguraMinima: '140px',
         alinhamento: 'center',
       },
     ],
@@ -165,7 +164,7 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  carregarDados(paginaAtual: number = 0, itensPorPagina: number = 10): void {
+  carregarDados(paginaAtual = 0, itensPorPagina = 10): void {
     this.equipamentoService
       .obterDadosParaGrid(
         paginaAtual,
@@ -197,11 +196,11 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
     // this.router.navigate([`/equipamentos/detalhes/${equipamento.id}`]);
   }
 
-  buscar(valores: Record<string, any>): void {
+  buscar(valores: Record<string, unknown>): void {
     const filtros: EquipamentoFiltro = {
-      codigo: valores['codigo'] || '',
-      categoria: valores['categoria'] || '',
-      localizacao: valores['localizacao'] || '',
+      codigo: (valores['codigo'] as string) || '',
+      categoria: (valores['categoria'] as string) || '',
+      localizacao: (valores['localizacao'] as string) || '',
     };
     this.filtrosSubject.next(filtros);
     this.carregarDados();

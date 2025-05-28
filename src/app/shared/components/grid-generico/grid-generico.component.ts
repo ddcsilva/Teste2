@@ -1,10 +1,7 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
-  Output,
   TemplateRef,
   ViewChild,
   ChangeDetectionStrategy,
@@ -13,7 +10,6 @@ import {
   effect,
   input,
   output,
-  AfterViewInit,
   afterNextRender,
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -72,7 +68,7 @@ export interface ColunaConfig {
   alinhamento?: 'left' | 'center' | 'right';
 }
 
-export interface GridDados<T = any> {
+export interface GridDados<T = unknown> {
   itens: T[];
   totalItens: number;
 }
@@ -103,9 +99,7 @@ export interface GridConfig {
   styleUrls: ['./grid-generico.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GridGenericoComponent<T = any>
-  implements OnInit, OnDestroy, AfterViewInit
-{
+export class GridGenericoComponent<T = unknown> implements OnInit, OnDestroy {
   // =============================================================================
   // VIEW CHILDREN
   // =============================================================================
@@ -182,7 +176,6 @@ export class GridGenericoComponent<T = any>
   readonly configColunas = computed(() => {
     const config = this.configCompleta();
     const colunas = this.colunas();
-    const colunasComAcoes = this.colunasComAcoes();
 
     // Se há configuração personalizada, usar ela
     if (config.colunas && config.colunas.length > 0) {
@@ -190,7 +183,6 @@ export class GridGenericoComponent<T = any>
     }
 
     // Senão, criar configuração padrão baseada no número de colunas
-    const totalColunas = colunasComAcoes.length;
     const temAcoes = this.acoesTemplate() !== undefined;
 
     return this.criarConfiguracaoPadrao(colunas, temAcoes);
@@ -198,7 +190,7 @@ export class GridGenericoComponent<T = any>
 
   readonly estilosColunas = computed(() => {
     const configColunas = this.configColunas();
-    const estilos: { [key: string]: any } = {};
+    const estilos: Record<string, Record<string, string>> = {};
 
     configColunas.forEach((config, index) => {
       const seletor = `nth-child(${index + 1})`;
@@ -262,11 +254,6 @@ export class GridGenericoComponent<T = any>
     this.destroy$.complete();
   }
 
-  ngAfterViewInit(): void {
-    // Sort será configurado automaticamente pelo sortEffect
-    // quando o ViewChild estiver disponível
-  }
-
   // =============================================================================
   // MÉTODOS PÚBLICOS
   // =============================================================================
@@ -284,7 +271,7 @@ export class GridGenericoComponent<T = any>
     this.linhaSelecionada.emit(item);
   }
 
-  obterValorColuna(item: T, coluna: string): any {
+  obterValorColuna(item: T, coluna: string): unknown {
     return item[coluna as keyof T];
   }
 
@@ -299,7 +286,7 @@ export class GridGenericoComponent<T = any>
     return Math.ceil(total / porPagina);
   }
 
-  obterEstilosColuna(coluna: string, index: number): any {
+  obterEstilosColuna(coluna: string, index: number): Record<string, string> {
     const configColunas = this.configColunas();
     const config = configColunas[index];
 
@@ -317,9 +304,9 @@ export class GridGenericoComponent<T = any>
   // =============================================================================
   trackByColuna = (index: number, coluna: string): string => coluna;
 
-  trackByItem = (index: number, item: T): any => {
+  trackByItem = (index: number, item: T): unknown => {
     // Tenta usar 'id' se existir, senão usa o índice
-    return (item as any)?.id ?? index;
+    return (item as Record<string, unknown>)['id'] ?? index;
   };
 
   // =============================================================================
@@ -343,7 +330,7 @@ export class GridGenericoComponent<T = any>
           this.dadosSignal.set(dados);
           this.carregandoInterno.set(false);
         },
-        error: (erro) => {
+        error: () => {
           this.erroSignal.set('Erro inesperado ao carregar dados.');
           this.carregandoInterno.set(false);
         },
@@ -377,20 +364,20 @@ export class GridGenericoComponent<T = any>
     temAcoes: boolean
   ): ColunaConfig[] {
     const config: ColunaConfig[] = [];
-    colunas.forEach((nome, index) => {
+    colunas.forEach((nome) => {
       config.push({
         nome,
         alinhamento: 'left',
         largura: 'auto',
-        larguraMinima: 'auto',
+        larguraMinima: '150px', // Largura mínima mais generosa para desktop
       });
     });
     if (temAcoes) {
       config.push({
         nome: 'acoes',
         alinhamento: 'center',
-        largura: '100px',
-        larguraMinima: '100px',
+        largura: '140px', // Mais espaço para ações em desktop
+        larguraMinima: '140px',
       });
     }
     return config;

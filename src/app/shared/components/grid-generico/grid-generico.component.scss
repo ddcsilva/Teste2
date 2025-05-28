@@ -212,7 +212,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $spacing-sm;
+  gap: $spacing-xs;
   flex-wrap: nowrap;
 
   mat-icon-button {
@@ -272,12 +272,6 @@
   border-top: 1px solid $color-border;
   background-color: $color-surface;
   min-height: 64px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: $spacing-md;
-    padding: $spacing-md;
-  }
 }
 
 .grid-footer-info {
@@ -285,12 +279,6 @@
   flex-direction: column;
   gap: $spacing-xs;
   min-width: 200px;
-
-  @media (max-width: 768px) {
-    align-items: center;
-    text-align: center;
-    min-width: auto;
-  }
 }
 
 .total-items {
@@ -313,23 +301,11 @@
     justify-content: flex-end;
     padding: 0;
     min-height: auto;
-
-    @media (max-width: 768px) {
-      justify-content: center;
-      flex-direction: column;
-      gap: $spacing-sm;
-      align-items: center;
-    }
   }
 
   ::ng-deep .mat-mdc-paginator-page-size {
     align-items: center;
     margin-right: $spacing-lg;
-
-    @media (max-width: 768px) {
-      margin-right: 0;
-      margin-bottom: $spacing-sm;
-    }
 
     .mat-mdc-paginator-page-size-label {
       font-size: 13px;
@@ -356,7 +332,7 @@
     white-space: nowrap;
   }
 
-  // Melhorar botões de navegação
+  // Melhorar botões de navegação para desktop
   ::ng-deep .mat-mdc-icon-button {
     width: 40px;
     height: 40px;
@@ -398,70 +374,22 @@
 }
 
 // =============================================================================
-// RESPONSIVIDADE
+// RESPONSIVIDADE OTIMIZADA PARA DESKTOP/NOTEBOOK
 // =============================================================================
-@media (max-width: 768px) {
-  .table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
+@media (max-width: 1024px) {
+  // Apenas para notebooks menores (11-13 polegadas)
   .grid-table {
-    min-width: 600px;
+    font-size: 13px;
   }
 
   .grid-header-cell,
   .grid-data-cell {
-    padding: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
     font-size: 13px;
-
-    .cell-content {
-      max-width: 120px;
-    }
   }
 
   .actions-container {
     gap: $spacing-xs;
-
-    mat-icon-button {
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
-
-      mat-icon {
-        font-size: 16px;
-        width: 16px;
-        height: 16px;
-      }
-    }
-  }
-
-  .no-data-container {
-    padding: $spacing-lg;
-
-    .no-data-text {
-      font-size: 15px;
-    }
-
-    .no-data-subtitle {
-      font-size: 13px;
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .grid-table {
-    min-width: 500px;
-  }
-
-  .grid-header-cell,
-  .grid-data-cell {
-    padding: $spacing-xs $spacing-sm;
-    font-size: 12px;
-
-    .cell-content {
-      max-width: 100px;
-    }
   }
 }
 
