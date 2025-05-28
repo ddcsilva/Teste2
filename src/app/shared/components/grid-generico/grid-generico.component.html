@@ -104,16 +104,34 @@
     </table>
   </div>
 
-  <!-- Paginação -->
+  <!-- Paginação Melhorada -->
   @if (configCompleta().mostrarPaginacao && totalItens() > 0) {
-  <mat-paginator
-    [length]="totalItens()"
-    [pageIndex]="configCompleta().paginaAtual"
-    [pageSize]="configCompleta().itensPorPagina"
-    [pageSizeOptions]="[5, 10, 20, 50, 100]"
-    [showFirstLastButtons]="true"
-    (page)="aoMudarPagina($event)"
-    class="grid-paginator"
-  ></mat-paginator>
+  <div class="grid-footer">
+    <div class="grid-footer-info">
+      @if (obterTotalPaginas() > 1) {
+      <span class="current-page-info">
+        Página {{ paginaAtual() + 1 }} de
+        {{ obterTotalPaginas() }}
+      </span>
+      } @else {
+      <span class="total-items">
+        {{ totalItens() }}
+        {{ totalItens() === 1 ? "item" : "itens" }} encontrado{{
+          totalItens() === 1 ? "" : "s"
+        }}
+      </span>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalItens()"
+      [pageIndex]="paginaAtual()"
+      [pageSize]="configCompleta().itensPorPagina"
+      [pageSizeOptions]="[5, 10, 20, 50, 100]"
+      [showFirstLastButtons]="true"
+      (page)="aoMudarPagina($event)"
+      class="grid-paginator"
+    ></mat-paginator>
+  </div>
   } }
 </mat-card>

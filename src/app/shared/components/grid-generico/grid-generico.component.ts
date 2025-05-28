@@ -17,6 +17,7 @@ import {
   afterNextRender,
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { catchError, Observable, of, Subject, takeUntil } from 'rxjs';
@@ -27,6 +28,39 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+
+// =============================================================================
+// SERVIÇO DE TRADUÇÃO PARA PAGINADOR
+// =============================================================================
+export class PaginadorPortugues extends MatPaginatorIntl {
+  override itemsPerPageLabel = 'Por página:';
+  override nextPageLabel = 'Próxima página';
+  override previousPageLabel = 'Página anterior';
+  override firstPageLabel = 'Primeira página';
+  override lastPageLabel = 'Última página';
+
+  override getRangeLabel = (
+    page: number,
+    pageSize: number,
+    length: number
+  ): string => {
+    if (length === 0) {
+      return 'Nenhum item';
+    }
+    const startIndex = page * pageSize;
+    const endIndex =
+      startIndex < length
+        ? Math.min(startIndex + pageSize, length)
+        : startIndex + pageSize;
+
+    // Se só tem uma página, não mostrar range
+    if (length <= pageSize) {
+      return '';
+    }
+
+    return `${startIndex + 1}-${endIndex} de ${length}`;
+  };
+}
 
 // =============================================================================
 // INTERFACES E TIPOS
@@ -56,6 +90,7 @@ export interface GridConfig {
     MatProgressSpinnerModule,
     MatIconModule,
   ],
+  providers: [{ provide: MatPaginatorIntl, useClass: PaginadorPortugues }],
   templateUrl: './grid-generico.component.html',
   styleUrls: ['./grid-generico.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -98,6 +133,7 @@ export class GridGenericoComponent<T = any>
   });
   private readonly carregandoInterno = signal<boolean>(false);
   private readonly erroSignal = signal<string | null>(null);
+  private readonly paginaAtualSignal = signal<number>(0);
 
   // =============================================================================
   // COMPUTED PROPERTIES
@@ -133,6 +169,7 @@ export class GridGenericoComponent<T = any>
 
   readonly temDados = computed(() => this.dados().itens.length > 0);
   readonly totalItens = computed(() => this.dados().totalItens);
+  readonly paginaAtual = computed(() => this.paginaAtualSignal());
 
   readonly classesTabela = computed(() => {
     const densidade = this.configCompleta().densidade;
@@ -193,6 +230,7 @@ export class GridGenericoComponent<T = any>
   // MÉTODOS PÚBLICOS
   // =============================================================================
   aoMudarPagina(evento: PageEvent): void {
+    this.paginaAtualSignal.set(evento.pageIndex);
     this.mudancaPagina.emit(evento);
     this.salvarEstadoPaginacao(evento);
   }
@@ -212,6 +250,12 @@ export class GridGenericoComponent<T = any>
   obterNomeColuna(coluna: string): string {
     const nomes = this.nomesColunas();
     return nomes[coluna] || this.formatarNomeColuna(coluna);
+  }
+
+  obterTotalPaginas(): number {
+    const total = this.totalItens();
+    const porPagina = this.configCompleta().itensPorPagina;
+    return Math.ceil(total / porPagina);
   }
 
   // =============================================================================
@@ -258,6 +302,7 @@ export class GridGenericoComponent<T = any>
       const pagina = parseInt(paginaStorage, 10);
       if (!isNaN(pagina) && pagina >= 0) {
         this.paginator.pageIndex = pagina;
+        this.paginaAtualSignal.set(pagina);
       }
     }
   }

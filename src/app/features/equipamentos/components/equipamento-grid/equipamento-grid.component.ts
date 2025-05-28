@@ -138,7 +138,7 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  carregarDados(paginaAtual: number = 1, itensPorPagina: number = 10): void {
+  carregarDados(paginaAtual: number = 0, itensPorPagina: number = 10): void {
     this.equipamentoService
       .obterDadosParaGrid(
         paginaAtual,
@@ -152,7 +152,7 @@ export class EquipamentoGridComponent implements OnInit, OnDestroy {
   }
 
   aoMudarPagina(evento: PageEvent): void {
-    this.carregarDados(evento.pageIndex + 1, evento.pageSize);
+    this.carregarDados(evento.pageIndex, evento.pageSize);
   }
 
   // =============================================================================

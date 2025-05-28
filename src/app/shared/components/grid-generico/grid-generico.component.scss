@@ -265,23 +265,138 @@
 }
 
 // =============================================================================
-// PAGINAÇÃO
+// PAGINAÇÃO MELHORADA
 // =============================================================================
-.grid-paginator {
+.grid-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
   border-top: 1px solid $color-border;
   background-color: $color-surface;
+  min-height: 64px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-md;
+  }
+}
+
+.grid-footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  min-width: 200px;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+    min-width: auto;
+  }
+}
+
+.total-items {
+  font-size: 14px;
+  color: $color-text-secondary;
+  font-weight: 400;
+}
+
+.current-page-info {
+  font-size: 14px;
+  color: $color-text-primary;
+  font-weight: 500;
+}
+
+.grid-paginator {
+  background-color: transparent;
+  border: none;
 
   ::ng-deep .mat-mdc-paginator-container {
-    justify-content: center;
-    padding: $spacing-md $spacing-lg;
+    justify-content: flex-end;
+    padding: 0;
+    min-height: auto;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+      flex-direction: column;
+      gap: $spacing-sm;
+      align-items: center;
+    }
   }
 
   ::ng-deep .mat-mdc-paginator-page-size {
     align-items: center;
+    margin-right: $spacing-lg;
+
+    @media (max-width: 768px) {
+      margin-right: 0;
+      margin-bottom: $spacing-sm;
+    }
+
+    .mat-mdc-paginator-page-size-label {
+      font-size: 13px;
+      color: $color-text-secondary;
+      margin-right: $spacing-sm;
+    }
+
+    .mat-mdc-paginator-page-size-select {
+      font-size: 13px;
+      min-width: 60px;
+    }
+  }
+
+  ::ng-deep .mat-mdc-paginator-range-actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
   }
 
   ::ng-deep .mat-mdc-paginator-range-label {
-    margin: 0 $spacing-lg;
+    font-size: 13px;
+    color: $color-text-secondary;
+    margin: 0 $spacing-md;
+    white-space: nowrap;
+  }
+
+  // Melhorar botões de navegação
+  ::ng-deep .mat-mdc-icon-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    .mat-mdc-button-touch-target {
+      width: 100%;
+      height: 100%;
+    }
+
+    .mdc-icon-button__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:hover:not([disabled]) {
+      background-color: rgba($color-primary, 0.1);
+    }
+
+    &[disabled] {
+      opacity: 0.4;
+    }
+
+    // Garantir que o ícone esteja perfeitamente centralizado
+    mat-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      line-height: 1;
+    }
   }
 }
 
@@ -349,13 +464,6 @@
 
     .cell-content {
       max-width: 100px;
-    }
-  }
-
-  .grid-paginator {
-    ::ng-deep .mat-mdc-paginator-container {
-      flex-direction: column;
-      gap: $spacing-sm;
     }
   }
 }
