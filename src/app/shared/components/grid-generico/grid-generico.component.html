@@ -1,123 +1,119 @@
 <mat-card appearance="outlined" [ngClass]="classesTabela()">
   <!-- Estado de Carregamento -->
   @if (estaCarregando()) {
-    <div class="grid-loading-container">
-      <mat-spinner diameter="40"></mat-spinner>
-      <p class="loading-text">Carregando dados...</p>
-    </div>
+  <div class="grid-loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="loading-text">Carregando dados...</p>
+  </div>
   }
 
   <!-- Estado de Erro -->
   @if (temErro() && !estaCarregando()) {
-    <div class="grid-error-container">
-      <mat-icon class="error-icon">error_outline</mat-icon>
-      <p class="error-text">{{ erro() }}</p>
-    </div>
+  <div class="grid-error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p class="error-text">{{ erro() }}</p>
+  </div>
   }
 
   <!-- Tabela Principal -->
   @if (!estaCarregando() && !temErro()) {
-    <div class="table-container">
-      <table
-        mat-table
-        [dataSource]="dataSource().data"
-        class="grid-table"
-        matSort
-        matSortDisableClear
-      >
-        <!-- Colunas Dinâmicas -->
-        @for (coluna of colunasComAcoes(); track trackByColuna($index, coluna)) {
-          <ng-container [matColumnDef]="coluna">
-            <!-- Cabeçalho da Coluna -->
-            @if (coluna !== 'acoes') {
-              <th
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                class="grid-header-cell"
-                [class.sortable]="configCompleta().mostrarOrdenacao"
-              >
-                {{ obterNomeColuna(coluna) }}
-              </th>
-            } @else {
-              <th
-                mat-header-cell
-                *matHeaderCellDef
-                class="grid-header-cell grid-actions-header"
-              >
-                Ações
-              </th>
-            }
-
-            <!-- Conteúdo da Coluna -->
-            @if (coluna !== 'acoes') {
-              <td
-                mat-cell
-                *matCellDef="let element; trackBy: trackByItem"
-                class="grid-data-cell"
-                [attr.data-label]="obterNomeColuna(coluna)"
-              >
-                <span class="cell-content">
-                  {{ obterValorColuna(element, coluna) }}
-                </span>
-              </td>
-            } @else {
-              <td
-                mat-cell
-                *matCellDef="let element; trackBy: trackByItem"
-                class="grid-data-cell grid-actions-cell"
-              >
-                <div class="actions-container">
-                  @if (acoesTemplate(); as template) {
-                    <ng-container
-                      *ngTemplateOutlet="template; context: { $implicit: element }"
-                    ></ng-container>
-                  }
-                </div>
-              </td>
-            }
-          </ng-container>
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="dataSource()"
+      class="grid-table"
+      matSort
+      matSortDisableClear
+    >
+      <!-- Colunas Dinâmicas -->
+      @for (coluna of colunasComAcoes(); track trackByColuna($index, coluna)) {
+      <ng-container [matColumnDef]="coluna">
+        <!-- Cabeçalho da Coluna -->
+        @if (coluna !== 'acoes') {
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="grid-header-cell"
+          [class.sortable]="configCompleta().mostrarOrdenacao"
+        >
+          {{ obterNomeColuna(coluna) }}
+        </th>
+        } @else {
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="grid-header-cell grid-actions-header"
+        >
+          Ações
+        </th>
         }
 
-        <!-- Cabeçalho da Tabela -->
-        <tr mat-header-row *matHeaderRowDef="colunasComAcoes()"></tr>
+        <!-- Conteúdo da Coluna -->
+        @if (coluna !== 'acoes') {
+        <td
+          mat-cell
+          *matCellDef="let element"
+          class="grid-data-cell"
+          [attr.data-label]="obterNomeColuna(coluna)"
+        >
+          <span class="cell-content">
+            {{ obterValorColuna(element, coluna) }}
+          </span>
+        </td>
+        } @else {
+        <td
+          mat-cell
+          *matCellDef="let element"
+          class="grid-data-cell grid-actions-cell"
+        >
+          <div class="actions-container">
+            @if (acoesTemplate(); as template) {
+            <ng-container
+              *ngTemplateOutlet="template; context: { $implicit: element }"
+            ></ng-container>
+            }
+          </div>
+        </td>
+        }
+      </ng-container>
+      }
 
-        <!-- Linhas de Dados -->
-        <tr
-          mat-row
-          *matRowDef="let row; columns: colunasComAcoes(); trackBy: trackByItem"
-          class="grid-row"
-          (click)="aoSelecionarLinha(row)"
-        ></tr>
+      <!-- Cabeçalho da Tabela -->
+      <tr mat-header-row *matHeaderRowDef="colunasComAcoes()"></tr>
 
-        <!-- Estado Vazio -->
-        <tr class="grid-no-data-row" *matNoDataRow>
-          <td
-            class="grid-no-data-cell"
-            [attr.colspan]="colunasComAcoes().length"
-          >
-            <div class="no-data-container">
-              <p class="no-data-text">Nenhum dado encontrado</p>
-              <p class="no-data-subtitle">
-                Tente ajustar os filtros ou adicionar novos registros
-              </p>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
+      <!-- Linhas de Dados -->
+      <tr
+        mat-row
+        *matRowDef="let row; columns: colunasComAcoes()"
+        class="grid-row"
+        (click)="aoSelecionarLinha(row)"
+      ></tr>
 
-    <!-- Paginação -->
-    @if (configCompleta().mostrarPaginacao && totalItens() > 0) {
-      <mat-paginator
-        [length]="totalItens()"
-        [pageIndex]="configCompleta().paginaAtual"
-        [pageSize]="configCompleta().itensPorPagina"
-        [pageSizeOptions]="[5, 10, 20, 50, 100]"
-        [showFirstLastButtons]="true"
-        (page)="aoMudarPagina($event)"
-        class="grid-paginator"
-      ></mat-paginator>
-    }
-  }
+      <!-- Estado Vazio -->
+      <tr class="grid-no-data-row" *matNoDataRow>
+        <td class="grid-no-data-cell" [attr.colspan]="colunasComAcoes().length">
+          <div class="no-data-container">
+            <p class="no-data-text">Nenhum dado encontrado</p>
+            <p class="no-data-subtitle">
+              Tente ajustar os filtros ou adicionar novos registros
+            </p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Paginação -->
+  @if (configCompleta().mostrarPaginacao && totalItens() > 0) {
+  <mat-paginator
+    [length]="totalItens()"
+    [pageIndex]="configCompleta().paginaAtual"
+    [pageSize]="configCompleta().itensPorPagina"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+    [showFirstLastButtons]="true"
+    (page)="aoMudarPagina($event)"
+    class="grid-paginator"
+  ></mat-paginator>
+  } }
 </mat-card>

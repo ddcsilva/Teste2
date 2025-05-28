@@ -13,6 +13,7 @@ import {
   effect,
   input,
   output,
+  AfterViewInit,
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -58,7 +59,9 @@ export interface GridConfig {
   styleUrls: ['./grid-generico.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GridGenericoComponent<T = any> implements OnInit, OnDestroy {
+export class GridGenericoComponent<T = any>
+  implements OnInit, OnDestroy, AfterViewInit
+{
   // =============================================================================
   // VIEW CHILDREN
   // =============================================================================
@@ -123,11 +126,7 @@ export class GridGenericoComponent<T = any> implements OnInit, OnDestroy {
     const dados = this.dados();
     const dataSource = new MatTableDataSource<T>(dados.itens);
 
-    // Configurar ordenação se disponível
-    if (this.sort) {
-      dataSource.sort = this.sort;
-    }
-
+    // Configurar ordenação se disponível (será configurado no ngAfterViewInit)
     return dataSource;
   });
 
@@ -152,10 +151,13 @@ export class GridGenericoComponent<T = any> implements OnInit, OnDestroy {
   // =============================================================================
   // EFFECTS
   // =============================================================================
-  private readonly dadosEffect = effect(() => {
-    const observable = this.dadosObservable();
-    this.inicializarDados(observable);
-  });
+  private readonly dadosEffect = effect(
+    () => {
+      const observable = this.dadosObservable();
+      this.inicializarDados(observable);
+    },
+    { allowSignalWrites: true }
+  );
 
   // =============================================================================
   // LIFECYCLE
@@ -167,6 +169,22 @@ export class GridGenericoComponent<T = any> implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  ngAfterViewInit(): void {
+    // Configurar ordenação após a view estar inicializada
+    if (this.sort) {
+      // Usar um effect para reagir a mudanças no dataSource e configurar o sort
+      effect(
+        () => {
+          const ds = this.dataSource();
+          if (ds && this.sort) {
+            ds.sort = this.sort;
+          }
+        },
+        { allowSignalWrites: true }
+      );
+    }
   }
 
   // =============================================================================
