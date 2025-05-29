@@ -11,6 +11,7 @@ import {
   effect,
   input,
   output,
+  Injectable,
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
@@ -28,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 // =============================================================================
 // SERVIÇO DE TRADUÇÃO PARA PAGINADOR
 // =============================================================================
+@Injectable()
 export class PaginadorPortugues extends MatPaginatorIntl {
   override itemsPerPageLabel = 'Por página:';
   override nextPageLabel = 'Próxima página';
