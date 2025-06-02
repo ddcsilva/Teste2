@@ -1,0 +1,99 @@
+<main class="login-container" aria-labelledby="login-titulo">
+  <section class="login-card" role="form">
+    <div class="login-card__header">
+      <div class="login-card__logo">
+        <mat-icon aria-hidden="true">https</mat-icon>
+        <h1 id="login-titulo">Login</h1>
+      </div>
+    </div>
+
+    <div class="login-card__content">
+      <form
+        [formGroup]="formulario"
+        (ngSubmit)="aoEntrar()"
+        class="login-form__container"
+        autocomplete="off"
+      >
+        <!-- Campo Chave -->
+        <mat-form-field appearance="outline" class="login-form__field">
+          <mat-label>Chave</mat-label>
+          <mat-icon matPrefix class="login-form__icon">person_outline</mat-icon>
+          <input
+            type="text"
+            matInput
+            formControlName="chave"
+            placeholder="Digite sua chave"
+            appToUppercase
+            aria-required="true"
+          />
+          <mat-error
+            *ngIf="formularioLoginService.campoInvalido(formulario, 'chave')"
+          >
+            Chave <strong>obrigatória</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Campo Senha -->
+        <mat-form-field appearance="outline" class="login-form__field">
+          <mat-label>Senha</mat-label>
+          <mat-icon matPrefix class="login-form__icon">lock_outline</mat-icon>
+          <input
+            [type]="esconderSenha ? 'password' : 'text'"
+            matInput
+            formControlName="senha"
+            placeholder="Digite sua senha"
+            aria-required="true"
+          />
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="alternarVisibilidadeSenha()"
+            [attr.aria-label]="'Mostrar senha'"
+            [attr.aria-pressed]="!esconderSenha"
+            class="password-toggle"
+          >
+            <mat-icon>{{
+              esconderSenha ? "visibility" : "visibility_off"
+            }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="formularioLoginService.campoInvalido(formulario, 'senha')"
+          >
+            Senha <strong>obrigatória</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Botão de Login -->
+        <div class="login-form__actions">
+          <button
+            type="submit"
+            color="primary"
+            mat-raised-button
+            class="login-button"
+            [disabled]="formulario.invalid || estaProcessando"
+            [class.processing]="estaProcessando"
+          >
+            <div class="button-content">
+              <mat-spinner
+                *ngIf="estaProcessando"
+                [diameter]="20"
+                class="spinner-button"
+              ></mat-spinner>
+              <mat-icon *ngIf="!estaProcessando">login</mat-icon>
+              <span>{{ estaProcessando ? "Processando" : "Entrar" }}</span>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="login-card__footer">
+      <p>Para solicitar acesso, envie e-mail para a chave BDDF1</p>
+      <a href="mailto:bddutosflexiveis@petrobras.com.br" class="email-link">
+        <mat-icon class="email-icon" aria-hidden="true">email</mat-icon>
+        <span>bddutosflexiveis&#64;petrobras.com.br</span>
+      </a>
+    </div>
+  </section>
+</main>

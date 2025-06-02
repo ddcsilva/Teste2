@@ -1,12 +1,22 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './auth/guards/auth.guard';
+import { guestGuard } from './auth/guards/guest.guard';
 
 export const routes: Routes = [
+  // Rotas de autenticação
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.routes').then((m) => m.authRoutes),
+    canActivate: [guestGuard],
+  },
+  // Rotas protegidas
   {
     path: '',
     loadComponent: () =>
       import('./core/layout/main-layout/main-layout.component').then(
         (m) => m.MainLayoutComponent
       ),
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -48,6 +58,6 @@ export const routes: Routes = [
   // Rota 404 - deve ser a última
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: '/auth/login',
   },
 ];
