@@ -64,26 +64,22 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- Botão de Login -->
+        <!-- Botão de Login com componente personalizado -->
         <div class="login-form__actions">
-          <button
-            type="submit"
-            color="primary"
-            mat-raised-button
-            class="login-button"
-            [disabled]="formulario.invalid || estaProcessando"
-            [class.processing]="estaProcessando"
+          <app-botao
+            tipo="submit"
+            variante="primary"
+            tamanho="grande"
+            [desabilitado]="formulario.invalid"
+            [carregando]="estaProcessando"
+            [icone]="estaProcessando ? '' : 'login'"
+            iconePosicao="esquerda"
+            tooltip="Clique para fazer login no sistema"
+            (clicado)="aoEntrar()"
+            class="login-button-custom"
           >
-            <div class="button-content">
-              <mat-spinner
-                *ngIf="estaProcessando"
-                [diameter]="20"
-                class="spinner-button"
-              ></mat-spinner>
-              <mat-icon *ngIf="!estaProcessando">login</mat-icon>
-              <span>{{ estaProcessando ? "Processando" : "Entrar" }}</span>
-            </div>
-          </button>
+            {{ estaProcessando ? "Processando..." : "Entrar" }}
+          </app-botao>
         </div>
       </form>
     </div>

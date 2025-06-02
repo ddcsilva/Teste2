@@ -18,6 +18,7 @@ import { AuthService } from '../../services/auth.service';
 import { Login } from '../../../shared/models/login.model';
 import { FormularioLoginService } from '../../services/formulario-login.service';
 import { ToUppercaseDirective } from '../../../shared/directives/to-uppercase.directive';
+import { BotaoComponent } from '../../../shared/ui/botao/botao.component';
 
 @Component({
   selector: 'app-login-page',
@@ -32,6 +33,7 @@ import { ToUppercaseDirective } from '../../../shared/directives/to-uppercase.di
     MatIconModule,
     MatProgressSpinnerModule,
     ToUppercaseDirective,
+    BotaoComponent,
   ],
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
