@@ -1,11 +1,5 @@
-$cor-rodape-card: #f5f5f5;
-$box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-$petrobras-primary: #008542;
-$petrobras-hover: #00b058;
-$light-primary-text: #fff;
-$cor-texto: #333;
-$cor-texto-secundario: rgba(0, 0, 0, 0.6);
-$cor-borda-card: #e0e0e0;
+@use "../../../../styles/tokens" as *;
+@use "../../../../styles/utilities/mixins" as *;
 
 .login-container {
   display: flex;
@@ -13,62 +7,62 @@ $cor-borda-card: #e0e0e0;
   align-items: center;
   min-height: 100%;
   width: 100%;
-  padding: 1.5rem;
+  padding: $spacing-lg;
   box-sizing: border-box;
 }
 
 .login-card {
   width: 100%;
   max-width: 420px;
-  border-radius: 8px;
-  box-shadow: $box-shadow;
+  border-radius: $border-radius-md;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease-in-out;
-  background-color: #ffffff; /* Adicionando fundo branco ao card */
+  transition: $transition-card;
+  background-color: $color-surface;
 
   @media (max-width: 480px) {
     max-width: 100%;
-    margin: 0 1rem;
+    margin: 0 $spacing-md;
   }
 
   &__header {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.75rem 1.5rem 1rem;
+    padding: $spacing-2xl $spacing-lg $spacing-md;
 
     .login-card__logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: $spacing-sm;
 
       mat-icon {
         font-size: 1.5rem;
         height: 3rem;
         width: 3rem;
-        color: $light-primary-text;
-        background-color: $petrobras-primary;
+        color: $color-text-on-primary;
+        background-color: $color-primary;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 8px rgba($petrobras-primary, 0.25);
+        box-shadow: 0 2px 8px rgba(0, 133, 66, 0.25);
       }
 
       h1 {
         font-size: 1.625rem;
         font-weight: 500;
-        color: $cor-texto;
+        color: $color-text-primary;
         margin: 0;
       }
     }
   }
 
   &__content {
-    padding: 0.75rem 1.75rem 1.25rem;
+    padding: $spacing-sm $spacing-2xl $spacing-lg;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -76,15 +70,15 @@ $cor-borda-card: #e0e0e0;
 
   &__footer {
     text-align: center;
-    padding: 1.25rem;
+    padding: $spacing-lg;
     font-size: 0.8125rem;
-    color: $cor-texto-secundario;
-    border-top: 1px solid rgba($cor-borda-card, 0.5);
-    background-color: rgba($cor-rodape-card, 0.5);
+    color: $color-text-secondary;
+    border-top: 1px solid rgba(224, 224, 224, 0.5);
+    background-color: rgba(245, 245, 245, 0.5);
     position: relative;
 
     p {
-      margin: 0 0 0.375rem 0;
+      margin: 0 0 $spacing-xs 0;
       font-weight: 400;
       position: relative;
       display: inline-block;
@@ -92,27 +86,27 @@ $cor-borda-card: #e0e0e0;
 
     a {
       text-decoration: none;
-      color: $petrobras-primary;
+      color: $color-primary;
       font-weight: 500;
-      transition: color 0.2s ease-in-out;
+      transition: $transition-color;
 
       &:hover {
         text-decoration: underline;
-        color: $petrobras-hover;
+        color: $color-primary-light;
       }
     }
 
     .email-link {
       display: inline-flex;
       align-items: center;
-      padding: 5px 10px;
-      background-color: rgba($cor-rodape-card, 0.8);
-      border-radius: 4px;
-      border: 1px solid rgba($cor-borda-card, 0.5);
-      transition: all 0.2s ease;
+      padding: $spacing-xs $spacing-sm;
+      background-color: rgba(245, 245, 245, 0.8);
+      border-radius: $border-radius-sm;
+      border: 1px solid rgba(224, 224, 224, 0.5);
+      transition: $transition-normal;
 
       &:hover {
-        background-color: rgba($petrobras-primary, 0.05);
+        background-color: rgba(0, 133, 66, 0.05);
         text-decoration: none;
         transform: translateY(-1px);
       }
@@ -121,8 +115,8 @@ $cor-borda-card: #e0e0e0;
         font-size: 16px;
         height: 16px;
         width: 16px;
-        margin-right: 5px;
-        color: $petrobras-primary;
+        margin-right: $spacing-xs;
+        color: $color-primary;
       }
     }
   }
@@ -143,21 +137,20 @@ $cor-borda-card: #e0e0e0;
 
   &__field {
     width: 100%;
-    margin-bottom: 1.25rem;
+    margin-bottom: $spacing-lg;
 
-    // Simplificar os estilos ::ng-deep para reduzir o tamanho
     ::ng-deep .mat-form-field-wrapper {
       margin-bottom: 0;
     }
 
     ::ng-deep .mat-form-field-outline {
-      border-radius: 4px;
+      border-radius: $border-radius-sm;
     }
   }
 
   &__icon {
-    color: $cor-texto-secundario;
-    margin-right: 0.75rem;
+    color: $color-text-secondary;
+    margin-right: $spacing-sm;
     font-size: 1.25rem;
   }
 
@@ -165,20 +158,20 @@ $cor-borda-card: #e0e0e0;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    padding-top: 0.5rem;
+    margin-top: $spacing-xl;
+    margin-bottom: $spacing-sm;
+    padding-top: $spacing-sm;
     width: 100%;
 
     // Estilos específicos para o botão personalizado de login
     .login-button-custom {
-      margin: 0 auto; // Centraliza o botão
-      display: block; // Garante que o botão seja um bloco
-      width: fit-content; // Ajusta a largura ao conteúdo, mas mantém centralização
+      margin: 0 auto;
+      display: block;
+      width: fit-content;
 
       ::ng-deep .app-botao {
-        color: $light-primary-text !important;
-        background-color: $petrobras-primary !important;
+        color: $color-text-on-primary !important;
+        background-color: $color-primary !important;
         text-transform: uppercase;
         font-weight: 500;
         font-size: 0.9375rem;
@@ -186,36 +179,47 @@ $cor-borda-card: #e0e0e0;
         border-radius: 24px !important;
         min-width: 180px;
         max-width: 220px;
-        padding: 0.75rem 2rem !important;
-        box-shadow: 0 3px 8px rgba($petrobras-primary, 0.35);
-        transition: all 0.25s ease-in-out;
+        padding: $spacing-sm $spacing-xl !important;
+        box-shadow: 0 3px 8px rgba(0, 133, 66, 0.35);
+        transition: $transition-button;
         border: none !important;
         display: flex;
         align-items: center;
         justify-content: center;
 
         &:hover:not(:disabled) {
-          background-color: $petrobras-hover !important;
-          box-shadow: 0 5px 12px rgba($petrobras-hover, 0.4);
+          background-color: $color-primary-light !important;
+          box-shadow: 0 5px 12px rgba(0, 133, 66, 0.4);
           transform: translateY(-2px);
         }
 
         &:active:not(:disabled) {
           transform: translateY(0);
-          box-shadow: 0 2px 6px rgba($petrobras-primary, 0.35);
+          box-shadow: 0 2px 6px rgba(0, 133, 66, 0.35);
         }
 
         &:disabled {
-          background-color: rgba($petrobras-primary, 0.6) !important;
+          background-color: rgba(0, 133, 66, 0.6) !important;
           box-shadow: none;
           transform: none;
         }
 
         &.app-botao--loading {
-          background-color: $petrobras-primary !important;
+          background-color: $color-primary !important;
+        }
 
-          .icone-carregando {
-            color: $light-primary-text;
+        .botao-conteudo {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: $spacing-sm;
+        }
+
+        .spinner-carregando {
+          ::ng-deep {
+            svg circle {
+              stroke: $color-text-on-primary !important;
+            }
           }
         }
 
@@ -225,7 +229,7 @@ $cor-borda-card: #e0e0e0;
         }
 
         .icone-esquerda {
-          color: $light-primary-text;
+          color: $color-text-on-primary;
         }
       }
     }
@@ -233,7 +237,7 @@ $cor-borda-card: #e0e0e0;
 }
 
 .password-toggle {
-  transition: transform 0.2s ease;
+  transition: $transition-transform;
 
   &:hover {
     transform: scale(1.05);

@@ -11,23 +11,22 @@
   [matTooltipHideDelay]="200"
   (click)="aoClicar($event)"
 >
-  <!-- Ícone à esquerda -->
-  @if (mostrarIconeEsquerda() && !carregando()) {
-  <mat-icon class="icone-esquerda">{{ icone() }}</mat-icon>
-  }
+  <div class="botao-conteudo">
+    <!-- Ícone à esquerda ou Spinner -->
+    @if (carregando()) {
+    <mat-spinner [diameter]="18" class="spinner-carregando"></mat-spinner>
+    } @else if (mostrarIconeEsquerda()) {
+    <mat-icon class="icone-esquerda">{{ icone() }}</mat-icon>
+    }
 
-  <!-- Loading spinner -->
-  @if (carregando()) {
-  <mat-icon class="icone-carregando">refresh</mat-icon>
-  }
+    <!-- Conteúdo do botão -->
+    <span class="texto-botao">
+      <ng-content></ng-content>
+    </span>
 
-  <!-- Conteúdo do botão -->
-  <span class="texto-botao">
-    <ng-content></ng-content>
-  </span>
-
-  <!-- Ícone à direita -->
-  @if (mostrarIconeDireita() && !carregando()) {
-  <mat-icon class="icone-direita">{{ icone() }}</mat-icon>
-  }
+    <!-- Ícone à direita -->
+    @if (mostrarIconeDireita() && !carregando()) {
+    <mat-icon class="icone-direita">{{ icone() }}</mat-icon>
+    }
+  </div>
 </button>

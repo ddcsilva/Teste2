@@ -47,32 +47,53 @@
   // Carregamento
   &.app-botao--loading {
     @include estado-carregando;
-
-    .icone-carregando {
-      animation: $animation-spin;
-      margin-right: $spacing-sm;
-    }
   }
+}
+
+// Container do conteúdo do botão
+.botao-conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  width: 100%;
 }
 
 // Ícones
 .icone-esquerda,
-.icone-direita,
-.icone-carregando {
+.icone-direita {
   font-size: 18px;
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
 }
 
-.icone-esquerda,
-.icone-carregando {
+.icone-esquerda {
   margin-right: $spacing-sm;
 }
+
 .icone-direita {
   margin-left: $spacing-sm;
+}
+
+// Spinner de carregamento
+.spinner-carregando {
+  flex-shrink: 0;
+
+  ::ng-deep {
+    svg {
+      width: 18px !important;
+      height: 18px !important;
+    }
+
+    circle {
+      stroke: currentColor;
+    }
+  }
 }
 
 .texto-botao {
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
 }
